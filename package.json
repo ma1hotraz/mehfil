@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Mehfil — a GenAI-powered planning almanac for weddings, birthdays and community events.",
+  "description": "Mehfil \u2014 a GenAI-powered planning almanac for weddings, birthdays and community events.",
   "engines": {
     "node": ">=22"
   },
@@ -16,7 +16,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.server.json",
     "test": "vitest run --coverage",
     "test:e2e": "playwright test",
-    "check": "npm run lint && npm run typecheck && npm run test && npm run build && node scripts/check-bundle.mjs"
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build && node scripts/check-bundle.mjs",
+    "build:client": "vite build"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",

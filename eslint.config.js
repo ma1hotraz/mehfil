@@ -25,6 +25,10 @@ export default tseslint.config(
       'no-param-reassign': ['error', { props: true }],
       complexity: ['error', 12],
       'max-depth': ['error', 3],
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       '@typescript-eslint/restrict-template-expressions': [
         'error',
         { allowNumber: true, allowBoolean: true },
@@ -81,6 +85,10 @@ export default tseslint.config(
     rules: {
       '@typescript-eslint/no-non-null-assertion': 'off', // tests assert on known fixtures
       '@typescript-eslint/no-unsafe-type-assertion': 'off',
+      // supertest response bodies are untyped JSON; each test asserts their shape explicitly
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
     },
   },
 );

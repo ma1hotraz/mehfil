@@ -1,0 +1,20 @@
+{
+  "brief": {
+    "eventType": "wedding",
+    "subType": "traditional",
+    "title": "Ananya & Kabir",
+    "date": "2027-05-12",
+    "guestCount": 250,
+    "budget": 1800000,
+    "currency": "INR",
+    "city": "Jaipur",
+    "setting": "outdoor",
+    "vibe": ["cultural", "festive"],
+    "dietary": ["jain", "vegetarian"],
+    "accessibility": ["step-free", "elderly-guests"],
+    "traditions": "Mehendi and sangeet, Rajasthani customs",
+    "mustHaves": "Live ghazal singer, no plastic"
+  },
+  "focus": "all",
+  "exclude": []
+}

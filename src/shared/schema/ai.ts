@@ -51,7 +51,14 @@ export const PlanDigest = z.strictObject({
     )
     .max(8),
   vendors: z
-    .array(z.strictObject({ id: safeId, label: z.string().max(80), status: VendorStatus }))
+    .array(
+      z.strictObject({
+        id: safeId,
+        label: z.string().max(80),
+        status: VendorStatus,
+        bookByDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+      }),
+    )
     .max(40),
   feasibility: z.strictObject({
     verdict: Verdict,
