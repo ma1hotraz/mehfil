@@ -1,0 +1,138 @@
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-3) var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--rule);
+  background: var(--paper-raised);
+  transition: box-shadow var(--dur-state) var(--ease);
+  animation: ink-in var(--dur-enter) var(--ease);
+}
+
+.card:hover,
+.card:focus-within {
+  box-shadow: var(--shadow-print);
+}
+
+.mark {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 0 solid var(--ink-soft);
+}
+
+.tl {
+  top: 4px;
+  left: 4px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+.tr {
+  top: 4px;
+  right: 4px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+}
+.bl {
+  bottom: 4px;
+  left: 4px;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+.br {
+  right: 4px;
+  bottom: 4px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+}
+
+.kicker {
+  margin: 0 0 var(--space-1);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  color: var(--sindoor);
+  font-weight: 600;
+}
+
+.title {
+  font-size: var(--fs-lg);
+  margin-bottom: var(--space-2);
+}
+
+.text {
+  margin: 0;
+}
+
+.side {
+  grid-row: 1;
+  grid-column: 2;
+}
+
+.footer {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: var(--hairline);
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.postage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.stampBox {
+  display: grid;
+  place-items: center;
+  min-width: 72px;
+  height: 84px;
+  padding: var(--space-2);
+  border: 3px dotted var(--ink);
+  background: var(--paper);
+}
+
+.band {
+  font-family: var(--font-figures);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--sindoor);
+}
+
+.postmark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--ink-soft);
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink-soft);
+  transform: rotate(-12deg);
+}
+
+@media (max-width: 719px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+
+  .side {
+    grid-row: auto;
+    grid-column: 1;
+  }
+
+  .postage {
+    flex-direction: row;
+  }
+}

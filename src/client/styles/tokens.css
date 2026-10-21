@@ -1,0 +1,88 @@
+/* Design tokens for "The Almanac" (docs/06 §3). Paper is the default theme; Lamplight is dark. */
+:root {
+  --paper: #f3ebdd;
+  --paper-raised: #faf5ec;
+  --paper-sunk: #e9decb;
+  --ink: #1e1915;
+  --ink-soft: #4f453c;
+  --sindoor: #a8301c;
+  --peacock: #1d5a55;
+  --leaf: #3d6527;
+  --umber: #7a4a12;
+  --marigold: #d99a2b;
+  --rule: #cdbfa8;
+  --rule-strong: #7d6b55;
+  --on-sindoor: #faf5ec;
+
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-text: 'Instrument Sans Variable', 'Helvetica Neue', Arial, sans-serif;
+  --font-figures: 'JetBrains Mono Variable', ui-monospace, 'Courier New', monospace;
+
+  --text-scale: 1;
+  --fs-xs: calc(0.8125rem * var(--text-scale));
+  --fs-sm: calc(0.9375rem * var(--text-scale));
+  --fs-md: calc(1.0625rem * var(--text-scale));
+  --fs-lg: calc(1.3125rem * var(--text-scale));
+  --fs-xl: calc(1.75rem * var(--text-scale));
+  --fs-2xl: calc(2.5rem * var(--text-scale));
+  --fs-3xl: clamp(calc(2.75rem * var(--text-scale)), 6vw, calc(4.5rem * var(--text-scale)));
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+  --space-9: 112px;
+
+  --hairline: 1px solid var(--rule);
+  --rule-double: 3px double var(--ink);
+  --rule-dotted: 1px dotted var(--rule-strong);
+
+  --r-0: 0;
+  --r-1: 2px;
+  --shadow-print: 3px 3px 0 var(--ink);
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-state: 120ms;
+  --dur-enter: 240ms;
+
+  --focus-ring: 3px solid var(--peacock);
+  --measure: 68ch;
+}
+
+:root[data-theme='lamplight'] {
+  --paper: #17130f;
+  --paper-raised: #221c16;
+  --paper-sunk: #100d0a;
+  --ink: #efe6d6;
+  --ink-soft: #bcae9b;
+  --sindoor: #f08468;
+  --peacock: #78c2b7;
+  --leaf: #9cc97f;
+  --umber: #e0a866;
+  --marigold: #e9b04a;
+  --rule: #3a3128;
+  --rule-strong: #8e7c66;
+  --on-sindoor: #17130f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='paper']) {
+    --paper: #17130f;
+    --paper-raised: #221c16;
+    --paper-sunk: #100d0a;
+    --ink: #efe6d6;
+    --ink-soft: #bcae9b;
+    --sindoor: #f08468;
+    --peacock: #78c2b7;
+    --leaf: #9cc97f;
+    --umber: #e0a866;
+    --marigold: #e9b04a;
+    --rule: #3a3128;
+    --rule-strong: #8e7c66;
+    --on-sindoor: #17130f;
+  }
+}

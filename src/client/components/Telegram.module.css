@@ -1,0 +1,31 @@
+.slip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: min(32rem, 100%);
+  margin-inline: auto;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--ink);
+  border-radius: var(--r-0);
+  background: var(--paper-raised);
+  box-shadow: var(--shadow-print);
+  animation: ink-in var(--dur-enter) var(--ease);
+}
+
+.text {
+  flex: 1;
+  font-family: var(--font-figures);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--r-0);
+  background: transparent;
+}

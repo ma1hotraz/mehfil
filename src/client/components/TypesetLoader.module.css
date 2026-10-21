@@ -1,0 +1,26 @@
+.loader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4) 0;
+}
+
+.slugs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.slug {
+  display: block;
+  height: 14px;
+  background: var(--rule);
+  animation: ink-in var(--dur-enter) var(--ease) both;
+}
+
+.label {
+  margin: 0;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}

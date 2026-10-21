@@ -1,0 +1,18 @@
+.rule {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--sindoor);
+  margin: var(--space-5) 0;
+}
+
+.line {
+  flex: 1;
+  border-top: var(--hairline);
+}
+
+@media (forced-colors: active) {
+  .rule {
+    color: CanvasText;
+  }
+}

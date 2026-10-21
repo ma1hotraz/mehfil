@@ -71,6 +71,8 @@ export default tseslint.config(
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
       ...jsxA11y.flatConfigs.strict.rules,
+      // WAI-ARIA tabs: the tabpanel itself is focusable (docs/09 §3)
+      'jsx-a11y/no-noninteractive-tabindex': ['error', { tags: [], roles: ['tabpanel'] }],
       'react/no-danger': 'error',
       'react/jsx-no-target-blank': 'error',
     },

@@ -1,0 +1,62 @@
+.stamp {
+  display: inline-grid;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  padding: 3px;
+  font-variant-caps: all-small-caps;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  text-align: center;
+  transform: rotate(var(--tilt, -4deg));
+}
+
+.ring {
+  display: grid;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+  overflow-wrap: anywhere;
+}
+
+.sm {
+  width: 84px;
+  height: 84px;
+  font-size: var(--fs-sm);
+}
+
+.lg {
+  width: 116px;
+  height: 116px;
+  font-size: var(--fs-md);
+}
+
+.ink {
+  color: var(--ink);
+}
+.peacock {
+  color: var(--peacock);
+}
+.umber {
+  color: var(--umber);
+}
+.sindoor {
+  color: var(--sindoor);
+}
+.leaf {
+  color: var(--leaf);
+}
+
+.fresh {
+  animation: stamp var(--dur-enter) var(--ease);
+}
+
+@media (forced-colors: active) {
+  .stamp {
+    color: CanvasText;
+  }
+}
