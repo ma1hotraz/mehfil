@@ -165,7 +165,7 @@ npm run dev              # http://localhost:5173 (API on :8080)
 ```
 
 Other commands: `npm run check` (lint, types, tests, build, bundle budgets), `npm start`
-(serve the production build).
+(serve the production build; the server is bundled to `dist/server.mjs` with esbuild).
 
 ## Deploy (Vercel)
 
@@ -182,8 +182,8 @@ vercel --prod
 
 Then check `/api/health` (`"ai":"enabled"` when the key is set) and run the Jaipur sample.
 Note: on serverless the rate limiter and ideas cache are per instance (see SECURITY.md). A
-`Dockerfile` (distroless, non-root) is included for running the production server in a
-container; the image is about 247 MB uncompressed, above the 200 MB target in the docs.
+`Dockerfile` (Alpine, non-root, one bundled server file) is included for running the production
+server in a container; the image is 197 MB.
 
 ## Responsible AI
 

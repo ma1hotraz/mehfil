@@ -11,7 +11,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const isProduction = process.env.NODE_ENV === 'production';
 const { app, config, logger, ai } = bootstrap(
   process.env,
-  isProduction ? path.resolve(here, '../../client') : undefined,
+  isProduction ? path.resolve(here, 'client') : undefined,
 );
 
 const server = app.listen(config.port, '0.0.0.0', () => {

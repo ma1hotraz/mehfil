@@ -80,6 +80,16 @@ describe('docs/06 "Never do" list', () => {
   });
 });
 
+describe('performance guards', () => {
+  it('preloads the two display and text fonts, but not the mono face', () => {
+    const html = fs.readFileSync('index.html', 'utf8');
+    expect(html).toContain('fraunces-latin-opsz-normal.woff2');
+    expect(html).toContain('instrument-sans-latin-wght-normal.woff2');
+    expect(html).not.toContain('jetbrains-mono');
+    expect(html.match(/rel="preload"/g)).toHaveLength(2);
+  });
+});
+
 describe('security and purity guards', () => {
   it('never uses dangerouslySetInnerHTML or unsafe CSP keywords', () => {
     expect(hits(files, /dangerouslySetInnerHTML|unsafe-inline|unsafe-eval/)).toEqual([]);

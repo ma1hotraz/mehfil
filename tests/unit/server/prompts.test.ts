@@ -30,8 +30,8 @@ describe('ideas prompt', () => {
   });
 
   it('sends a budget band rather than the amount, and no contact details', () => {
-    expect(prompt).toContain('budget band: high');
-    expect(prompt).not.toMatch(/1800000|18,00,000|1,800,000/);
+    expect(prompt).toContain('budget band: mid');
+    expect(prompt).not.toMatch(/1200000|12,00,000|1,200,000/);
     expect(prompt).not.toMatch(/phone|contact/i);
   });
 

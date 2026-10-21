@@ -10,9 +10,9 @@ test('changing a share keeps the total exact and survives a reload (AC10)', asyn
   await page.getByRole('button', { name: 'Increase Photo & video by 0.5 percent' }).click();
   await expect(photo).toHaveValue('10.5');
   const table = page.getByRole('table');
-  await expect(table).toHaveAccessibleName('Budget allocation, total ₹18,00,000');
+  await expect(table).toHaveAccessibleName('Budget allocation, total ₹12,00,000');
   await expect(table.getByRole('row', { name: /^Total/ })).toContainText('100.0%');
-  await expect(table.getByRole('row', { name: /^Total/ })).toContainText('₹18,00,000');
+  await expect(table.getByRole('row', { name: /^Total/ })).toContainText('₹12,00,000');
   await page.reload();
   await expect(page.getByRole('heading', { level: 1, name: 'Ananya & Kabir' })).toBeVisible();
   await expect(

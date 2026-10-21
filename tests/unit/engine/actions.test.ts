@@ -34,7 +34,7 @@ describe('shiftBudget', () => {
     expect(pct(next, 'decor')).toBeCloseTo(pct(plan, 'decor') - 3, 5);
     expect(pct(next, 'contingency')).toBeCloseTo(pct(plan, 'contingency') + 3, 5);
     expect(next.ledger.reduce((s, l) => s + l.amountMinor, 0)).toBe(toMinor(ananya.budget));
-    expect(notice).toBe('Moved 3% (₹54,000) from Décor & flowers to Contingency.');
+    expect(notice).toBe('Moved 3% (₹36,000) from Décor & flowers to Contingency.');
   });
 
   it('clamps to what the source has, and keeps contingency at 3% or more', () => {

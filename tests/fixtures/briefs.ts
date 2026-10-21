@@ -11,7 +11,8 @@ export const ananya = make({
   title: 'Ananya & Kabir',
   date: '2027-05-12',
   guestCount: 250,
-  budget: 1_800_000,
+  // ₹12 lakh for 250 guests: ₹4,800 per guest against ₹3,500, so the verdict is "workable".
+  budget: 1_200_000,
   currency: 'INR',
   city: 'Jaipur',
   setting: 'outdoor',

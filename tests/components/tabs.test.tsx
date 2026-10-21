@@ -45,10 +45,10 @@ describe('OverviewTab', () => {
 
   it('shows and hides the full list of notices', async () => {
     setup();
-    await userEvent.click(screen.getByRole('button', { name: /Show all 8 notices/ }));
+    await userEvent.click(screen.getByRole('button', { name: /Show all 7 notices/ }));
     expect(
       within(screen.getByRole('region', { name: 'Notices' })).getAllByRole('listitem'),
-    ).toHaveLength(8);
+    ).toHaveLength(7);
     const toggle = screen.getByRole('button', { name: 'Show fewer notices' });
     expect(toggle).toHaveAttribute('aria-expanded', 'true');
     await userEvent.click(toggle);
@@ -58,7 +58,7 @@ describe('OverviewTab', () => {
   it('prints key figures and the next three deadlines in timetable style', () => {
     setup();
     const figures = screen.getByRole('region', { name: 'Key figures' });
-    expect(within(figures).getByText('₹7,200')).toBeInTheDocument();
+    expect(within(figures).getByText('₹4,800')).toBeInTheDocument();
     expect(within(figures).getByText('per guest')).toBeInTheDocument();
     const deadlines = within(
       screen.getByRole('region', { name: 'Next three deadlines' }),
@@ -98,9 +98,9 @@ describe('LedgerTab', () => {
     const api = fakeApi(basePlan);
     render(<LedgerTab plan={basePlan} api={api} />);
     expect(
-      screen.getByRole('table', { name: 'Budget allocation, total ₹18,00,000' }),
+      screen.getByRole('table', { name: 'Budget allocation, total ₹12,00,000' }),
     ).toBeInTheDocument();
-    expect(screen.getByText('₹18,00,000', { selector: 'td' })).toBeInTheDocument();
+    expect(screen.getByText('₹12,00,000', { selector: 'td' })).toBeInTheDocument();
     await userEvent.click(screen.getByRole('button', { name: 'Increase Venue by 0.5 percent' }));
     expect(api.step).toHaveBeenCalledWith('venue', 0.5);
     const input = screen.getByRole('spinbutton', { name: 'Venue share in percent' });

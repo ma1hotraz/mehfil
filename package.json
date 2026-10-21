@@ -3,21 +3,22 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Mehfil — a GenAI-powered planning almanac for weddings, birthdays and community events.",
+  "description": "Mehfil \u2014 a GenAI-powered planning almanac for weddings, birthdays and community events.",
   "engines": {
     "node": ">=22"
   },
   "scripts": {
     "dev": "concurrently -k -n server,client \"tsx watch src/server/index.ts\" \"vite\"",
-    "build": "vite build && tsc -p tsconfig.server.json",
-    "start": "node dist/server/server/index.js",
+    "build": "vite build && npm run build:server",
+    "start": "node dist/server.mjs",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --check .",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.server.json",
     "test": "vitest run --coverage",
     "test:e2e": "playwright test",
     "check": "npm run lint && npm run typecheck && npm run test && npm run build && node scripts/check-bundle.mjs",
-    "build:client": "vite build"
+    "build:client": "vite build",
+    "build:server": "esbuild src/server/index.ts --bundle --platform=node --format=esm --target=node22 --minify --legal-comments=none --banner:js=\"import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\" --outfile=dist/server.mjs"
   },
   "dependencies": {
     "@google/genai": "^2.30.0",
@@ -46,6 +47,7 @@
     "@vitejs/plugin-react": "^6.1.2",
     "@vitest/coverage-v8": "^5.0.5",
     "concurrently": "^10.0.6",
+    "esbuild": "^0.28.2",
     "eslint": "^9.39.5",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",

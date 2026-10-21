@@ -16,7 +16,7 @@ const facts = (brief: typeof ananya) => {
 };
 
 describe('buildPlan personas', () => {
-  it('Ananya: comfortable, accessibility line and step-free venue question', () => {
+  it('Ananya: workable, accessibility line and step-free venue question', () => {
     expect(facts(ananya)).toMatchInlineSnapshot(`
       {
         "ledger": [
@@ -38,11 +38,10 @@ describe('buildPlan personas', () => {
           "R03",
           "R04",
           "R05",
-          "R12",
           "R20",
         ],
         "vendors": 11,
-        "verdict": "comfortable",
+        "verdict": "workable",
       }
     `);
     const venue = buildPlan(ananya, fixedToday).vendors.find((v) => v.id === 'venue');

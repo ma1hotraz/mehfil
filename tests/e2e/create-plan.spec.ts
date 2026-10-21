@@ -10,7 +10,7 @@ test('a sample becomes a plan with a focused heading and library ideas', async (
   const heading = page.getByRole('heading', { level: 1, name: 'Ananya & Kabir' });
   await expect(heading).toBeFocused();
   await expect(page).toHaveTitle('Ananya & Kabir · Overview — Mehfil');
-  await expect(page.getByText('COMFORTABLE')).toBeVisible();
+  await expect(page.getByText('WORKABLE', { exact: true })).toBeVisible();
   await page.getByRole('tab', { name: /Ideas/ }).click();
   await expect(page.getByText('FROM THE MEHFIL LIBRARY')).toBeVisible();
   await expect(page.getByRole('article').first()).toBeVisible();

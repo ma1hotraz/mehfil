@@ -53,7 +53,7 @@ describe('App: flow 1, the first plan', () => {
     expect(
       screen.getAllByText(/WEDDING · TRADITIONAL · 250 GUESTS · JAIPUR/).length,
     ).toBeGreaterThan(0);
-    expect(screen.getByText('COMFORTABLE')).toBeInTheDocument();
+    expect(screen.getByText('WORKABLE')).toBeInTheDocument();
     await waitFor(() => {
       expect(screen.getByTestId('live-polite')).toHaveTextContent(
         /Your almanac is ready\. \d+ notices, \d+ tasks, \d+ vendors\. Ideas are being drafted\./,
@@ -94,7 +94,7 @@ describe('App: the almanac', () => {
         screen.getByRole('spinbutton', { name: 'Photo & video share in percent' }),
       ).toHaveValue(10.5);
     });
-    expect(screen.getByRole('table')).toHaveAccessibleName('Budget allocation, total ₹18,00,000');
+    expect(screen.getByRole('table')).toHaveAccessibleName('Budget allocation, total ₹12,00,000');
     await waitFor(() => {
       expect(screen.getByTestId('live-polite')).toHaveTextContent(
         /Photo & video now 10\.5 percent/,
@@ -203,11 +203,11 @@ describe('App: the almanac', () => {
     expect(await within(dialog).findByText(/^Offline planner mode —/)).toBeInTheDocument();
     await user.click(await within(dialog).findByRole('button', { name: /^Apply: Move 3%/ }));
     await waitFor(() => {
-      expect(within(dialog).getByText(/^Moved 3% \(₹54,000\)/)).toBeInTheDocument();
+      expect(within(dialog).getByText(/^Moved 3% \(₹36,000\)/)).toBeInTheDocument();
     });
     expect(
       await screen.findByText(
-        /MOVED 3% \(₹54,000\) FROM ATTIRE & BEAUTY TO CONTINGENCY\. · STOP|MOVED 3%/,
+        /MOVED 3% \(₹36,000\) FROM ATTIRE & BEAUTY TO CONTINGENCY\. · STOP|MOVED 3%/,
       ),
     ).toBeInTheDocument();
   });

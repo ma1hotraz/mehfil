@@ -34,7 +34,7 @@ type AskResult = Result<AssistantResponse, { kind: 'network' | 'server' }>;
 function Harness({
   ask,
   apply = () =>
-    Promise.resolve({ notice: 'Moved 3% (₹54,000) from Décor & flowers to Contingency.' }),
+    Promise.resolve({ notice: 'Moved 3% (₹36,000) from Décor & flowers to Contingency.' }),
 }: {
   ask: (r: AssistantRequest, o?: ApiOptions) => Promise<AskResult>;
   apply?: () => Promise<{ notice: string } | { error: string }>;
@@ -91,13 +91,13 @@ describe('PlannerPanel', () => {
 
   it('applies a suggestion only on click and leaves focus on the slip with the notice', async () => {
     const apply = vi.fn(() =>
-      Promise.resolve({ notice: 'Moved 3% (₹54,000) from Décor & flowers to Contingency.' }),
+      Promise.resolve({ notice: 'Moved 3% (₹36,000) from Décor & flowers to Contingency.' }),
     );
     render(<Harness ask={() => Promise.resolve(reply('Do this.'))} apply={apply} />);
     await userEvent.type(screen.getByLabelText('Your question for the Planner'), 'Help');
     await userEvent.click(screen.getByRole('button', { name: 'Send' }));
     const slip = await screen.findByRole('article', {
-      name: /Move 3% from Décor & flowers to Contingency \(₹54,000\)/,
+      name: /Move 3% from Décor & flowers to Contingency \(₹36,000\)/,
     });
     expect(apply).not.toHaveBeenCalled();
     await userEvent.click(within(slip).getByRole('button', { name: /^Apply: Move 3%/ }));
@@ -105,7 +105,7 @@ describe('PlannerPanel', () => {
     await waitFor(() => {
       expect(slip).toHaveFocus();
     });
-    expect(within(slip).getByText(/^Moved 3% \(₹54,000\)/)).toBeInTheDocument();
+    expect(within(slip).getByText(/^Moved 3% \(₹36,000\)/)).toBeInTheDocument();
     expect(screen.getByTestId('notice')).toHaveTextContent('Moved 3%');
     expect(within(slip).queryByRole('button')).not.toBeInTheDocument();
   });
@@ -206,7 +206,7 @@ describe('PlannerPanel', () => {
 describe('describeAction', () => {
   it('words each action with the plan’s own numbers', () => {
     expect(describeAction(shift, plan)).toBe(
-      'Move 3% from Décor & flowers to Contingency (₹54,000)',
+      'Move 3% from Décor & flowers to Contingency (₹36,000)',
     );
     expect(
       describeAction(

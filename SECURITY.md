@@ -18,7 +18,7 @@ within a few days.
 | User privacy       | Personal data sent or stored on a server                | Data minimisation to the model (budget band, no contacts); nothing is stored server-side; vendor contacts never leave the browser                                                                             |
 | Availability       | Crashes from malformed input                            | zod at every boundary, a central error handler, error boundaries around every tab                                                                                                                             |
 | Supply chain       | Vulnerable dependencies                                 | Small dependency set, committed lockfile, `npm audit` in CI, Dependabot                                                                                                                                       |
-| Container          | Privilege escalation                                    | Non-root `node:22-alpine` image                                                                                                                                                                               |
+| Container          | Privilege escalation                                    | Non-root Alpine image holding only the Node binary and one bundled server file                                                                                                                                |
 
 ## OWASP Top 10 for LLM applications
 

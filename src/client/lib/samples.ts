@@ -25,7 +25,7 @@ const SAMPLES: readonly SampleSpec[] = [
       subType: 'traditional',
       title: 'Ananya & Kabir',
       guestCount: 250,
-      budget: 1_800_000,
+      budget: 1_200_000,
       currency: 'INR',
       city: 'Jaipur',
       setting: 'outdoor',

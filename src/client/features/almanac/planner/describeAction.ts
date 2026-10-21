@@ -5,7 +5,7 @@ import { STATUS_LABELS, money, plural } from '../../../lib/format';
 
 /**
  * A suggested action in plain words, with money worked out from the plan's own numbers.
- * @example describeAction(shift, plan) // 'Move 3% from Décor & flowers to Contingency (₹54,000)'
+ * @example describeAction(shift, plan) // 'Move 3% from Décor & flowers to Contingency (₹36,000)'
  */
 export function describeAction(action: SuggestedAction, plan: Plan): string {
   switch (action.type) {

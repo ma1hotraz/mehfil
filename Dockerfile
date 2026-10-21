@@ -5,14 +5,16 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN npm run build && npm prune --omit=dev
+RUN npm run build
 
-# ---- runtime (distroless keeps the image small and shell-free; runs as the non-root user) ----
-FROM gcr.io/distroless/nodejs22-debian12:nonroot
+# ---- runtime: plain Alpine plus the Node binary, one bundled server file and the static client.
+# Copying only the binary (instead of the node image) leaves out npm and yarn, which are not needed.
+FROM alpine:3.22
 ENV NODE_ENV=production PORT=8080
+RUN apk add --no-cache libstdc++ && adduser -D -u 1000 app
+COPY --from=build /usr/local/bin/node /usr/local/bin/node
 WORKDIR /app
-COPY --from=build --chown=nonroot:nonroot /app/node_modules ./node_modules
-COPY --from=build --chown=nonroot:nonroot /app/dist ./dist
-COPY --from=build --chown=nonroot:nonroot /app/package.json ./
+COPY --from=build --chown=app:app /app/dist ./dist
+USER app
 EXPOSE 8080
-CMD ["dist/server/server/index.js"]
+CMD ["node", "dist/server.mjs"]

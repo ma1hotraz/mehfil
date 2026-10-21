@@ -83,7 +83,7 @@ export function Tabs({
                 role="tab"
                 id={tabId(idPrefix, tab.id)}
                 aria-selected={selected}
-                aria-controls={panelId(idPrefix, tab.id)}
+                aria-controls={selected ? panelId(idPrefix, tab.id) : undefined}
                 tabIndex={selected ? 0 : -1}
                 className={cx(styles.tab, selected && styles.selected)}
                 onClick={() => {
