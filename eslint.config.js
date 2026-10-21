@@ -40,6 +40,21 @@ export default tseslint.config(
     rules: { 'no-console': 'error' },
   },
   {
+    // Size limits from docs/12 §1: files 300 lines, functions 40 (components 150); data tables excepted.
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/shared/engine/data/**'],
+    rules: {
+      'max-lines': ['error', { max: 300, skipBlankLines: true, skipComments: true }],
+      'max-lines-per-function': ['error', { max: 40, skipBlankLines: true, skipComments: true }],
+    },
+  },
+  {
+    files: ['src/**/*.tsx'],
+    rules: {
+      'max-lines-per-function': ['error', { max: 150, skipBlankLines: true, skipComments: true }],
+    },
+  },
+  {
     files: ['src/shared/**/*.ts', 'src/server/**/*.ts'],
     rules: { '@typescript-eslint/explicit-module-boundary-types': 'error' },
   },

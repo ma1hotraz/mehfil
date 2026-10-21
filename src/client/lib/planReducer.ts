@@ -69,6 +69,26 @@ type OpenPlanAction = Exclude<
   { type: 'loaded' | 'save' | 'open' | 'remove' | 'setIdeas' }
 >;
 
+type VendorAction = Extract<PlansAction, { type: 'setVendorStatus' | 'setVendorContact' }>;
+type IdeaAction = Extract<PlansAction, { type: 'toggleIdeaSaved' }>;
+
+const changeVendor = (action: VendorAction) => (plan: Plan) => ({
+  ...plan,
+  vendors: plan.vendors.map((v) => {
+    if (v.id !== action.id) {
+      return v;
+    }
+    return action.type === 'setVendorStatus'
+      ? { ...v, status: action.status }
+      : { ...v, contact: action.contact };
+  }),
+});
+
+const toggleIdea = (action: IdeaAction) => (plan: Plan) => ({
+  ...plan,
+  ideas: plan.ideas.map((idea) => (idea.id === action.id ? { ...idea, saved: !idea.saved } : idea)),
+});
+
 /** The change each plan-editing action makes to the open plan. */
 function changeFor(action: OpenPlanAction): (plan: Plan) => Plan {
   switch (action.type) {
@@ -91,26 +111,10 @@ function changeFor(action: OpenPlanAction): (plan: Plan) => Plan {
         timeline: plan.timeline.map((m) => (m.id === action.id ? { ...m, done: !m.done } : m)),
       });
     case 'setVendorStatus':
-      return (plan) => ({
-        ...plan,
-        vendors: plan.vendors.map((v) =>
-          v.id === action.id ? { ...v, status: action.status } : v,
-        ),
-      });
     case 'setVendorContact':
-      return (plan) => ({
-        ...plan,
-        vendors: plan.vendors.map((v) =>
-          v.id === action.id ? { ...v, contact: action.contact } : v,
-        ),
-      });
+      return changeVendor(action);
     case 'toggleIdeaSaved':
-      return (plan) => ({
-        ...plan,
-        ideas: plan.ideas.map((idea) =>
-          idea.id === action.id ? { ...idea, saved: !idea.saved } : idea,
-        ),
-      });
+      return toggleIdea(action);
   }
 }
 

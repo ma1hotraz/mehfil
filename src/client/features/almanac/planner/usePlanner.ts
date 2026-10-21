@@ -2,7 +2,11 @@ import { useCallback, useState } from 'react';
 
 import { buildDigest } from '../../../../shared/engine/digest.js';
 import { rulesAnswer } from '../../../../shared/planner.js';
-import type { AssistantRequest, SuggestedAction } from '../../../../shared/schema/ai.js';
+import type {
+  AssistantRequest,
+  AssistantResponse,
+  SuggestedAction,
+} from '../../../../shared/schema/ai.js';
 import type { Plan } from '../../../../shared/schema/plan.js';
 import { type ApiOptions, askPlanner as defaultAsk } from '../../../lib/api';
 import type { Announce } from '../../../lib/useAnnouncer';
@@ -54,86 +58,112 @@ function historyOf(exchanges: readonly Exchange[]): AssistantRequest['history'] 
     .slice(-HISTORY_TURNS);
 }
 
-/**
- * The conversation with the Planner, kept in memory for the session. Answers come from the
- * server; if it cannot be reached the same rule-based answers run locally, so asking never fails.
- */
-export function usePlanner({
-  plan,
-  today,
-  api,
-  announce,
-  onNotice,
-  ask = defaultAsk,
-}: Deps): Planner {
-  const [exchanges, setExchanges] = useState<Exchange[]>([]);
-  const busy = exchanges.some((e) => e.pending);
+const requestFor = (
+  plan: Plan,
+  today: string,
+  exchanges: readonly Exchange[],
+  question: string,
+): AssistantRequest => ({
+  brief: plan.brief,
+  plan: buildDigest(plan, today),
+  history: historyOf(exchanges),
+  question,
+});
 
+/** The reply to show: the server's, or the same rules run locally when it cannot be reached. */
+function replyFor(request: AssistantRequest, result: Awaited<ReturnType<typeof defaultAsk>>) {
+  return result.ok ? result.value : rulesAnswer(request, result.error.kind === 'network');
+}
+
+const settle =
+  (reply: AssistantResponse) =>
+  (e: Exchange): Exchange => ({
+    ...e,
+    pending: false,
+    answer: reply.answer,
+    source: reply.source,
+    actions: reply.suggestedActions.map((action) => ({ action, status: 'open' })),
+  });
+
+/** The list of exchanges with small, stable updaters for one exchange or one action. */
+function useExchanges() {
+  const [exchanges, setExchanges] = useState<Exchange[]>([]);
   const patch = useCallback((id: number, change: (e: Exchange) => Exchange) => {
     setExchanges((current) => current.map((e) => (e.id === id ? change(e) : e)));
   }, []);
-
-  const askQuestion = useCallback(
-    (question: string) => {
-      const id = exchanges.length + 1;
-      const request: AssistantRequest = {
-        brief: plan.brief,
-        plan: buildDigest(plan, today),
-        history: historyOf(exchanges),
-        question,
-      };
-      setExchanges((current) => [...current, { id, question, pending: true, actions: [] }]);
-      void ask(request).then((result) => {
-        const reply = result.ok
-          ? result.value
-          : rulesAnswer(request, result.error.kind === 'network');
-        patch(id, (e) => ({
-          ...e,
-          pending: false,
-          answer: reply.answer,
-          source: reply.source,
-          actions: reply.suggestedActions.map((action) => ({ action, status: 'open' })),
-        }));
-        announce('The Planner replied.');
-      });
-    },
-    [exchanges, plan, today, ask, patch, announce],
-  );
-
   const setAction = useCallback(
-    (exchangeId: number, index: number, next: Partial<ActionState>) => {
-      patch(exchangeId, (e) => ({
+    (id: number, index: number, next: Partial<ActionState>) => {
+      patch(id, (e) => ({
         ...e,
         actions: e.actions.map((a, i) => (i === index ? { ...a, ...next } : a)),
       }));
     },
     [patch],
   );
+  return { exchanges, setExchanges, patch, setAction };
+}
+
+/** Applies one suggestion through the plan API and records the outcome on its slip. */
+async function applySuggestion(
+  state: ActionState | undefined,
+  api: Pick<PlansApi, 'applyPlannerAction'>,
+  record: (next: Partial<ActionState>) => void,
+  onNotice: (notice: string) => void,
+): Promise<void> {
+  if (!state) {
+    return;
+  }
+  const result = await api.applyPlannerAction(state.action);
+  if ('notice' in result) {
+    record({ status: 'applied', message: result.notice });
+    onNotice(result.notice);
+  } else {
+    record({ status: 'failed', message: result.error });
+  }
+}
+
+/**
+ * The conversation with the Planner, kept in memory for the session. Answers come from the
+ * server; if it cannot be reached the same rule-based answers run locally, so asking never fails.
+ */
+export function usePlanner(deps: Deps): Planner {
+  const { plan, today, api, announce, onNotice, ask = defaultAsk } = deps;
+  const { exchanges, setExchanges, patch, setAction } = useExchanges();
+
+  const askQuestion = useCallback(
+    (question: string) => {
+      const id = exchanges.length + 1;
+      const request = requestFor(plan, today, exchanges, question);
+      setExchanges((current) => [...current, { id, question, pending: true, actions: [] }]);
+      void ask(request).then((result) => {
+        patch(id, settle(replyFor(request, result)));
+        announce('The Planner replied.');
+      });
+    },
+    [exchanges, plan, today, ask, patch, setExchanges, announce],
+  );
 
   const apply = useCallback(
-    (exchangeId: number, index: number) => {
-      const state = exchanges.find((e) => e.id === exchangeId)?.actions[index];
-      if (!state) {
-        return;
-      }
-      void api.applyPlannerAction(state.action).then((result) => {
-        if ('notice' in result) {
-          setAction(exchangeId, index, { status: 'applied', message: result.notice });
-          onNotice(result.notice);
-        } else {
-          setAction(exchangeId, index, { status: 'failed', message: result.error });
-        }
-      });
+    (id: number, index: number) => {
+      const state = exchanges.find((e) => e.id === id)?.actions[index];
+      void applySuggestion(
+        state,
+        api,
+        (next) => {
+          setAction(id, index, next);
+        },
+        onNotice,
+      );
     },
     [exchanges, api, setAction, onNotice],
   );
 
   const dismiss = useCallback(
-    (exchangeId: number, index: number) => {
-      setAction(exchangeId, index, { status: 'dismissed' });
+    (id: number, index: number) => {
+      setAction(id, index, { status: 'dismissed' });
     },
     [setAction],
   );
 
-  return { exchanges, busy, ask: askQuestion, apply, dismiss };
+  return { exchanges, busy: exchanges.some((e) => e.pending), ask: askQuestion, apply, dismiss };
 }

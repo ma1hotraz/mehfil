@@ -30,27 +30,33 @@ function insertLine(ledger: readonly LedgerLine[], id: CategoryId): LedgerLine[]
   return [...ledger, line].sort((a, b) => CATEGORY_IDS.indexOf(a.id) - CATEGORY_IDS.indexOf(b.id));
 }
 
-function shiftBudget(
-  plan: Plan,
-  action: Extract<SuggestedAction, { type: 'shiftBudget' }>,
-): ActionResult {
+type ShiftAction = Extract<SuggestedAction, { type: 'shiftBudget' }>;
+
+/** How many points may move, or an error message when the request cannot be honoured. */
+function shiftPoints(plan: Plan, action: ShiftAction): number | string {
   const { from, to } = action;
   const source = plan.ledger.find((line) => line.id === from);
   if (from === to) {
-    return { error: 'Choose two different budget lines.' };
+    return 'Choose two different budget lines.';
   }
   if (!source) {
-    return { error: `${CATEGORY_LABELS[from]} is not in this budget.` };
+    return `${CATEGORY_LABELS[from]} is not in this budget.`;
   }
   if (!plan.ledger.some((line) => line.id === to) && !CREATABLE.includes(to)) {
-    return { error: `${CATEGORY_LABELS[to]} is not in this budget.` };
+    return `${CATEGORY_LABELS[to]} is not in this budget.`;
   }
   const floor = from === 'contingency' ? THRESHOLDS.contingencyFloor : 0;
   const movable = Math.floor((source.percent - floor) * 10) / 10;
   const points = Math.min(tenth(action.percent), movable);
-  if (points <= 0) {
-    return { error: `${CATEGORY_LABELS[from]} has nothing left to move.` };
+  return points > 0 ? points : `${CATEGORY_LABELS[from]} has nothing left to move.`;
+}
+
+function shiftBudget(plan: Plan, action: ShiftAction): ActionResult {
+  const points = shiftPoints(plan, action);
+  if (typeof points === 'string') {
+    return { error: points };
   }
+  const { from, to } = action;
   const ledger = plan.ledger.some((line) => line.id === to)
     ? plan.ledger
     : insertLine(plan.ledger, to);
@@ -62,7 +68,7 @@ function shiftBudget(
   });
   const totalMinor = toMinor(plan.brief.budget);
   const amounts = amountsFromPercents(percents, totalMinor);
-  const moved = Math.round((points * totalMinor) / 100);
+  const moved = formatMoney(Math.round((points * totalMinor) / 100), plan.brief.currency);
   return {
     plan: {
       ...plan,
@@ -72,7 +78,7 @@ function shiftBudget(
         amountMinor: at(amounts, index),
       })),
     },
-    notice: `Moved ${points}% (${formatMoney(moved, plan.brief.currency)}) from ${CATEGORY_LABELS[from]} to ${CATEGORY_LABELS[to]}.`,
+    notice: `Moved ${points}% (${moved}) from ${CATEGORY_LABELS[from]} to ${CATEGORY_LABELS[to]}.`,
   };
 }
 
