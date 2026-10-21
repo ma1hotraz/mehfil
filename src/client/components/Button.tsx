@@ -1,11 +1,11 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 
 import { cx } from '../lib/cx';
 
 import styles from './Button.module.css';
 import { Icon, type IconName } from './Icon';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ComponentProps<'button'> {
   variant?: 'primary' | 'secondary' | 'text';
   icon?: IconName;
   children: ReactNode;

@@ -1,26 +1,31 @@
-import { z } from 'zod';
+import * as z from 'zod/mini';
 
 import { EventBrief } from './brief.js';
-import { CategoryId, Idea, IdeaCategory, Verdict, VendorStatus } from './plan.js';
+import { CategoryId, Idea, IdeaCategory, VendorStatus, Verdict } from './plan.js';
 
-const safeId = z.string().regex(/^[a-z0-9-]{1,64}$/i);
+const safeId = z.string().check(z.regex(/^[a-z0-9-]{1,64}$/i));
+const isoDate = z.string().check(z.regex(/^\d{4}-\d{2}-\d{2}$/));
+const str = (max: number) => z.string().check(z.maxLength(max));
+const minor = z.int().check(z.gte(0));
 
 /** One idea as drafted by the model (no id, no saved flag, bounded strings). */
 export const RawIdea = z.object({
   category: IdeaCategory,
-  title: z.string().min(1).max(60),
-  description: z.string().min(1).max(240),
-  costBand: z.number().int().min(1).max(3),
-  fitsBecause: z.string().min(1).max(140),
+  title: z.string().check(z.minLength(1), z.maxLength(60)),
+  description: z.string().check(z.minLength(1), z.maxLength(240)),
+  costBand: z.int().check(z.gte(1), z.lte(3)),
+  fitsBecause: z.string().check(z.minLength(1), z.maxLength(140)),
 });
 export type RawIdea = z.infer<typeof RawIdea>;
 
-export const IdeasModelOutput = z.object({ ideas: z.array(RawIdea).max(12) });
+export const IdeasModelOutput = z.object({
+  ideas: z.array(RawIdea).check(z.maxLength(12)),
+});
 
 export const IdeasRequest = z.strictObject({
   brief: EventBrief,
-  focus: z.union([z.literal('all'), IdeaCategory]).default('all'),
-  exclude: z.array(z.string().max(80)).max(20).default([]),
+  focus: z._default(z.union([z.literal('all'), IdeaCategory]), 'all'),
+  exclude: z._default(z.array(str(80)).check(z.maxLength(20)), []),
 });
 export type IdeasRequest = z.infer<typeof IdeasRequest>;
 
@@ -36,36 +41,36 @@ export const PlanDigest = z.strictObject({
     .array(
       z.strictObject({
         id: CategoryId,
-        percent: z.number().min(0).max(100),
-        amountMinor: z.number().int().min(0),
+        percent: z.number().check(z.gte(0), z.lte(100)),
+        amountMinor: minor,
       }),
     )
-    .max(24),
+    .check(z.maxLength(24)),
   openMilestones: z
     .array(
       z.strictObject({
-        title: z.string().max(120),
-        dueDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        title: str(120),
+        dueDate: isoDate,
         critical: z.boolean(),
       }),
     )
-    .max(8),
+    .check(z.maxLength(8)),
   vendors: z
     .array(
       z.strictObject({
         id: safeId,
-        label: z.string().max(80),
+        label: str(80),
         status: VendorStatus,
-        bookByDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+        bookByDate: isoDate,
       }),
     )
-    .max(40),
+    .check(z.maxLength(40)),
   feasibility: z.strictObject({
     verdict: Verdict,
-    perGuestMinor: z.number().int().min(0),
-    benchmarkMinor: z.number().int().min(0),
+    perGuestMinor: minor,
+    benchmarkMinor: minor,
   }),
-  leadDays: z.number().int().min(0).max(1200),
+  leadDays: z.int().check(z.gte(0), z.lte(1200)),
 });
 export type PlanDigest = z.infer<typeof PlanDigest>;
 
@@ -74,42 +79,42 @@ export const SuggestedAction = z.discriminatedUnion('type', [
     type: z.literal('shiftBudget'),
     from: CategoryId,
     to: CategoryId,
-    percent: z.number().min(0.5).max(20),
-    rationale: z.string().max(200),
+    percent: z.number().check(z.gte(0.5), z.lte(20)),
+    rationale: str(200),
   }),
   z.strictObject({
     type: z.literal('addTask'),
-    title: z.string().min(1).max(80),
-    daysBeforeEvent: z.number().int().min(0).max(730),
+    title: z.string().check(z.minLength(1), z.maxLength(80)),
+    daysBeforeEvent: z.int().check(z.gte(0), z.lte(730)),
     category: z.union([CategoryId, z.literal('general')]),
-    rationale: z.string().max(200),
+    rationale: str(200),
   }),
   z.strictObject({
     type: z.literal('markVendor'),
     vendorId: safeId,
     status: VendorStatus,
-    rationale: z.string().max(200),
+    rationale: str(200),
   }),
 ]);
 export type SuggestedAction = z.infer<typeof SuggestedAction>;
 
 export const ChatTurn = z.strictObject({
   role: z.enum(['user', 'planner']),
-  text: z.string().max(600),
+  text: str(600),
 });
 export type ChatTurn = z.infer<typeof ChatTurn>;
 
 export const AssistantRequest = z.strictObject({
   brief: EventBrief,
   plan: PlanDigest,
-  history: z.array(ChatTurn).max(10).default([]),
-  question: z.string().trim().min(1).max(500),
+  history: z._default(z.array(ChatTurn).check(z.maxLength(10)), []),
+  question: z.string().check(z.trim(), z.minLength(1), z.maxLength(500)),
 });
 export type AssistantRequest = z.infer<typeof AssistantRequest>;
 
 export const AssistantResponse = z.strictObject({
-  answer: z.string().max(900),
-  suggestedActions: z.array(SuggestedAction).max(3),
+  answer: str(900),
+  suggestedActions: z.array(SuggestedAction).check(z.maxLength(3)),
   source: z.enum(['gemini', 'rules']),
 });
 export type AssistantResponse = z.infer<typeof AssistantResponse>;

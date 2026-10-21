@@ -111,3 +111,19 @@ export function rebalance(
     amountMinor: at(amounts, index),
   }));
 }
+
+/** Puts every line back to its recommended share, with exact minor-unit amounts. */
+export function resetToRecommended(
+  ledger: readonly LedgerLine[],
+  totalMinor: number,
+): LedgerLine[] {
+  const amounts = amountsFromPercents(
+    ledger.map((line) => line.recommendedPercent),
+    totalMinor,
+  );
+  return ledger.map((line, index) => ({
+    ...line,
+    percent: line.recommendedPercent,
+    amountMinor: at(amounts, index),
+  }));
+}

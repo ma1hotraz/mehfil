@@ -1,0 +1,15 @@
+.source {
+  align-self: flex-start;
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border: 2px solid var(--sindoor);
+  color: var(--sindoor);
+  transform: rotate(-1.5deg);
+  font-size: var(--fs-md);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+}

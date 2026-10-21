@@ -17,8 +17,24 @@ function polyfillDialog(): void {
   };
 }
 
+/** jsdom has no matchMedia; report "no match" so wide-only and dark-only branches stay off. */
+function polyfillMatchMedia(): void {
+  if (typeof window.matchMedia !== 'function') {
+    window.matchMedia = (query: string): MediaQueryList =>
+      ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addEventListener: () => undefined,
+        removeEventListener: () => undefined,
+        dispatchEvent: () => false,
+      }) as unknown as MediaQueryList;
+  }
+}
+
 if (typeof document !== 'undefined') {
   polyfillDialog();
+  polyfillMatchMedia();
 }
 
 /** No test may touch the network: fetch throws unless a test stubs it. */

@@ -1,0 +1,39 @@
+.order {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.slot {
+  display: grid;
+  grid-template-columns: 4.5rem 1.5rem minmax(0, 1fr);
+  align-items: baseline;
+  padding: var(--space-3) 0;
+}
+
+.time {
+  text-align: right;
+  font-weight: 600;
+}
+
+.leader {
+  align-self: center;
+  border-bottom: var(--rule-dotted);
+  margin: 0 var(--space-1);
+}
+
+.what {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+
+.note {
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  font-style: italic;
+}

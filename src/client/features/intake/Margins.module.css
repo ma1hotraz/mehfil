@@ -1,0 +1,44 @@
+.margins {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: var(--fs-lg);
+  border-bottom: var(--hairline);
+  padding-bottom: var(--space-2);
+}
+
+.lede {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-width: 0;
+}
+
+.notepaper {
+  line-height: 28px;
+  padding-block: 0;
+  /* Ruled notepaper: discrete lines aligned to the line height, not a gradient fill. */
+  background-image: repeating-linear-gradient(to bottom, transparent 0 27px, var(--rule) 27px 28px);
+  background-attachment: local;
+  resize: vertical;
+}
+
+@media (min-width: 900px) {
+  .columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

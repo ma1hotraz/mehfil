@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import { answer, isGrounded, rulesAnswer, vetActions } from '../../../src/server/ai/assistant.js';
+import { answer } from '../../../src/server/ai/assistant.js';
+import { isGrounded, rulesAnswer, vetActions } from '../../../src/shared/planner.js';
 import { silentLogger } from '../../../src/server/logger.js';
 import { buildDigest } from '../../../src/shared/engine/digest.js';
 import { applyAction } from '../../../src/shared/engine/actions.js';

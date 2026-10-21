@@ -65,7 +65,7 @@ export function Tabs({
 
   return (
     <div>
-      <div className={styles.strip}>
+      <nav aria-label={label} className={styles.strip}>
         <div role="tablist" aria-label={label} className={styles.list}>
           {tabs.map((tab, index) => {
             const selected = tab.id === activeId;
@@ -100,7 +100,7 @@ export function Tabs({
           })}
         </div>
         {trailing ? <div className={styles.trailing}>{trailing}</div> : null}
-      </div>
+      </nav>
       <div
         role="tabpanel"
         id={panelId(idPrefix, activeId)}

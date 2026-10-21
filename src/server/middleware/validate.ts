@@ -1,5 +1,5 @@
 import type { RequestHandler } from 'express';
-import type { ZodType } from 'zod';
+import * as z from 'zod/mini';
 
 /** Field → message map from a zod error, keyed by dotted path. */
 export function fieldErrors(
@@ -14,7 +14,7 @@ export function fieldErrors(
 }
 
 /** Validates `req.body` with zod; on success the parsed value replaces the body. */
-export function validate<T>(schema: ZodType<T>): RequestHandler {
+export function validate(schema: z.ZodMiniType): RequestHandler {
   return (req, res, next) => {
     const result = schema.safeParse(req.body);
     if (!result.success) {

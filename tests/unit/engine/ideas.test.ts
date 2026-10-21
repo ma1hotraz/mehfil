@@ -74,7 +74,7 @@ describe('selectFallbackIdeas', () => {
   it('honours focus, count and exclude (case-insensitive)', () => {
     const brief = pick('wedding', 'traditional');
     const foods = select(brief, 3, 'food');
-    expect(foods).toHaveLength(2);
+    expect(foods).toHaveLength(3);
     expect(foods.every((i) => i.category === 'food')).toBe(true);
     const again = select(brief, 10, 'food', [foods[0]?.title.toUpperCase() ?? '']);
     expect(again.map((i) => i.title)).not.toContain(foods[0]?.title);

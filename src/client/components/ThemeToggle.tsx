@@ -1,6 +1,6 @@
-import styles from './Toggles.module.css';
+import type { ThemeName } from '../lib/prefs';
 
-export type ThemeName = 'paper' | 'lamplight';
+import styles from './Toggles.module.css';
 
 /** Toggle between the Paper and Lamplight themes. Pressed means Lamplight is on. */
 export function ThemeToggle({

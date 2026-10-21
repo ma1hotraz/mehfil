@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import * as z from 'zod/mini';
 
 import { addDays, diffDays, isValidDate } from '../engine/dates.js';
 
@@ -56,38 +56,46 @@ export type Access = z.infer<typeof Access>;
 /** How far ahead an event may be planned, in days (~3 years). */
 export const MAX_LEAD_DAYS = 1095;
 
-const uniqueList = <T extends z.ZodType>(item: T, max: number) =>
-  z
-    .array(item)
-    .max(max)
-    .refine((list) => new Set(list).size === list.length, 'Duplicate entries are not allowed')
-    .default([]);
+const uniqueList = <T extends z.ZodMiniType>(item: T, max: number) =>
+  z._default(
+    z.array(item).check(
+      z.maxLength(max),
+      z.refine((list) => new Set(list).size === list.length, 'Duplicate entries are not allowed'),
+    ),
+    [],
+  );
+
+const text = (max: number) => z.string().check(z.trim(), z.maxLength(max));
 
 /** The Event Brief: the single validated input to the engine, the server and the prompts. */
 export const EventBrief = z
   .strictObject({
     eventType: EventType,
     subType: z.string(),
-    title: z.string().trim().max(80).optional(),
+    title: z.optional(text(80)),
     date: z
       .string()
-      .regex(/^\d{4}-\d{2}-\d{2}$/, 'Use the format YYYY-MM-DD')
-      .refine(isValidDate, 'Enter a real calendar date'),
-    guestCount: z.number().int().min(1).max(5000),
-    budget: z.number().positive().max(1e10),
+      .check(
+        z.regex(/^\d{4}-\d{2}-\d{2}$/, 'Use the format YYYY-MM-DD'),
+        z.refine(isValidDate, 'Enter a real calendar date'),
+      ),
+    guestCount: z.int().check(z.gte(1), z.lte(5000)),
+    budget: z.number().check(z.positive(), z.lte(1e10)),
     currency: Currency,
-    city: z.string().trim().min(1, 'Enter a city').max(60),
+    city: z.string().check(z.trim(), z.minLength(1, 'Enter a city'), z.maxLength(60)),
     setting: Setting,
     vibe: uniqueList(Vibe, 3),
     dietary: uniqueList(Dietary, 7),
     accessibility: uniqueList(Access, 6),
-    traditions: z.string().trim().max(200).default(''),
-    mustHaves: z.string().trim().max(300).default(''),
+    traditions: z._default(text(200), ''),
+    mustHaves: z._default(text(300), ''),
   })
-  .refine((brief) => (SUB_TYPES[brief.eventType] as readonly string[]).includes(brief.subType), {
-    path: ['subType'],
-    message: 'Choose a sub-type that belongs to this event type',
-  });
+  .check(
+    z.refine((brief) => (SUB_TYPES[brief.eventType] as readonly string[]).includes(brief.subType), {
+      path: ['subType'],
+      message: 'Choose a sub-type that belongs to this event type',
+    }),
+  );
 export type EventBrief = z.infer<typeof EventBrief>;
 
 /**

@@ -13,12 +13,14 @@ export interface ControlProps {
 
 interface FieldProps {
   label: string;
-  hint?: string;
+  hint?: string | undefined;
   error?: string | undefined;
   hideLabel?: boolean;
   required?: boolean;
   variant?: 'underline' | 'boxed';
-  className?: string;
+  className?: string | undefined;
+  /** Fixed id for the control, so error summaries can link to it. */
+  id?: string | undefined;
   /** Receives the ids and ARIA wiring to spread onto the real control. */
   children: (control: ControlProps) => ReactNode;
 }
@@ -45,9 +47,11 @@ export function Field({
   required = false,
   variant = 'boxed',
   className,
+  id: fixedId,
   children,
 }: FieldProps) {
-  const id = useId();
+  const generated = useId();
+  const id = fixedId ?? generated;
   const ids = { hint: `${id}-hint`, error: `${id}-error` };
   const control: ControlProps = {
     id,

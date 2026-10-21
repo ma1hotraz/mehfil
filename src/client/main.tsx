@@ -1,9 +1,15 @@
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
+import { App } from './App';
 import './styles/base.css';
 import './styles/print.css';
 
 const root = document.getElementById('root');
 if (root) {
-  createRoot(root).render(<h1>Mehfil</h1>);
+  createRoot(root).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
 }

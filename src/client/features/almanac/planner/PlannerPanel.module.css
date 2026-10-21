@@ -1,0 +1,108 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.title {
+  font-size: var(--fs-lg);
+  border-bottom: var(--rule-double);
+  padding-bottom: var(--space-2);
+}
+
+.empty,
+.caution {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--fs-sm);
+}
+
+.letters {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.exchange {
+  padding: var(--space-4) 0;
+  border-bottom: var(--hairline);
+}
+
+.kicker {
+  margin: 0 0 var(--space-1);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: var(--sindoor);
+}
+
+.question {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+.answer {
+  margin: 0 0 var(--space-3);
+}
+
+.source {
+  margin: var(--space-2) 0 0;
+  font-size: var(--fs-xs);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
+
+.slip {
+  margin: var(--space-3) 0;
+  padding: var(--space-3);
+  border: 2px dashed var(--rule-strong);
+  background: var(--paper-raised);
+}
+
+.slipText {
+  margin: 0 0 var(--space-1);
+  font-weight: 600;
+}
+
+.rationale {
+  margin: 0 0 var(--space-3);
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+}
+
+.result {
+  margin: 0;
+  font-weight: 600;
+  color: var(--peacock);
+}
+
+.slipActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.form > :first-child {
+  width: 100%;
+}
+
+.notepaper {
+  line-height: 28px;
+  padding-block: 0;
+  /* Ruled notepaper: discrete lines aligned to the line height, not a gradient fill. */
+  background-image: repeating-linear-gradient(to bottom, transparent 0 27px, var(--rule) 27px 28px);
+  background-attachment: local;
+  resize: vertical;
+}

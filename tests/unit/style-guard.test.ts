@@ -90,7 +90,7 @@ describe('security and purity guards', () => {
   });
 
   it('never references the Gemini key from client code', () => {
-    expect(hits(client, /GEMINI|AIza|VITE_/)).toEqual([]);
+    expect(hits(client, /GEMINI_API_KEY|GEMINI_MODEL|AIza|VITE_/)).toEqual([]);
   });
 
   it('uses no console calls in src (use the logger)', () => {

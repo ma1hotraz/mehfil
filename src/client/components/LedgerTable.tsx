@@ -1,12 +1,13 @@
 import { type CSSProperties, useState } from 'react';
 
+import type { CategoryId } from '../../shared/schema/plan.js';
 import { cx } from '../lib/cx';
 
 import { Icon } from './Icon';
 import styles from './LedgerTable.module.css';
 
 export interface LedgerRowView {
-  id: string;
+  id: CategoryId;
   label: string;
   percent: number;
   amount: string;
@@ -20,8 +21,8 @@ interface LedgerTableProps {
   totalAmount: string;
   /** Percentage points per stepper click. */
   step?: number;
-  onStep: (id: string, delta: number) => void;
-  onSetPercent: (id: string, percent: number) => void;
+  onStep: (id: CategoryId, delta: number) => void;
+  onSetPercent: (id: CategoryId, percent: number) => void;
 }
 
 const formatPercent = (value: number): string => value.toFixed(1);

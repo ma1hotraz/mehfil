@@ -26,6 +26,13 @@ const idea = (
 export const FALLBACK_IDEAS: Record<string, readonly FallbackIdea[]> = {
   'wedding/traditional': [
     idea(
+      'food',
+      'Fresh fruit and nimbu pani bar',
+      'Set out seasonal fruit and jars of nimbu pani on ice. It suits every diet on the list and cools an outdoor crowd between ceremonies.',
+      1,
+      ['classic', 'eco-conscious'],
+    ),
+    idea(
       'theme',
       'Marigold and mogra mandap morning',
       'Build the look around orange marigold strings and white mogra garlands, with brass diyas and a rangoli at the entrance.',
@@ -114,6 +121,13 @@ export const FALLBACK_IDEAS: Record<string, readonly FallbackIdea[]> = {
   ],
   'wedding/intimate': [
     idea(
+      'food',
+      'Herb-infused water jugs and fruit',
+      'Put jugs of water infused with mint, cucumber and citrus on each table, with a bowl of seasonal fruit to share.',
+      1,
+      ['minimalist', 'rustic'],
+    ),
+    idea(
       'theme',
       'Candlelit long-table supper',
       'Seat everyone at one long table with candles in glass jars and loose seasonal flowers, so the evening feels like a family dinner.',
@@ -199,6 +213,13 @@ export const FALLBACK_IDEAS: Record<string, readonly FallbackIdea[]> = {
     ),
   ],
   'wedding/destination': [
+    idea(
+      'food',
+      'Citrus and mint welcome drinks',
+      'Hand arriving guests a chilled glass of lime, mint and soda. It is quick to serve, local and free of common allergens.',
+      1,
+      ['classic', 'minimalist'],
+    ),
     idea(
       'theme',
       'Sunset beach mehendi by lanterns',
@@ -289,6 +310,13 @@ export const FALLBACK_IDEAS: Record<string, readonly FallbackIdea[]> = {
   ],
   'wedding/court-and-reception': [
     idea(
+      'food',
+      'Fresh juice cart at the reception',
+      'Park a juice cart near the entrance pressing orange, sugarcane and pomegranate to order, for guests who skip rich food or alcohol.',
+      2,
+      ['playful', 'eco-conscious'],
+    ),
+    idea(
       'theme',
       'Registry morning, garden evening',
       'Keep the legal ceremony small and quick in the morning, then hold a relaxed garden reception in the evening for everyone else.',
@@ -375,6 +403,13 @@ export const FALLBACK_IDEAS: Record<string, readonly FallbackIdea[]> = {
     ),
   ],
   'birthday/kids': [
+    idea(
+      'food',
+      'Frozen fruit pop station',
+      'Blend fruit into pops that the children choose in the morning and enjoy at the end of the party, with no added dairy, gluten or nuts.',
+      1,
+      ['playful', 'eco-conscious'],
+    ),
     idea(
       'theme',
       'Little explorers’ jungle safari',
@@ -463,6 +498,13 @@ export const FALLBACK_IDEAS: Record<string, readonly FallbackIdea[]> = {
   ],
   'birthday/teen': [
     idea(
+      'food',
+      'Smoothie and fruit-soda bar',
+      'Offer blended fruit smoothies and sparkling fruit sodas that friends can mix themselves from simple fruit and ice.',
+      2,
+      ['playful'],
+    ),
+    idea(
       'theme',
       'Retro arcade night',
       'Set up a few console stations and a high-score board, and give out “coins” as tokens for winning games.',
@@ -548,6 +590,13 @@ export const FALLBACK_IDEAS: Record<string, readonly FallbackIdea[]> = {
     ),
   ],
   'birthday/adult': [
+    idea(
+      'food',
+      'Seasonal fruit platter course',
+      'Close dinner with a platter of cut seasonal fruit, lime and chaat masala on the side. It is light and suits most diets.',
+      1,
+      ['minimalist', 'elegant'],
+    ),
     idea(
       'theme',
       'Terrace supper under string lights',
@@ -635,6 +684,13 @@ export const FALLBACK_IDEAS: Record<string, readonly FallbackIdea[]> = {
   ],
   'birthday/milestone': [
     idea(
+      'food',
+      'Sorbet course by decade',
+      'Serve three small fruit sorbets as a palate cleanser, each flavour named for a decade of the life being celebrated.',
+      2,
+      ['elegant', 'classic'],
+    ),
+    idea(
       'theme',
       'Decade-by-decade story evening',
       'Set up one corner for each decade of life with photos, music and a small prop, and let guests walk through them like a gallery.',
@@ -719,6 +775,13 @@ export const FALLBACK_IDEAS: Record<string, readonly FallbackIdea[]> = {
     ),
   ],
   'community/festival': [
+    idea(
+      'food',
+      'Water and lemonade seva stall',
+      'Run a free stall of chilled water, lemonade and sliced fruit staffed by volunteers. It suits every dietary need and costs little.',
+      1,
+      ['cultural', 'eco-conscious'],
+    ),
     idea(
       'theme',
       'Lantern lane Diwali mela',
@@ -806,6 +869,13 @@ export const FALLBACK_IDEAS: Record<string, readonly FallbackIdea[]> = {
   ],
   'community/fundraiser': [
     idea(
+      'food',
+      'Fruit and lemonade donation table',
+      'Offer lemonade and cut fruit by donation at the entrance. It is simple to run and safe for nearly every guest.',
+      1,
+      ['playful', 'minimalist'],
+    ),
+    idea(
       'theme',
       'Evening of giving in three stories',
       'Build the programme around three short stories of people the cause has helped, and end with a clear and simple ask.',
@@ -890,6 +960,13 @@ export const FALLBACK_IDEAS: Record<string, readonly FallbackIdea[]> = {
     ),
   ],
   'community/cultural-night': [
+    idea(
+      'food',
+      'Interval lemonade and fruit cart',
+      'Wheel a cart of lemonade and sliced fruit around the hall at the interval, so every audience member has something to enjoy.',
+      1,
+      ['classic', 'cultural'],
+    ),
     idea(
       'theme',
       'Many voices, one stage',
@@ -977,6 +1054,13 @@ export const FALLBACK_IDEAS: Record<string, readonly FallbackIdea[]> = {
     ),
   ],
   'community/drive': [
+    idea(
+      'food',
+      'Banana and water break on the route',
+      'Station a volunteer at the halfway point with bananas, oranges and water for everyone doing the route.',
+      1,
+      ['eco-conscious', 'playful'],
+    ),
     idea(
       'theme',
       'Clean-up relay in team colours',

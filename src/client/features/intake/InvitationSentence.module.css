@@ -1,0 +1,88 @@
+.card {
+  margin: 0;
+  padding: var(--space-6) var(--space-5);
+  border: 1px solid var(--ink);
+  border-radius: var(--r-0);
+  background: var(--paper-raised);
+  /* Inset thin double border, like a printed invitation card. */
+  outline: 1px solid var(--ink);
+  outline-offset: -8px;
+}
+
+.sentence {
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 400;
+  line-height: 2.1;
+}
+
+.blank {
+  display: inline-flex;
+  position: relative;
+  vertical-align: baseline;
+  max-width: 100%;
+}
+
+.blank :is(input, select) {
+  min-height: 44px;
+  padding: 0 var(--space-2);
+  color: var(--sindoor);
+  font-family: var(--font-display);
+  font-size: inherit;
+  line-height: 1.4;
+  field-sizing: content;
+  max-width: 100%;
+}
+
+.blank :is(input, select):focus-visible {
+  outline-offset: 0;
+}
+
+.blank p {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  width: max-content;
+  max-width: 18rem;
+  font-family: var(--font-text);
+  font-size: var(--fs-xs);
+  line-height: 1.3;
+  /* Hints stay in the accessibility tree and become visible while the blank is in use. */
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.blank:focus-within p:not([id$='-error']) {
+  clip-path: none;
+  height: auto;
+  overflow: visible;
+  white-space: normal;
+  padding: var(--space-1) var(--space-2);
+  background: var(--paper-raised);
+  border: 1px solid var(--rule-strong);
+}
+
+.blank p[id$='-error'] {
+  position: static;
+  clip-path: none;
+  height: auto;
+  overflow: visible;
+  white-space: normal;
+  width: auto;
+  max-width: 18rem;
+  font-size: var(--fs-sm);
+}
+
+@media (max-width: 719px) {
+  .card {
+    padding: var(--space-5) var(--space-3);
+  }
+
+  .sentence {
+    font-size: var(--fs-lg);
+    line-height: 2.2;
+  }
+}

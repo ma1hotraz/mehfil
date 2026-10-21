@@ -10,7 +10,7 @@ import { Dialog } from '../../src/client/components/Dialog';
 import { ErrorBoundary } from '../../src/client/components/ErrorBoundary';
 import { Field } from '../../src/client/components/Field';
 import { Icon, type IconName } from '../../src/client/components/Icon';
-import { LedgerTable } from '../../src/client/components/LedgerTable';
+import { LedgerTable, type LedgerRowView } from '../../src/client/components/LedgerTable';
 import { Postage, Postcard } from '../../src/client/components/Postcard';
 import { MOTIF_BY_TYPE, Rule } from '../../src/client/components/Rule';
 import { SkipLink } from '../../src/client/components/SkipLink';
@@ -397,7 +397,7 @@ describe('Ticket and Postcard', () => {
 });
 
 describe('LedgerTable', () => {
-  const rows = [
+  const rows: LedgerRowView[] = [
     {
       id: 'venue',
       label: 'Venue',

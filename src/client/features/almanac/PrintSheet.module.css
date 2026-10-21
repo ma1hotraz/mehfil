@@ -1,0 +1,22 @@
+.sheet {
+  display: none;
+}
+
+.sheet table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 12pt;
+}
+
+.sheet th,
+.sheet td {
+  padding: 3pt 6pt;
+  border-bottom: 1px solid #999;
+  text-align: left;
+}
+
+@media print {
+  .sheet {
+    display: block;
+  }
+}

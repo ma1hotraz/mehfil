@@ -4,6 +4,7 @@ import {
   allocate,
   buildLedger,
   rebalance,
+  resetToRecommended,
   withContingencyBounds,
 } from '../../../src/shared/engine/budget.js';
 import { safetyRule } from '../../../src/shared/engine/budgetRules.js';
@@ -248,5 +249,17 @@ describe('rebalance', () => {
     const next = rebalance(zeros, zeros[0]?.id ?? 'venue', 50, total);
     expect(tenths(next)).toBe(1000);
     expect(next[1]?.percent).toBe(25);
+  });
+});
+
+describe('resetToRecommended', () => {
+  it('restores recommended shares with exact amounts after edits', () => {
+    const total = toMinor(ananya.budget);
+    const base = buildPlan(ananya, fixedToday).ledger;
+    const edited = rebalance(base, 'photo', 25, total);
+    const reset = resetToRecommended(edited, total);
+    expect(reset.map((l) => l.percent)).toEqual(base.map((l) => l.recommendedPercent));
+    expect(reset.reduce((s, l) => s + l.amountMinor, 0)).toBe(total);
+    expect(reset).toEqual(base);
   });
 });

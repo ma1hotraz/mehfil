@@ -1,9 +1,8 @@
 import { useId } from 'react';
 
-import styles from './Toggles.module.css';
+import { TEXT_SIZES, type TextSize } from '../lib/prefs';
 
-export const TEXT_SIZES = [1, 1.15, 1.3] as const;
-export type TextSize = (typeof TEXT_SIZES)[number];
+import styles from './Toggles.module.css';
 
 /** Three-way text size choice (100 / 115 / 130 percent) as native radios. */
 export function TextSizeControl({
