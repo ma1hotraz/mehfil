@@ -20,7 +20,8 @@
   width: 100%;
   height: 100%;
   padding: 4px;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 .sm {
@@ -30,9 +31,10 @@
 }
 
 .lg {
-  width: 116px;
-  height: 116px;
-  font-size: var(--fs-md);
+  width: 132px;
+  height: 132px;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.04em;
 }
 
 .ink {

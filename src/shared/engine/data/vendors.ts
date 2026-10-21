@@ -19,8 +19,20 @@ export interface VendorTemplate {
 const ALL: readonly EventType[] = ['wedding', 'birthday', 'community'];
 const WEDDING_BIRTHDAY: readonly EventType[] = ['wedding', 'birthday'];
 
-const settingWord = (brief: EventBrief): string =>
-  brief.setting === 'indoor' ? 'indoor' : brief.setting === 'outdoor' ? 'outdoor' : 'part-outdoor';
+/** "an indoor venue", "an outdoor venue" or "a part-outdoor venue". */
+const venueKind = (brief: EventBrief): string =>
+  brief.setting === 'indoor'
+    ? 'an indoor venue'
+    : brief.setting === 'outdoor'
+      ? 'an outdoor venue'
+      : 'a part-outdoor venue';
+/** "indoors", "outdoors" or "part outdoors", for "the event is ...". */
+const eventIs = (brief: EventBrief): string =>
+  brief.setting === 'indoor'
+    ? 'indoors'
+    : brief.setting === 'outdoor'
+      ? 'outdoors'
+      : 'part outdoors';
 const kind = (brief: EventBrief): string => `${brief.subType} ${brief.eventType}`.replace('-', ' ');
 const guests = (brief: EventBrief): string => `${brief.guestCount} guests`;
 
@@ -74,7 +86,7 @@ export const VENDOR_CATALOG: readonly VendorTemplate[] = [
     appliesTo: ['wedding'],
     roles: ['venue'],
     bookByOffset: 270,
-    reason: (b) => `Added because a ${kind(b)} for ${guests(b)} needs a ${settingWord(b)} venue.`,
+    reason: (b) => `Added because a ${kind(b)} for ${guests(b)} needs ${venueKind(b)}.`,
     questions: () => [...QUESTIONS.venue],
   },
   {
@@ -307,7 +319,8 @@ export const VENDOR_CATALOG: readonly VendorTemplate[] = [
     appliesTo: ['community'],
     roles: ['venue'],
     bookByOffset: 70,
-    reason: (b) => `Added because ${guests(b)} need a ${settingWord(b)} site for a ${kind(b)}.`,
+    reason: (b) =>
+      `Added because ${guests(b)} need ${venueKind(b).replace('venue', 'site')} for a ${kind(b)}.`,
     questions: () => [...QUESTIONS.venue],
   },
   {
@@ -425,7 +438,7 @@ export const VENDOR_CATALOG: readonly VendorTemplate[] = [
     appliesTo: WEDDING_BIRTHDAY,
     bookByOffset: 60,
     when: (b) => b.setting !== 'indoor',
-    reason: (b) => `Added because the event is ${settingWord(b)} with ${guests(b)}.`,
+    reason: (b) => `Added because the event is ${eventIs(b)} with ${guests(b)}.`,
     questions: () => [
       'Is the canopy rated for wind and rain?',
       'Who installs it, and how early?',
