@@ -3,7 +3,7 @@
 > GenAI-powered planner for weddings, birthdays and community events: budgets, timelines,
 > vendor checklists and personalised ideas — with an assistant that reasons about your plan.
 
-**Live demo:** _not deployed yet — see [Deploy](#deploy-vercel)_ · **Challenge:** [Challenge 5] Celebration & Event Planner
+**Live demo:** https://mehfil-chi.vercel.app · **Challenge:** [Challenge 5] Celebration & Event Planner
 
 ## What it does
 
@@ -201,5 +201,6 @@ server-side storage of personal data (privacy by design and scope focus).
 
 ## Google services used
 
-Gemini API (ideas and the Planner, structured JSON output). The UI was built directly from
-`docs/06_DESIGN_SYSTEM.md`; no Stitch MCP server was connected in this build.
+Gemini API (ideas and the Planner, structured JSON output). Hosting is on Vercel. The UI was
+built directly from `docs/06_DESIGN_SYSTEM.md`: the Stitch MCP server was connected late and its
+screen generation timed out, so no Stitch output was used.
