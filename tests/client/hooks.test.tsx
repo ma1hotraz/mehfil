@@ -75,6 +75,14 @@ describe('AnnouncerProvider', () => {
     announce('nothing');
     expect(typeof announce).toBe('function');
   });
+
+  it('ignores empty or whitespace-only announcements', () => {
+    const { result } = renderHook(() => useAnnouncer(), {
+      wrapper: AnnouncerProvider,
+    });
+    result.current('   ');
+    expect(screen.getByTestId('live-polite')).toBeEmptyDOMElement();
+  });
 });
 
 describe('usePreferences', () => {
@@ -216,13 +224,19 @@ describe('usePlans', () => {
     await run(() => {
       result.current.toggleTask('book-venue');
     });
+    // Second debounce within 10s runs flush but skips the announcement (false branch)
+    await waitFor(() => {
+      const saved = JSON.parse(store.data.get(PLANS_KEY) ?? '{}') as {
+        plans: { timeline: { id: string; done: boolean }[] }[];
+      };
+      expect(saved.plans[0]?.timeline.find((m) => m.id === 'book-venue')?.done).toBe(true);
+    });
+    expect(
+      announce.mock.calls.filter(([msg]) => msg === 'Plan saved on this device.'),
+    ).toHaveLength(1);
     act(() => {
       window.dispatchEvent(new Event('pagehide'));
     });
-    const saved = JSON.parse(store.data.get(PLANS_KEY) ?? '{}') as {
-      plans: { timeline: { id: string; done: boolean }[] }[];
-    };
-    expect(saved.plans[0]?.timeline.find((m) => m.id === 'book-venue')?.done).toBe(true);
   });
 
   it('restores the open plan from storage (refresh)', async () => {
@@ -241,6 +255,9 @@ describe('usePlans', () => {
     const { result } = setup(fetchDown);
     await run(() => result.current.create(ananya));
     announce.mockClear();
+    await run(() => {
+      result.current.step('unknown-category' as never, 1);
+    });
     await run(() => {
       result.current.step('photo', 0.5);
     });

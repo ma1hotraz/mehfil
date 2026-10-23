@@ -93,7 +93,7 @@ export function draftFromBrief(brief: EventBrief): IntakeDraft {
 /** Sub-type to use when the event type changes: keep the current one only if it still belongs. */
 export function subTypeFor(eventType: EventType, current: string): string {
   const options: readonly string[] = SUB_TYPES[eventType];
-  return options.includes(current) ? current : (options[0] ?? current);
+  return options.includes(current) ? current : (options[0] ?? '');
 }
 
 /**
@@ -147,7 +147,7 @@ function candidateOf(draft: IntakeDraft): Record<string, unknown> {
   };
 }
 
-function errorsFrom(issues: readonly { path: PropertyKey[]; message: string }[]): FieldErrors {
+export function errorsFrom(issues: readonly { path: PropertyKey[]; message: string }[]): FieldErrors {
   const errors: FieldErrors = {};
   for (const issue of issues) {
     const key = issue.path[0];

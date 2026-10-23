@@ -1,10 +1,8 @@
-import { PHASES, type Milestone, type Plan } from '../../../shared/schema/plan.js';
-import { PHASE_LABELS } from '../../../shared/engine/timeline.js';
+import type { Plan } from '../../../shared/schema/plan.js';
 import { Button } from '../../components/Button';
 import { Section } from '../../components/Section';
 import { cx } from '../../lib/cx';
-import { formatLongDate, offsetFromEvent, tMinus, tMinusSpoken } from '../../lib/format';
-import { CATEGORY_LABELS } from '../../../shared/engine/data/allocations.js';
+import { buildTimetableViewModel, type TimetableTaskView } from '../../lib/almanacViewModels';
 
 import styles from './almanac.module.css';
 import own from './TimetableTab.module.css';
@@ -18,18 +16,12 @@ interface Props {
 }
 
 function Row({
-  plan,
   task,
-  today,
   onToggle,
 }: {
-  plan: Plan;
-  task: Milestone;
-  today: string;
+  task: TimetableTaskView;
   onToggle: (id: string) => void;
 }) {
-  const offset = offsetFromEvent(plan.brief.date, task.dueDate);
-  const overdue = !task.done && task.idealOffsetDays >= 0 && task.dueDate < today;
   const inputId = `task-${task.id}`;
   const noteId = `${inputId}-note`;
   return (
@@ -50,23 +42,17 @@ function Row({
           {task.title}
         </label>
         <p id={noteId} className={own.meta}>
-          <span className="srOnly">
-            Due {formatLongDate(task.dueDate)}, {tMinusSpoken(offset)}.
-          </span>
+          <span className="srOnly">{task.spokenDue}</span>
           <time dateTime={task.dueDate} className={styles.mono} aria-hidden="true">
-            {formatLongDate(task.dueDate)}
+            {task.dueDateFormatted}
           </time>
           <span aria-hidden="true" className={cx(styles.mono, task.critical && own.critical)}>
-            {tMinus(offset)}
+            {task.tMinusText}
           </span>
-          <span className={cx(styles.kicker, styles.muted)}>
-            {task.category === 'general' ? 'General' : CATEGORY_LABELS[task.category]}
-          </span>
+          <span className={cx(styles.kicker, styles.muted)}>{task.categoryLabel}</span>
           {task.critical ? <span className={cx(styles.kicker, own.critical)}>Critical</span> : null}
-          {task.rushed && !task.done ? (
-            <span className={cx(styles.tag, styles.rushed)}>Rushed</span>
-          ) : null}
-          {overdue ? <span className={cx(styles.tag, styles.overdue)}>Overdue</span> : null}
+          {task.rushed ? <span className={cx(styles.tag, styles.rushed)}>Rushed</span> : null}
+          {task.overdue ? <span className={cx(styles.tag, styles.overdue)}>Overdue</span> : null}
         </p>
       </div>
     </li>
@@ -75,7 +61,7 @@ function Row({
 
 /** §3 The Timetable: a railway departures board printed on paper, grouped by phase. */
 export default function TimetableTab({ plan, today, onToggle, onExport, onPrint }: Props) {
-  const open = plan.timeline.filter((m) => !m.done).length;
+  const { openCount, totalCount, phases } = buildTimetableViewModel(plan, today);
   return (
     <Section
       number={3}
@@ -83,7 +69,7 @@ export default function TimetableTab({ plan, today, onToggle, onExport, onPrint 
       margin={
         <>
           <p>
-            {open} of {plan.timeline.length} tasks still to do.
+            {openCount} of {totalCount} tasks still to do.
           </p>
           <p>Where time is short, due dates are squeezed and marked rushed.</p>
         </>
@@ -100,21 +86,18 @@ export default function TimetableTab({ plan, today, onToggle, onExport, onPrint 
       }
     >
       <div className={own.board}>
-        {PHASES.map((phase) => {
-          const tasks = plan.timeline.filter((m) => m.phase === phase);
-          return tasks.length === 0 ? null : (
-            <section key={phase} aria-labelledby={`phase-${phase}`}>
-              <h3 id={`phase-${phase}`} className={own.platform}>
-                {PHASE_LABELS[phase]}
-              </h3>
-              <ol className={cx(styles.plain, own.rail)}>
-                {tasks.map((task) => (
-                  <Row key={task.id} plan={plan} task={task} today={today} onToggle={onToggle} />
-                ))}
-              </ol>
-            </section>
-          );
-        })}
+        {phases.map((group) => (
+          <section key={group.phase} aria-labelledby={`phase-${group.phase}`}>
+            <h3 id={`phase-${group.phase}`} className={own.platform}>
+              {group.label}
+            </h3>
+            <ol className={cx(styles.plain, own.rail)}>
+              {group.tasks.map((task) => (
+                <Row key={task.id} task={task} onToggle={onToggle} />
+              ))}
+            </ol>
+          </section>
+        ))}
       </div>
     </Section>
   );

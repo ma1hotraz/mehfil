@@ -179,4 +179,11 @@ describe('every vendor', () => {
     expect(venue?.bookByDate).toBe(addDays(brief.date, -Math.round((270 * 150) / 300)));
     expect((venue?.bookByDate ?? '') >= fixedToday).toBe(true);
   });
+
+  it('handles setting: mixed correctly in reasons and descriptions', () => {
+    const mixedVendors = vendors({ setting: 'mixed' });
+    expect(mixedVendors.length).toBeGreaterThan(0);
+    const canopy = mixedVendors.find((v) => v.id === 'canopy');
+    expect(canopy?.reason).toMatch(/part outdoors/);
+  });
 });

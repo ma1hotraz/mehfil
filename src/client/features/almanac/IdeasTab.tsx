@@ -12,6 +12,7 @@ import type { PlansApi } from '../../lib/usePlans';
 
 import styles from './almanac.module.css';
 import own from './IdeasTab.module.css';
+import { filterIdeas } from '../../lib/almanacViewModels';
 
 const FILTERS = [
   { value: 'all', label: 'All' },
@@ -34,9 +35,7 @@ interface Props {
 export default function IdeasTab({ plan, api }: Props) {
   const [filter, setFilter] = useState('all');
   const { ideas, brief } = plan;
-  const shown = ideas.filter((i) =>
-    filter === 'all' ? true : filter === 'kept' ? i.saved : i.category === filter,
-  );
+  const shown = filterIdeas(ideas, filter);
   const focus = IDEA_CATEGORIES.find((c) => c === filter);
   const loading = api.ideasLoading;
 

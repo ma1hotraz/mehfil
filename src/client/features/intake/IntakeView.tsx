@@ -1,15 +1,14 @@
-import { type SyntheticEvent, useMemo, useRef, useState, type Ref } from 'react';
+import { type SyntheticEvent, useRef, useState, type Ref } from 'react';
 
 import { addDays } from '../../../shared/engine/dates.js';
 import { MAX_LEAD_DAYS, type EventBrief } from '../../../shared/schema/brief.js';
 import { Button } from '../../components/Button';
 import {
-  FIELD_KEYS,
-  type FieldErrors,
   type FieldKey,
   type IntakeDraft,
   parseDraft,
 } from '../../lib/draft';
+import { useIntakeValidation } from '../../lib/useIntakeValidation';
 
 import { InvitationSentence, fieldId } from './InvitationSentence';
 import styles from './IntakeView.module.css';
@@ -55,15 +54,7 @@ export function IntakeView({
   const [submitted, setSubmitted] = useState(false);
   const summaryRef = useRef<HTMLDivElement>(null);
 
-  const all = useMemo<FieldErrors>(() => {
-    const result = parseDraft(draft, today);
-    return result.ok ? {} : result.error;
-  }, [draft, today]);
-  const visible = useMemo<FieldErrors>(
-    () => Object.fromEntries(Object.entries(all).filter(([key]) => submitted || touched.has(key))),
-    [all, submitted, touched],
-  );
-  const summary = FIELD_KEYS.filter((key) => submitted && all[key]);
+  const { all, visible, summary } = useIntakeValidation(draft, today, touched, submitted);
 
   const handleSubmit = (event: SyntheticEvent): void => {
     event.preventDefault();

@@ -119,28 +119,13 @@ async function applySuggestion(
   }
 }
 
-/**
- * The conversation with the Planner, kept in memory for the session. Answers come from the
- * server; if it cannot be reached the same rule-based answers run locally, so asking never fails.
- */
-export function usePlanner(deps: Deps): Planner {
-  const { plan, today, api, announce, onNotice, ask = defaultAsk } = deps;
-  const { exchanges, setExchanges, patch, setAction } = useExchanges();
-
-  const askQuestion = useCallback(
-    (question: string) => {
-      const id = exchanges.length + 1;
-      const request = requestFor(plan, today, exchanges, question);
-      setExchanges((current) => [...current, { id, question, pending: true, actions: [] }]);
-      void ask(request).then((result) => {
-        patch(id, settle(replyFor(request, result)));
-        announce('The Planner replied.');
-      });
-    },
-    [exchanges, plan, today, ask, patch, setExchanges, announce],
-  );
-
-  const apply = useCallback(
+function useApplyAction(
+  exchanges: readonly Exchange[],
+  api: Pick<PlansApi, 'applyPlannerAction'>,
+  setAction: (id: number, index: number, next: Partial<ActionState>) => void,
+  onNotice: (notice: string) => void,
+) {
+  return useCallback(
     (id: number, index: number) => {
       const state = exchanges.find((e) => e.id === id)?.actions[index];
       if (!state) {
@@ -157,7 +142,31 @@ export function usePlanner(deps: Deps): Planner {
     },
     [exchanges, api, setAction, onNotice],
   );
+}
 
+/**
+ * The conversation with the Planner, kept in memory for the session. Answers come from the
+ * server; if it cannot be reached the same rule-based answers run locally, so asking never fails.
+ */
+export function usePlanner(deps: Deps): Planner {
+  const { plan, today, api, announce, onNotice, ask = defaultAsk } = deps;
+  const { exchanges, setExchanges, patch, setAction } = useExchanges();
+
+  const askQuestion = useCallback(
+    (question: string) => {
+      const id = exchanges.length + 1;
+      const request = requestFor(plan, today, exchanges, question);
+      setExchanges((current) => [...current, { id, question, pending: true, actions: [] }]);
+      announce('Consulting the Planner…');
+      void ask(request).then((result) => {
+        patch(id, settle(replyFor(request, result)));
+        announce('The Planner replied.');
+      });
+    },
+    [exchanges, plan, today, ask, patch, setExchanges, announce],
+  );
+
+  const apply = useApplyAction(exchanges, api, setAction, onNotice);
   const dismiss = useCallback(
     (id: number, index: number) => {
       setAction(id, index, { status: 'dismissed' });

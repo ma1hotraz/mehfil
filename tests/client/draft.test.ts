@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import {
   draftFromBrief,
   emptyDraft,
+  errorsFrom,
   parseAmount,
   parseCount,
   parseDraft,
@@ -88,5 +89,14 @@ describe('validation messages', () => {
     expect(
       errorsOf(valid({ vibe: ['classic', 'playful', 'rustic', 'elegant'] })).vibe,
     ).toBeDefined();
+  });
+
+  it('safely skips unknown or empty issue paths in errorsFrom', () => {
+    expect(
+      errorsFrom([
+        { path: [], message: 'root error' },
+        { path: ['nonExistentField'], message: 'field error' },
+      ]),
+    ).toEqual({});
   });
 });

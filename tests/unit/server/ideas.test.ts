@@ -168,6 +168,15 @@ describe('generateIdeas fallbacks', () => {
     expect(client.calls).toHaveLength(0);
   });
 
+  it('falls back to category library count when model throws on a category focus', async () => {
+    const client = new FakeAiClient(() => {
+      throw new Error('boom');
+    });
+    const result = await generateIdeas(deps(client), request({ focus: 'decor' }));
+    expect(result.source).toBe('library');
+    expect(result.ideas.length).toBeGreaterThanOrEqual(1);
+  });
+
   it('does not cache failures', async () => {
     const client = new FakeAiClient((_a, call) => (call === 1 ? 'bad' : batch(8)));
     const d = deps(client);

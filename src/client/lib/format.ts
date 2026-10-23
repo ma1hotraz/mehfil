@@ -70,4 +70,4 @@ export const costMarks = (currency: Currency, band: 1 | 2 | 3): string =>
   currencySymbol(currency).repeat(band);
 
 /** Human-readable cost tier description for screen readers and tooltips. */
-export const costLabel = (band: 1 | 2 | 3): string => `Cost: ${BAND_WORDS[band - 1] ?? 'medium'}`;
+export const costLabel = (band: 1 | 2 | 3): string => `Cost: ${BAND_WORDS[band - 1]}`;

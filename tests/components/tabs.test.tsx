@@ -191,6 +191,20 @@ describe('TimetableTab', () => {
     expect(screen.queryByText('Rushed')).not.toBeInTheDocument();
   });
 
+  it('renders gracefully when phases have no tasks', () => {
+    const emptyPlan: Plan = { ...basePlan, timeline: [] };
+    render(
+      <TimetableTab
+        plan={emptyPlan}
+        today={fixedToday}
+        onToggle={() => undefined}
+        onExport={() => undefined}
+        onPrint={() => undefined}
+      />,
+    );
+    expect(screen.getByRole('heading', { level: 2, name: /Timetable/ })).toBeInTheDocument();
+  });
+
   it('has no axe violations', async () => {
     await expectNoViolations(
       <TimetableTab

@@ -10,6 +10,7 @@ interface DialogProps {
   /** Shows the "Close" text button; confirm dialogs supply their own actions instead. */
   showClose?: boolean;
   variant?: 'centre' | 'sheet';
+  dialogRef?: React.RefObject<HTMLDialogElement | null>;
   children: ReactNode;
 }
 
@@ -23,9 +24,11 @@ export function Dialog({
   title,
   showClose = true,
   variant = 'centre',
+  dialogRef,
   children,
 }: DialogProps) {
-  const ref = useRef<HTMLDialogElement>(null);
+  const internalRef = useRef<HTMLDialogElement>(null);
+  const ref = dialogRef ?? internalRef;
   const titleId = useId();
 
   useEffect(() => {
@@ -38,7 +41,7 @@ export function Dialog({
     } else if (!open && dialog.open) {
       dialog.close();
     }
-  }, [open]);
+  }, [open, ref]);
 
   return (
     <dialog

@@ -164,3 +164,46 @@ describe('error plumbing', () => {
     expect(json).toHaveBeenCalledWith({ error: 'internal_error', requestId: '' });
   });
 });
+
+describe('sameOriginOnly', () => {
+  it('allows safe methods, missing origin, and matching origin; blocks cross-site or malformed origin', async () => {
+    const { sameOriginOnly } = await import('../../../src/server/middleware/origin.js');
+    const next = vi.fn();
+
+    // 1. Safe method
+    sameOriginOnly({ method: 'GET', headers: {} } as never, {} as never, next);
+    expect(next).toHaveBeenCalledTimes(1);
+
+    // 2. Missing origin on POST
+    sameOriginOnly({ method: 'POST', headers: { host: 'localhost:8080' } } as never, {} as never, next);
+    expect(next).toHaveBeenCalledTimes(2);
+
+    // 3. Matching origin
+    sameOriginOnly(
+      { method: 'POST', headers: { host: 'example.com', origin: 'https://example.com' } } as never,
+      {} as never,
+      next,
+    );
+    expect(next).toHaveBeenCalledTimes(3);
+
+    // 4. Cross-site origin blocked
+    const json1 = vi.fn();
+    const status1 = vi.fn(() => ({ json: json1 }));
+    sameOriginOnly(
+      { method: 'POST', headers: { host: 'example.com', origin: 'https://attacker.com' } } as never,
+      { status: status1 } as never,
+      next,
+    );
+    expect(status1).toHaveBeenCalledWith(403);
+
+    // 5. Malformed origin blocked
+    const json2 = vi.fn();
+    const status2 = vi.fn(() => ({ json: json2 }));
+    sameOriginOnly(
+      { method: 'POST', headers: { host: 'example.com', origin: 'not a url' } } as never,
+      { status: status2 } as never,
+      next,
+    );
+    expect(status2).toHaveBeenCalledWith(403);
+  });
+});

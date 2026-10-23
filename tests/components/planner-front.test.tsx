@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { render, screen, waitFor, within } from '@testing-library/react';
+import { render, renderHook, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createRef, useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
@@ -198,6 +198,22 @@ describe('PlannerPanel', () => {
     expect(screen.getByRole('button', { name: 'Send' })).toBeDisabled();
   });
 
+  it('safely ignores applying an invalid action id or index in usePlanner', () => {
+    const { result } = renderHook(() =>
+      usePlanner({
+        plan,
+        today: fixedToday,
+        api: { applyPlannerAction: vi.fn() },
+        announce: vi.fn(),
+        onNotice: vi.fn(),
+        ask: vi.fn(),
+      }),
+    );
+    expect(() => {
+      result.current.apply(999, 0);
+    }).not.toThrow();
+  });
+
   it('has no axe violations', async () => {
     await expectNoViolations(<Harness ask={() => Promise.resolve(reply('Hi', []))} />);
   });
@@ -314,6 +330,28 @@ describe('FrontPage', () => {
     expect(onRemove).not.toHaveBeenCalled();
     await userEvent.click(within(dialog).getByRole('button', { name: 'Keep it' }));
     expect(onRemove).not.toHaveBeenCalled();
+    await userEvent.click(screen.getByRole('button', { name: 'Remove Ananya & Kabir' }));
+    await userEvent.click(
+      within(await screen.findByRole('dialog')).getByRole('button', { name: 'Remove plan' }),
+    );
+    expect(onRemove).toHaveBeenCalledWith('a');
+  });
+
+  it('focuses the begin action when the only saved plan is removed', async () => {
+    const onRemove = vi.fn();
+    render(
+      <FrontPage
+        today={fixedToday}
+        plans={[plan]}
+        samples={samples}
+        discarded={0}
+        headingRef={createRef()}
+        onBegin={vi.fn()}
+        onSample={vi.fn()}
+        onOpen={vi.fn()}
+        onRemove={onRemove}
+      />,
+    );
     await userEvent.click(screen.getByRole('button', { name: 'Remove Ananya & Kabir' }));
     await userEvent.click(
       within(await screen.findByRole('dialog')).getByRole('button', { name: 'Remove plan' }),

@@ -11,6 +11,7 @@ import type { PlansApi } from '../../lib/usePlans';
 
 import styles from './almanac.module.css';
 import own from './VendorsTab.module.css';
+import { filterVendors } from '../../lib/almanacViewModels';
 
 const STATUSES: readonly VendorStatus[] = ['to-find', 'enquired', 'booked', 'paid'];
 const TONES: Record<VendorStatus, StampTone> = {
@@ -110,7 +111,7 @@ function VendorTicket({ vendor, api }: { vendor: VendorItem; api: PlansApi }) {
 /** §4 The Vendors: ticket stubs with reasons, book-by dates, questions and a status stamp. */
 export default function VendorsTab({ plan, api }: { plan: Plan; api: PlansApi }) {
   const [filter, setFilter] = useState('all');
-  const shown = plan.vendors.filter((v) => filter === 'all' || v.status === filter);
+  const shown = filterVendors(plan.vendors, filter);
   return (
     <Section
       number={4}

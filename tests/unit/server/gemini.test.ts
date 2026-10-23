@@ -106,6 +106,35 @@ describe('GeminiClient', () => {
     expect(second).not.toHaveProperty('thinkingConfig');
   });
 
+  it('propagates rejection when the 400 thinking downgrade fallback fails', async () => {
+    generateContent.mockRejectedValueOnce(apiError(400)).mockRejectedValueOnce(apiError(400));
+    await expect(
+      new GeminiClient({ apiKey: 'k', model: 'm' }).generateJson(args()),
+    ).rejects.toBeInstanceOf(ApiError);
+  });
+
+  it('honours custom maxRetries option', async () => {
+    generateContent
+      .mockRejectedValueOnce(apiError(429))
+      .mockRejectedValueOnce(apiError(429))
+      .mockResolvedValueOnce(ok('{"c":3}'));
+    const client = new GeminiClient({ apiKey: 'k', model: 'm', maxRetries: 2 });
+    const pending = client.generateJson(args());
+    await vi.advanceTimersByTimeAsync(2000);
+    await expect(pending).resolves.toEqual({ c: 3 });
+    expect(generateContent).toHaveBeenCalledTimes(3);
+  });
+
+  it('aborts backoff immediately when signal aborts during delay', async () => {
+    const controller = new AbortController();
+    generateContent.mockRejectedValue(apiError(429));
+    const client = new GeminiClient({ apiKey: 'k', model: 'm', maxRetries: 2 });
+    const pending = client.generateJson(args(controller.signal));
+    await vi.advanceTimersByTimeAsync(100);
+    controller.abort(new Error('aborted-in-wait'));
+    await expect(pending).rejects.toThrow('aborted-in-wait');
+  });
+
   it('rejects an empty response body', async () => {
     generateContent.mockResolvedValue(ok(undefined));
     await expect(

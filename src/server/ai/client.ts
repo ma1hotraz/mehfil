@@ -36,26 +36,45 @@ export class DisabledAiClient implements AiClient {
   }
 }
 
+export const DEFAULT_MAX_RETRIES = 1;
 const RETRY_DELAY_MS = 600;
 const RETRYABLE = (status: number): boolean => status === 429 || status >= 500;
 
 const statusOf = (error: unknown): number | undefined =>
   error instanceof ApiError ? error.status : undefined;
 
-const wait = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
+const wait = (ms: number, signal?: AbortSignal): Promise<void> =>
+  new Promise((resolve, reject) => {
+    const timer = setTimeout(resolve, ms);
+    signal?.addEventListener(
+      'abort',
+      () => {
+        clearTimeout(timer);
+        reject(
+          signal.reason instanceof Error
+            ? signal.reason
+            : new Error(String(signal.reason ?? 'Aborted')),
+        );
+      },
+      { once: true },
+    );
+  });
 
 export interface GeminiOptions {
   apiKey: string;
   model: string;
+  maxRetries?: number | undefined;
   onUsage?: ((usage: AiUsage) => void) | undefined;
 }
 
 export class GeminiClient implements AiClient {
   readonly enabled = true;
   private readonly ai: GoogleGenAI;
+  private readonly maxRetries: number;
 
   constructor(private readonly options: GeminiOptions) {
     this.ai = new GoogleGenAI({ apiKey: options.apiKey });
+    this.maxRetries = options.maxRetries ?? DEFAULT_MAX_RETRIES;
   }
 
   async generateJson(args: GenerateArgs): Promise<unknown> {
@@ -71,15 +90,21 @@ export class GeminiClient implements AiClient {
   }
 
   private async callWithRetry(args: GenerateArgs, withThinking: boolean): Promise<unknown> {
-    try {
-      return await this.call(args, withThinking);
-    } catch (error) {
-      const status = statusOf(error);
-      if (status === undefined || !RETRYABLE(status) || args.signal.aborted) {
-        throw error;
+    for (let attempt = 0; ; attempt++) {
+      try {
+        return await this.call(args, withThinking);
+      } catch (error) {
+        const status = statusOf(error);
+        if (
+          attempt >= this.maxRetries ||
+          status === undefined ||
+          !RETRYABLE(status) ||
+          args.signal.aborted
+        ) {
+          throw error;
+        }
+        await wait(RETRY_DELAY_MS + Math.random() * 200, args.signal);
       }
-      await wait(RETRY_DELAY_MS + Math.random() * 200);
-      return this.call(args, withThinking);
     }
   }
 

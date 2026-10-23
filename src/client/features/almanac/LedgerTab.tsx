@@ -3,10 +3,8 @@ import { Button } from '../../components/Button';
 import { LedgerTable } from '../../components/LedgerTable';
 import { Section } from '../../components/Section';
 import { cx } from '../../lib/cx';
-import { money } from '../../lib/format';
-import { parseAmount } from '../../lib/draft';
 import type { PlansApi } from '../../lib/usePlans';
-import { perGuestMinor } from '../../../shared/engine/money.js';
+import { buildLedgerViewModel, toCommittedMinor } from '../../lib/almanacViewModels';
 
 import styles from './almanac.module.css';
 import own from './LedgerTab.module.css';
@@ -18,17 +16,8 @@ interface Props {
 
 /** §2 The Ledger: editable shares that rebalance the rest, plus optional spent-so-far tracking. */
 export default function LedgerTab({ plan, api }: Props) {
-  const { brief, ledger } = plan;
-  const total = ledger.reduce((sum, line) => sum + line.amountMinor, 0);
-  const rows = ledger.map((line) => ({
-    id: line.id,
-    label: line.label,
-    percent: line.percent,
-    amount: money(line.amountMinor, brief.currency),
-    perGuest: money(perGuestMinor(line.amountMinor, brief.guestCount), brief.currency),
-    note: line.note,
-  }));
-  const weather = plan.insights.filter((i) => ['R01', 'R02', 'R03'].includes(i.ruleId));
+  const { brief } = plan;
+  const { totalFormatted, rows, committedLines, weather } = buildLedgerViewModel(plan);
 
   return (
     <Section
@@ -49,9 +38,9 @@ export default function LedgerTab({ plan, api }: Props) {
       }
     >
       <LedgerTable
-        caption={`Budget allocation, total ${money(total, brief.currency)}`}
+        caption={`Budget allocation, total ${totalFormatted}`}
         rows={rows}
-        totalAmount={money(total, brief.currency)}
+        totalAmount={totalFormatted}
         onStep={(id, delta) => {
           api.step(id, delta);
         }}
@@ -66,35 +55,24 @@ export default function LedgerTab({ plan, api }: Props) {
           out for you.
         </p>
         <ul className={cx(styles.plain, own.lines)}>
-          {ledger.map((line) => {
-            const committed = line.committedMinor ?? 0;
-            return (
-              <li key={line.id}>
-                <label>
-                  <span>
-                    {line.label} committed ({brief.currency})
-                  </span>
-                  <input
-                    type="text"
-                    inputMode="decimal"
-                    defaultValue={
-                      line.committedMinor === undefined ? '' : String(line.committedMinor / 100)
-                    }
-                    onBlur={(event) => {
-                      const value = parseAmount(event.target.value);
-                      api.setCommitted(
-                        line.id,
-                        value === undefined ? undefined : Math.round(value * 100),
-                      );
-                    }}
-                  />
-                </label>
-                <span className={cx(styles.mono, own.remaining)}>
-                  {money(line.amountMinor - committed, brief.currency)} remaining
+          {committedLines.map((line) => (
+            <li key={line.id}>
+              <label>
+                <span>
+                  {line.label} committed ({brief.currency})
                 </span>
-              </li>
-            );
-          })}
+                <input
+                  type="text"
+                  inputMode="decimal"
+                  defaultValue={line.defaultValue}
+                  onBlur={(event) => {
+                    api.setCommitted(line.id, toCommittedMinor(event.target.value));
+                  }}
+                />
+              </label>
+              <span className={cx(styles.mono, own.remaining)}>{line.remainingFormatted}</span>
+            </li>
+          ))}
         </ul>
       </details>
     </Section>

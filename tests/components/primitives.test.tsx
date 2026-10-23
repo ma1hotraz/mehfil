@@ -296,6 +296,30 @@ describe('Dialog', () => {
     expect(screen.getByRole('button', { name: 'Own action' })).toBeInTheDocument();
   });
 
+  it('handles null or detached dialogRef without crashing', () => {
+    const detached = {
+      get current() {
+        return null;
+      },
+      set current(val: HTMLDialogElement | null) {
+        if (val) {
+          return;
+        }
+      },
+    };
+    render(
+      <Dialog
+        open
+        onClose={() => undefined}
+        title="Detached"
+        dialogRef={detached}
+      >
+        <p>Detached</p>
+      </Dialog>,
+    );
+    expect(screen.getByRole('dialog', { hidden: true })).toBeInTheDocument();
+  });
+
   it('has no axe violations', async () => {
     await expectNoViolations(
       <Dialog open onClose={() => undefined} title="Remove plan?">
@@ -545,6 +569,27 @@ describe('Telegram', () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  it('handles null or detached slipRef without crashing', () => {
+    const detached = {
+      get current() {
+        return null;
+      },
+      set current(val: HTMLDivElement | null) {
+        if (val) {
+          return;
+        }
+      },
+    };
+    render(
+      <Telegram
+        message="Detached"
+        onDismiss={() => undefined}
+        slipRef={detached}
+      />,
+    );
+    expect(screen.getByText(/DETACHED/)).toBeInTheDocument();
   });
 
   it('has no axe violations', async () => {

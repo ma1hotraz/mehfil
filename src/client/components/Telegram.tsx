@@ -8,15 +8,17 @@ interface TelegramProps {
   onDismiss: () => void;
   /** Milliseconds before auto-dismissal when not hovered or focused. */
   timeoutMs?: number;
+  slipRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 /**
  * The "telegram slip" notice: a narrow paper slip in mono caps (docs/06 §7.9). It never auto
  * dismisses while hovered or focused, and has a close button.
  */
-export function Telegram({ message, onDismiss, timeoutMs = 6000 }: TelegramProps) {
+export function Telegram({ message, onDismiss, timeoutMs = 6000, slipRef }: TelegramProps) {
   const [paused, setPaused] = useState(false);
-  const slip = useRef<HTMLDivElement>(null);
+  const internalSlip = useRef<HTMLDivElement>(null);
+  const slip = slipRef ?? internalSlip;
 
   // Pause tracking uses plain listeners: the slip itself is not an interactive control.
   useEffect(() => {
@@ -44,7 +46,7 @@ export function Telegram({ message, onDismiss, timeoutMs = 6000 }: TelegramProps
         node.removeEventListener(name, handler);
       });
     };
-  }, []);
+  }, [slip]);
 
   useEffect(() => {
     if (paused) {

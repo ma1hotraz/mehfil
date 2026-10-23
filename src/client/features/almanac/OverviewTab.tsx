@@ -1,11 +1,10 @@
 import { useState } from 'react';
 
-import { diffDays } from '../../../shared/engine/dates.js';
 import type { Plan } from '../../../shared/schema/plan.js';
 import { Button } from '../../components/Button';
 import { Section } from '../../components/Section';
 import { cx } from '../../lib/cx';
-import { formatLongDate, money, offsetFromEvent, tMinus } from '../../lib/format';
+import { buildOverviewViewModel } from '../../lib/almanacViewModels';
 
 import styles from './almanac.module.css';
 import own from './OverviewTab.module.css';
@@ -17,7 +16,6 @@ const SEVERITY_WORDS = {
   info: 'Info',
 } as const;
 const SHOWN = 6;
-const MONTH_DAYS = 30;
 
 interface Props {
   plan: Plan;
@@ -28,14 +26,16 @@ interface Props {
 /** Overview: verdict marginalia, numbered notices, key figures and the next three deadlines. */
 export default function OverviewTab({ plan, today, onCopy }: Props) {
   const [all, setAll] = useState(false);
-  const { brief, feasibility } = plan;
+  const { feasibility } = plan;
   const notices = all ? plan.insights : plan.insights.slice(0, SHOWN);
-  const open = plan.timeline.filter((m) => !m.done && m.idealOffsetDays >= 0);
-  const dueSoon = open.filter((m) => {
-    const days = diffDays(today, m.dueDate);
-    return days >= 0 && days <= MONTH_DAYS;
-  });
-  const contingency = plan.ledger.find((l) => l.id === 'contingency');
+  const {
+    openDeadlines: open,
+    dueThisMonthCount,
+    dueThisMonthLabel,
+    perGuestFormatted,
+    contingencyFormatted,
+    nextThreeDeadlines,
+  } = buildOverviewViewModel(plan, today);
 
   return (
     <Section
@@ -98,20 +98,20 @@ export default function OverviewTab({ plan, today, onCopy }: Props) {
             <div>
               <dt className={cx(styles.kicker, styles.muted)}>per guest</dt>
               <dd className={cx(own.big, 'figures')}>
-                {money(feasibility.perGuestMinor, brief.currency)}
+                {perGuestFormatted}
               </dd>
             </div>
             <div>
               <dt className={cx(styles.kicker, styles.muted)}>contingency</dt>
               <dd className={cx(own.big, 'figures')}>
-                {money(contingency?.amountMinor ?? 0, brief.currency)}
+                {contingencyFormatted}
               </dd>
             </div>
             <div>
               <dt className={cx(styles.kicker, styles.muted)}>
-                {dueSoon.length === 1 ? 'task' : 'tasks'} due this month
+                {dueThisMonthLabel} due this month
               </dt>
-              <dd className={cx(own.big, 'figures')}>{dueSoon.length}</dd>
+              <dd className={cx(own.big, 'figures')}>{dueThisMonthCount}</dd>
             </div>
           </dl>
         </section>
@@ -124,13 +124,13 @@ export default function OverviewTab({ plan, today, onCopy }: Props) {
             <p className={styles.muted}>Every task is ticked off.</p>
           ) : (
             <ol className={cx(styles.plain, own.deadlines)}>
-              {open.slice(0, 3).map((m) => (
+              {nextThreeDeadlines.map((m) => (
                 <li key={m.id}>
                   <time dateTime={m.dueDate} className={styles.mono}>
-                    {formatLongDate(m.dueDate)}
+                    {m.dueDateFormatted}
                   </time>
                   <span aria-hidden="true" className={cx(styles.mono, m.critical && own.alert)}>
-                    {tMinus(offsetFromEvent(brief.date, m.dueDate))}
+                    {m.tMinusText}
                   </span>
                   <span>{m.title}</span>
                 </li>

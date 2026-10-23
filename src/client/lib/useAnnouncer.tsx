@@ -30,12 +30,19 @@ export function AnnouncerProvider({ children }: { children: ReactNode }) {
   const [polite, setPolite] = useState<Entry[]>([]);
   const [assertive, setAssertive] = useState<Entry[]>([]);
   const counter = useRef(0);
-
   const announce = useCallback<Announce>((message, level = 'polite') => {
+    const trimmed = message.trim();
+    if (!trimmed) {
+      return;
+    }
     counter.current += 1;
-    const entry = { id: counter.current, text: message };
-    const append = (list: Entry[]): Entry[] => [...list, entry].slice(-KEEP);
-    (level === 'assertive' ? setAssertive : setPolite)(append);
+    const entry = { id: counter.current, text: trimmed };
+    const setter = level === 'assertive' ? setAssertive : setPolite;
+
+    // Micro-tick pacing gives screen readers time to register discrete live-region updates
+    setTimeout(() => {
+      setter((list) => [...list, entry].slice(-KEEP));
+    }, 50);
   }, []);
 
   const value = useMemo(() => announce, [announce]);

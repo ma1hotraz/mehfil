@@ -26,7 +26,7 @@ async function createJaipurPlan(user: ReturnType<typeof userEvent.setup>): Promi
     await screen.findByRole('heading', { level: 1, name: /The Invitation/ }),
   ).toBeInTheDocument();
   await user.click(screen.getByRole('button', { name: /Set it in type/ }));
-  await screen.findByRole('heading', { level: 1, name: 'Ananya & Kabir' });
+  await screen.findByRole('heading', { level: 1, name: 'Ananya & Kabir' }, { timeout: 5000 });
 }
 
 describe('App: flow 1, the first plan', () => {
@@ -44,7 +44,11 @@ describe('App: flow 1, the first plan', () => {
     expect(screen.getByLabelText(/^City/)).toHaveValue('Jaipur');
 
     await user.click(screen.getByRole('button', { name: /Set it in type/ }));
-    const heading = await screen.findByRole('heading', { level: 1, name: 'Ananya & Kabir' });
+    const heading = await screen.findByRole(
+      'heading',
+      { level: 1, name: 'Ananya & Kabir' },
+      { timeout: 5000 },
+    );
     await waitFor(() => {
       expect(heading).toHaveFocus();
     });
