@@ -1,0 +1,96 @@
+import { type FallbackIdea, idea } from './idea.js';
+
+/** Library ideas for a intimate wedding. */
+export const WEDDING_INTIMATE: readonly FallbackIdea[] = [
+  idea(
+    'food',
+    'Herb-infused water jugs and fruit',
+    'Put jugs of water infused with mint, cucumber and citrus on each table, with a bowl of seasonal fruit to share.',
+    1,
+    ['minimalist', 'rustic'],
+  ),
+  idea(
+    'theme',
+    'Candlelit long-table supper',
+    'Seat everyone at one long table with candles in glass jars and loose seasonal flowers, so the evening feels like a family dinner.',
+    2,
+    ['classic', 'elegant', 'minimalist'],
+  ),
+  idea(
+    'theme',
+    'Courtyard vows at golden hour',
+    'Hold a short ceremony in a courtyard or garden an hour before sunset, with a simple floral arch and a single musician.',
+    2,
+    ['rustic', 'elegant'],
+  ),
+  idea(
+    'decor',
+    'Mismatched brass and glass centrepieces',
+    'Collect brass pots, glass bottles and small vases from family homes and fill each with one or two stems for a collected, personal look.',
+    1,
+    ['rustic', 'eco-conscious'],
+  ),
+  idea(
+    'decor',
+    'Handwritten place cards on banana leaf',
+    'Write each guest’s name on a small banana leaf with a paint pen. It looks good, composts afterwards and costs almost nothing.',
+    1,
+    ['eco-conscious', 'minimalist'],
+  ),
+  idea(
+    'food',
+    'Family-style sharing platters',
+    'Serve large platters of dal, seasonal vegetables, rice and breads to pass around the table, rather than plated courses.',
+    2,
+    ['classic', 'rustic'],
+    ['gluten-free'],
+  ),
+  idea(
+    'food',
+    'Five small courses from the couple’s story',
+    'Plan five small dishes that each recall a place or a meal that matters to the couple, with a line of text on the menu card.',
+    3,
+    ['elegant'],
+  ),
+  idea(
+    'activities',
+    'Letters to the couple',
+    'Leave a box and paper at the entrance so each guest can write a letter to open on the first anniversary.',
+    1,
+    ['classic', 'minimalist'],
+  ),
+  idea(
+    'activities',
+    'Candlelit toast circle',
+    'After dinner, gather everyone in a circle for short toasts of one minute each, passing a candle to the next speaker.',
+    1,
+    ['classic', 'elegant'],
+  ),
+  idea(
+    'favors',
+    'Seed-paper thank-you cards',
+    'Hand out plantable seed-paper cards with a handwritten note. Guests can bury them in a pot at home and grow wildflowers.',
+    1,
+    ['eco-conscious', 'minimalist'],
+  ),
+  idea(
+    'favors',
+    'Small jar of homemade chutney',
+    'Make a few jars of mango or mint chutney with family recipes and label them with the date and a thank-you line.',
+    1,
+    ['rustic', 'cultural'],
+    ['jain'],
+  ),
+  idea(
+    'inclusion',
+    'Large-print menus and seat cards',
+    'Print the menu and seating cards in a large, high-contrast typeface and keep a few Braille or audio copies on request.',
+    1,
+  ),
+  idea(
+    'inclusion',
+    'Seat plan with easy exits',
+    'Place elders and anyone with limited mobility near the entrance and restrooms, with clear floor space for wheelchairs and walkers.',
+    1,
+  ),
+];

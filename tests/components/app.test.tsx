@@ -228,6 +228,36 @@ describe('App: the almanac', () => {
   });
 });
 
+describe('App: print, sheet and idle prefetch', () => {
+  it('prints the run sheet, closes the Planner sheet, and works with requestIdleCallback', async () => {
+    Object.assign(window, {
+      requestIdleCallback: (callback: () => void) => {
+        callback();
+        return 1;
+      },
+      cancelIdleCallback: () => undefined,
+    });
+    try {
+      const user = userEvent.setup();
+      render(<App />);
+      await createJaipurPlan(user);
+      await user.click(screen.getByRole('tab', { name: /Run sheet/ }));
+      await user.click(await screen.findByRole('button', { name: 'Print run sheet' }));
+      expect(printSpy).toHaveBeenCalledOnce();
+      await user.click(screen.getByRole('button', { name: 'Ask the Planner' }));
+      const dialog = await screen.findByRole('dialog');
+      await user.click(within(dialog).getByRole('button', { name: 'Close' }));
+      await waitFor(() => {
+        expect(dialog).not.toHaveAttribute('open');
+      });
+    } finally {
+      cleanup();
+      Reflect.deleteProperty(window, 'requestIdleCallback');
+      Reflect.deleteProperty(window, 'cancelIdleCallback');
+    }
+  });
+});
+
 describe('App: shelf, preferences and recovery', () => {
   it('lists the saved plan on the front page, opens it and removes it after confirming (flow 5)', async () => {
     const user = userEvent.setup();
@@ -246,7 +276,7 @@ describe('App: shelf, preferences and recovery', () => {
     expect(
       await screen.findByRole('heading', { level: 1, name: 'Ananya & Kabir' }),
     ).toBeInTheDocument();
-    await user.click(screen.getByRole('button', { name: 'Mehfil' }));
+    await user.click(screen.getByRole('button', { name: /^Mehfil/ }));
     await user.click(await screen.findByRole('button', { name: 'Remove Ananya & Kabir' }));
     await user.click(
       within(await screen.findByRole('dialog')).getByRole('button', { name: 'Remove plan' }),

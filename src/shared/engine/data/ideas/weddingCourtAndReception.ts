@@ -1,0 +1,97 @@
+import { type FallbackIdea, idea } from './idea.js';
+
+/** Library ideas for a court and reception wedding. */
+export const WEDDING_COURT_AND_RECEPTION: readonly FallbackIdea[] = [
+  idea(
+    'food',
+    'Fresh juice cart at the reception',
+    'Park a juice cart near the entrance pressing orange, sugarcane and pomegranate to order, for guests who skip rich food or alcohol.',
+    2,
+    ['playful', 'eco-conscious'],
+  ),
+  idea(
+    'theme',
+    'Registry morning, garden evening',
+    'Keep the legal ceremony small and quick in the morning, then hold a relaxed garden reception in the evening for everyone else.',
+    2,
+    ['classic', 'elegant'],
+  ),
+  idea(
+    'theme',
+    'Ivory and leaf-green reception',
+    'Use ivory cloth, green foliage and a few white flowers. It reads as calm and photographs well in any light.',
+    2,
+    ['minimalist', 'elegant'],
+  ),
+  idea(
+    'decor',
+    'One statement flower arch',
+    'Spend the décor money on a single large flower arch at the entrance of the reception, and keep the tables simple.',
+    3,
+    ['elegant', 'minimalist'],
+  ),
+  idea(
+    'decor',
+    'Fairy-light tree canopy',
+    'Wrap lights around the trees or a tall frame above the dance floor for a warm glow without heavy rentals.',
+    2,
+    ['rustic', 'playful'],
+    ['sensory-friendly'],
+  ),
+  idea(
+    'food',
+    'Cocktail hour of small bites',
+    'Hold a one-hour cocktail hour of small vegetable bites and mocktails while the couple take their photos.',
+    2,
+    ['elegant'],
+    ['gluten-free'],
+  ),
+  idea(
+    'food',
+    'Regional mithai dessert table',
+    'Set a dessert table of regional mithai in small portions, such as soan papdi, rasgulla and jalebi, with a short card that names each sweet.',
+    2,
+    ['cultural', 'classic'],
+    ['vegan', 'gluten-free'],
+  ),
+  idea(
+    'activities',
+    'Instant-print photo booth',
+    'Hire a photo booth that prints two strips, one for the guest and one for a guestbook page that the couple keep.',
+    2,
+    ['playful'],
+  ),
+  idea(
+    'activities',
+    'Courtroom witness toasts',
+    'Invite the two legal witnesses to say a few words at the reception, and let each table add one line of advice on a card.',
+    1,
+    ['classic'],
+  ),
+  idea(
+    'favors',
+    'Hand-poured soy candle',
+    'Order small soy candles in reusable tins with a scent chosen by the couple and a tag with the date.',
+    2,
+    ['minimalist', 'elegant'],
+  ),
+  idea(
+    'favors',
+    'Packet of the couple’s favourite tea',
+    'Blend or buy a tea the couple love, pack it in a paper envelope and add a line on how to brew it.',
+    1,
+    ['rustic', 'eco-conscious'],
+  ),
+  idea(
+    'inclusion',
+    'Reserved seating near the registrar’s table',
+    'Keep chairs at the front for elders and wheelchair users, and clear the aisle so the ceremony is easy to see and hear.',
+    1,
+  ),
+  idea(
+    'inclusion',
+    'Captions during speeches',
+    'Show live captions or a printed text of the speeches on a small screen for guests who are deaf or hard of hearing.',
+    2,
+  ),
+];

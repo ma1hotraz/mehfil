@@ -173,6 +173,49 @@ describe('POST /api/assistant', () => {
   });
 });
 
+describe('same-origin guard', () => {
+  const send = (headers: Record<string, string>) =>
+    request(makeApp())
+      .post('/api/ideas')
+      .set('Content-Type', 'application/json')
+      .set(headers)
+      .send(JSON.stringify(ideasBody));
+
+  it('rejects browser requests from another site with 403', async () => {
+    for (const headers of [
+      { 'Sec-Fetch-Site': 'cross-site' },
+      { Origin: 'https://evil.example', Host: 'mehfil.example' },
+    ]) {
+      const res = await send(headers);
+      expect(res.status).toBe(403);
+      expect(res.body).toEqual({ error: 'forbidden_origin' });
+    }
+  });
+
+  it('allows same-origin browser requests and requests with no origin headers', async () => {
+    expect((await send({ Origin: 'https://mehfil.example', Host: 'mehfil.example' })).status).toBe(
+      200,
+    );
+    expect((await send({ 'Sec-Fetch-Site': 'same-origin' })).status).toBe(200);
+    expect((await send({})).status).toBe(200);
+  });
+
+  it('honours the trusted proxy host and refuses a malformed or null Origin', async () => {
+    const proxied = await send({
+      Origin: 'https://mehfil.app',
+      'X-Forwarded-Host': 'mehfil.app, internal',
+    });
+    expect(proxied.status).toBe(200);
+    expect((await send({ Origin: 'not a url' })).status).toBe(403);
+    expect((await send({ Origin: 'null' })).status).toBe(403);
+  });
+
+  it('never blocks reads', async () => {
+    const res = await request(makeApp()).get('/api/health').set('Origin', 'https://evil.example');
+    expect(res.status).toBe(200);
+  });
+});
+
 describe('rate limiting', () => {
   it('returns 429 JSON on the 21st AI request in a minute', async () => {
     const app = makeApp();

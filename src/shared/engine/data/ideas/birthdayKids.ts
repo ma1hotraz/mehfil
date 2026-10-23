@@ -1,0 +1,97 @@
+import { type FallbackIdea, idea } from './idea.js';
+
+/** Library ideas for a kids birthday. */
+export const BIRTHDAY_KIDS: readonly FallbackIdea[] = [
+  idea(
+    'food',
+    'Frozen fruit pop station',
+    'Blend fruit into pops that the children choose in the morning and enjoy at the end of the party, with no added dairy, gluten or nuts.',
+    1,
+    ['playful', 'eco-conscious'],
+  ),
+  idea(
+    'theme',
+    'Little explorers’ jungle safari',
+    'Turn the room into a jungle with green paper vines, animal masks and a “safari permit” for each child at the door.',
+    1,
+    ['playful'],
+  ),
+  idea(
+    'theme',
+    'Space-station mission',
+    'Give each child a mission badge and a task, such as launching a paper rocket, and finish with a countdown for the cake.',
+    2,
+    ['playful'],
+  ),
+  idea(
+    'decor',
+    'Balloon arch in three colours',
+    'Build a balloon arch in just three colours at the entrance. It makes a photo spot and costs far less than a full backdrop.',
+    1,
+    ['playful', 'festive'],
+    ['sensory-friendly'],
+  ),
+  idea(
+    'decor',
+    'Cardboard-box castle corner',
+    'Cover large cardboard boxes with paint and paper turrets to make a castle corner that the children can crawl through.',
+    1,
+    ['playful', 'eco-conscious'],
+  ),
+  idea(
+    'food',
+    'Build-your-own pizza station',
+    'Give each child a small base and bowls of sauce, cheese and vegetables to assemble, then bake the pizzas in batches.',
+    2,
+    ['playful'],
+    ['gluten-free', 'vegan'],
+  ),
+  idea(
+    'food',
+    'Fruit skewer rainbow bar',
+    'Lay out fruit in rainbow order and let the children thread their own skewers, with yogurt for dipping on the side.',
+    1,
+    ['playful', 'eco-conscious'],
+    ['vegan'],
+  ),
+  idea(
+    'activities',
+    'Picture-clue treasure hunt',
+    'Hide small prizes around the house or hall and give younger children picture clues instead of written ones.',
+    1,
+    ['playful'],
+  ),
+  idea(
+    'activities',
+    'Pass-the-parcel with small surprises',
+    'Wrap a parcel with a small toy or sticker in every layer so every child wins something and nobody is left out.',
+    1,
+    ['playful', 'classic'],
+  ),
+  idea(
+    'favors',
+    'Seed-bomb return gift',
+    'Give each child a small clay-and-seed ball to toss into a patch of soil and watch grow, with a card on how to plant it.',
+    1,
+    ['eco-conscious'],
+  ),
+  idea(
+    'favors',
+    'Colouring kit tote',
+    'Fill a cotton bag with a small sketchbook and a few crayons, so the gift is useful on the ride home.',
+    2,
+    ['playful', 'minimalist'],
+  ),
+  idea(
+    'inclusion',
+    'Labelled allergy-safe snack table',
+    'Set up one table of snacks that are free of the common allergens and label every dish so parents can check at a glance.',
+    1,
+  ),
+  idea(
+    'inclusion',
+    'Quiet corner with picture books',
+    'Set a rug and a few picture books in a corner away from the games for children who need a break from noise.',
+    1,
+  ),
+];

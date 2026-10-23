@@ -1,0 +1,98 @@
+import { type FallbackIdea, idea } from './idea.js';
+
+/** Library ideas for a traditional wedding. */
+export const WEDDING_TRADITIONAL: readonly FallbackIdea[] = [
+  idea(
+    'food',
+    'Fresh fruit and nimbu pani bar',
+    'Set out seasonal fruit and jars of nimbu pani on ice. It suits every diet on the list and cools an outdoor crowd between ceremonies.',
+    1,
+    ['classic', 'eco-conscious'],
+  ),
+  idea(
+    'theme',
+    'Marigold and mogra mandap morning',
+    'Build the look around orange marigold strings and white mogra garlands, with brass diyas and a rangoli at the entrance.',
+    2,
+    ['classic', 'festive', 'cultural'],
+  ),
+  idea(
+    'theme',
+    'Haveli fresco palette',
+    'Take colours from old haveli frescoes: peacock blue, saffron and rose. Repeat the same three shades on stage cloth, invitations and the cake table.',
+    2,
+    ['elegant', 'cultural'],
+  ),
+  idea(
+    'decor',
+    'Hanging brass diya ceiling',
+    'Hang rows of small brass diyas at varying heights over the entry walk. Use LED flames so a breeze or a crowd is never a worry.',
+    2,
+    ['classic', 'festive'],
+    ['sensory-friendly'],
+  ),
+  idea(
+    'decor',
+    'Fresh-flower jaali photo wall',
+    'Stretch a carved jaali screen on a frame and fill the gaps with seasonal blooms. It doubles as a photo backdrop and a stage divider.',
+    3,
+    ['elegant', 'cultural'],
+  ),
+  idea(
+    'food',
+    'Live chaat and kulfi counter',
+    'Add a counter of dahi puchka, papdi chaat and matka kulfi beside the main buffet so guests can snack during the family photographs.',
+    2,
+    ['festive'],
+    ['vegan', 'jain'],
+  ),
+  idea(
+    'food',
+    'Regional thali with a printed menu',
+    'Serve a seasonal Rajasthani thali with dal, gatte ki sabzi, ker sangri and bajra roti. Print the menu in Hindi and English on a small card.',
+    2,
+    ['classic', 'cultural'],
+    ['jain', 'vegan', 'gluten-free'],
+  ),
+  idea(
+    'activities',
+    'Sangeet team performances',
+    'Ask each side of the family to prepare one short song or skit. Keep a mehendi corner open all afternoon so guests can drift in and out.',
+    1,
+    ['playful', 'cultural'],
+    ['sensory-friendly'],
+  ),
+  idea(
+    'activities',
+    'Pheras storytelling cards',
+    'Put a small card on each seat that explains one vow or ritual in plain words, so guests new to the tradition can follow along.',
+    1,
+    ['classic', 'cultural'],
+  ),
+  idea(
+    'favors',
+    'Potted tulsi sapling favour',
+    'Give each family a tulsi sapling in a terracotta pot with a tag that says when to water it. It lasts, costs little and avoids plastic.',
+    1,
+    ['eco-conscious', 'rustic'],
+  ),
+  idea(
+    'favors',
+    'Block-printed potli of makhana',
+    'Pack roasted makhana and a small mishri packet into a block-printed cotton potli that guests can reuse.',
+    2,
+    ['cultural', 'elegant'],
+  ),
+  idea(
+    'inclusion',
+    'Ramp route with greeters',
+    'Mark a smooth ramp route from the gate to the mandap and assign two volunteers to guide elders and wheelchair users to a reserved front row.',
+    1,
+  ),
+  idea(
+    'inclusion',
+    'Shaded rest seats near the mandap',
+    'Set aside a shaded seating zone with cushioned chairs and water, within sight of the mandap, for elders and anyone who needs a break from the crowd.',
+    1,
+  ),
+];

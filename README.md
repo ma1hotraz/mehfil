@@ -98,7 +98,8 @@ tests/        unit, property, api, components, client, e2e
 - The Gemini key lives only in the server environment; the client bundle is checked for it.
 - Strict CSP (no `unsafe-inline` or `unsafe-eval`), HSTS, nosniff, Referrer- and
   Permissions-Policy; the same headers are set in `vercel.json` for static files.
-- Per-IP rate limits, a 16 kB JSON-only body limit, timeouts, response caching.
+- Per-IP rate limits, a 16 kB JSON-only body limit, timeouts, response caching, and a same-origin
+  guard that refuses cross-site POSTs to the AI routes.
 - zod validation on every HTTP body (`.strict()`), on localStorage reads and on model output.
 - Prompt-injection defences: sanitising, delimited data, schema output, an action whitelist
   and conflict filters (e.g. no nut ideas for a nut allergy). No `dangerouslySetInnerHTML`.
@@ -144,12 +145,12 @@ npm test          # Vitest with coverage thresholds
 npm run test:e2e  # Playwright against the production build (no API key)
 ```
 
-**536** unit, component, client and API tests · **4** property tests (fast-check, 500 runs) ·
+**544** unit, component, client and API tests · **4** property tests (fast-check, 500 runs) ·
 **20** end-to-end tests. No test touches the network.
 
 | Coverage            | Lines | Branches | Functions |
 | ------------------- | ----- | -------- | --------- |
-| All measured source | 98.9% | 95.8%    | 98.9%     |
+| All measured source | 99.8% | 96.4%    | 99.9%     |
 | `src/shared/engine` | 100%  | 99.1%    | 100%      |
 
 Covered: every engine rule and boundary, money invariants, the AI client (fake and mocked

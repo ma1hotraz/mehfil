@@ -1,5 +1,3 @@
-import type { CSSProperties } from 'react';
-
 import { cx } from '../lib/cx';
 
 import styles from './Stamp.module.css';
@@ -27,7 +25,7 @@ export function Stamp({
   return (
     <span
       className={cx(styles.stamp, styles[tone], styles[size], fresh && styles.fresh)}
-      style={{ '--tilt': `${tilt}deg` } as CSSProperties}
+      style={{ '--tilt': `${tilt}deg` }}
     >
       <span className={styles.ring}>{children}</span>
     </span>

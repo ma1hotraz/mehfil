@@ -53,6 +53,9 @@ function Shell() {
     (node: HTMLHeadingElement | null) => {
       if (node && focusedFor.current !== view) {
         focusedFor.current = view;
+        if (!node.hasAttribute('tabindex')) {
+          node.setAttribute('tabindex', '-1');
+        }
         node.focus();
       }
     },
@@ -88,8 +91,13 @@ function Shell() {
   return (
     <>
       <SkipLink />
-      <header className={styles.banner}>
-        <button type="button" className={styles.wordmark} onClick={goFront}>
+      <header className={styles.banner} aria-label="Mehfil">
+        <button
+          type="button"
+          className={styles.wordmark}
+          aria-label="Mehfil, back to the front page"
+          onClick={goFront}
+        >
           Mehfil
         </button>
         <div className={styles.prefs}>
@@ -177,7 +185,7 @@ function Shell() {
           </Suspense>
         )}
       </main>
-      <footer className={styles.footer}>
+      <footer className={styles.footer} aria-label="About your data">
         <p>Your plans are saved on this device only. Ideas and answers may be drafted by Gemini.</p>
       </footer>
     </>

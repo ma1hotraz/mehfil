@@ -1,0 +1,96 @@
+import { type FallbackIdea, idea } from './idea.js';
+
+/** Library ideas for a adult birthday. */
+export const BIRTHDAY_ADULT: readonly FallbackIdea[] = [
+  idea(
+    'food',
+    'Seasonal fruit platter course',
+    'Close dinner with a platter of cut seasonal fruit, lime and chaat masala on the side. It is light and suits most diets.',
+    1,
+    ['minimalist', 'elegant'],
+  ),
+  idea(
+    'theme',
+    'Terrace supper under string lights',
+    'Host a supper on a terrace or balcony with string lights, blankets and a playlist built from the guest of honour’s favourites.',
+    2,
+    ['elegant', 'rustic'],
+    ['step-free', 'elderly-guests'],
+  ),
+  idea(
+    'theme',
+    'Cook-along dinner party',
+    'Divide guests into small teams that each prepare one course alongside the host, then sit down to eat together.',
+    2,
+    ['playful', 'classic'],
+  ),
+  idea(
+    'decor',
+    'Candles and seasonal flowers',
+    'Put candles in jars and a few seasonal flowers on every table. It is simple, warm and quick to set up.',
+    1,
+    ['minimalist', 'elegant'],
+    ['sensory-friendly'],
+  ),
+  idea(
+    'decor',
+    'Photo timeline wall',
+    'Pin photos from each decade on a wall or clothesline with a line of text beside each, and let guests add their own.',
+    1,
+    ['classic'],
+  ),
+  idea(
+    'food',
+    'Tasting menu of the host’s favourites',
+    'Serve small portions of the dishes the birthday person loves most, each with a short story on the menu card.',
+    3,
+    ['elegant'],
+  ),
+  idea(
+    'food',
+    'Chai and mocktail flights',
+    'Offer three small tasting glasses of masala chai, iced tea and a seasonal mocktail instead of a full bar.',
+    1,
+    ['minimalist', 'cultural'],
+  ),
+  idea(
+    'activities',
+    'How-well-do-you-know quiz',
+    'Write ten questions about the guest of honour and let tables compete to answer them, with the birthday person as the judge.',
+    1,
+    ['playful'],
+  ),
+  idea(
+    'activities',
+    'Live ghazal or acoustic duo',
+    'Book a small ensemble for an hour after dinner, set at conversation volume so guests can still talk.',
+    3,
+    ['elegant', 'cultural'],
+  ),
+  idea(
+    'favors',
+    'Mini plant in a clay pot',
+    'Give each guest a small succulent in a clay pot with a handwritten thank-you tag.',
+    1,
+    ['eco-conscious', 'minimalist'],
+  ),
+  idea(
+    'favors',
+    'Handwritten recipe card',
+    'Print or write a card with the recipe for a dish from the evening so guests can cook it at home.',
+    1,
+    ['rustic', 'classic'],
+  ),
+  idea(
+    'inclusion',
+    'Seating near restrooms and exits',
+    'Keep a few tables at ground level, close to restrooms and exits, so anyone with limited mobility can join without stairs.',
+    1,
+  ),
+  idea(
+    'inclusion',
+    'Conversation-level volume',
+    'Keep the music low enough to hold a conversation and set aside a quieter corner for guests who find noise tiring.',
+    1,
+  ),
+];

@@ -42,7 +42,7 @@ export function AnnouncerProvider({ children }: { children: ReactNode }) {
   return (
     <AnnouncerContext.Provider value={value}>
       {children}
-      <div className="srOnly" aria-live="polite" aria-atomic="false" data-testid="live-polite">
+      <div className="srOnly" aria-live="polite" aria-atomic="true" data-testid="live-polite">
         {polite.map((entry) => (
           <p key={entry.id}>{entry.text}</p>
         ))}
@@ -50,7 +50,7 @@ export function AnnouncerProvider({ children }: { children: ReactNode }) {
       <div
         className="srOnly"
         aria-live="assertive"
-        aria-atomic="false"
+        aria-atomic="true"
         data-testid="live-assertive"
       >
         {assertive.map((entry) => (

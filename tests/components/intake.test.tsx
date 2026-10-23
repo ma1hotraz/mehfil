@@ -141,6 +141,17 @@ describe('IntakeView', () => {
     await userEvent.selectOptions(screen.getByLabelText('Currency'), 'GBP');
   });
 
+  it('edits the date and the sub-type, validating the date on blur', async () => {
+    setup(draftFromBrief(ananya));
+    const date = screen.getByLabelText(/Event date/);
+    await userEvent.clear(date);
+    await userEvent.type(date, '2020-01-01');
+    await userEvent.tab();
+    expect(await screen.findByText(/Check: Enter a date from today/)).toBeInTheDocument();
+    await userEvent.selectOptions(screen.getByLabelText(/Kind of event/), 'intimate');
+    expect(screen.getByLabelText(/Kind of event/)).toHaveValue('intimate');
+  });
+
   it('goes back when asked', async () => {
     const { onBack } = setup();
     await userEvent.click(screen.getByRole('button', { name: 'Back' }));

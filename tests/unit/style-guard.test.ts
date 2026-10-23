@@ -88,6 +88,10 @@ describe('performance guards', () => {
     expect(html).not.toContain('jetbrains-mono');
     expect(html.match(/rel="preload"/g)).toHaveLength(2);
   });
+
+  it('keeps index.html free of inline style attributes the CSP would block', () => {
+    expect(fs.readFileSync('index.html', 'utf8')).not.toMatch(/\sstyle="/);
+  });
 });
 
 describe('security and purity guards', () => {

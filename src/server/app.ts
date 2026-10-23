@@ -10,6 +10,7 @@ import type { Config } from './config.js';
 import type { Logger } from './logger.js';
 import { setRequestId } from './requestId.js';
 import { errorHandler, notFound } from './middleware/errors.js';
+import { sameOriginOnly } from './middleware/origin.js';
 import { aiRateLimits, applySecurity, noStore, requireJson } from './middleware/security.js';
 import { assistantRouter } from './routes/assistant.js';
 import { healthRouter } from './routes/health.js';
@@ -83,6 +84,7 @@ export function createApp(deps: AppDeps): Express {
   app.use(
     '/api',
     noStore,
+    sameOriginOnly,
     requireJson,
     express.json({ limit: BODY_LIMIT, strict: true, type: 'application/json' }),
   );

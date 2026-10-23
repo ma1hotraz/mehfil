@@ -1,0 +1,111 @@
+import { type MilestoneTemplate, t } from './template.js';
+
+/** Birthday milestones, plus those added by sub-type. */
+export const BIRTHDAY: MilestoneTemplate[] = [
+  t(
+    'set-budget',
+    'Set budget and guest list',
+    45,
+    'general',
+    'Decide the number first; it drives every other cost.',
+  ),
+  t(
+    'book-venue',
+    'Book the venue',
+    40,
+    'venue',
+    'Check the hours include set-up and clean-up.',
+    true,
+    (b) => b.guestCount > 15,
+  ),
+  t(
+    'choose-theme',
+    'Choose the theme',
+    35,
+    'decor',
+    'A theme makes décor, cake and favours easy to decide.',
+  ),
+  t(
+    'book-entertainer',
+    'Book entertainer or activities',
+    30,
+    'entertainment',
+    'Confirm age-suitable content and duration.',
+  ),
+  t(
+    'send-invitations',
+    'Send invitations',
+    21,
+    'invitations',
+    'Include start and end times and RSVP date.',
+    true,
+  ),
+  t(
+    'order-cake',
+    'Order the cake',
+    10,
+    'catering',
+    'Confirm flavour, size and any allergy needs.',
+    true,
+  ),
+  t(
+    'collect-rsvps',
+    'Collect RSVPs and dietary needs',
+    7,
+    'general',
+    'Chase quiet replies by message.',
+  ),
+  t(
+    'buy-decor-favours',
+    'Buy décor and favours',
+    7,
+    'decor',
+    'Pick up balloons, banners and return gifts.',
+  ),
+  t('confirm-vendors', 'Confirm vendors', 3, 'general', 'Re-check times and the address.', true),
+  t(
+    'playlist-run-sheet',
+    'Prepare the playlist and run sheet',
+    2,
+    'general',
+    'Keep a backup playlist offline.',
+  ),
+  t('event-day', 'Event day', 0, 'general', 'Follow the run sheet and enjoy the day.', true),
+  t(
+    'thank-you-messages',
+    'Send thank-you messages',
+    -3,
+    'general',
+    'A short note or photo to each guest.',
+  ),
+];
+
+export const BIRTHDAY_ADDS: MilestoneTemplate[] = [
+  t(
+    'allergy-info',
+    'Collect allergy information from parents',
+    10,
+    'catering',
+    'Ask every parent in the invitation chat.',
+    true,
+    (b) => b.subType === 'kids',
+  ),
+  t(
+    'supervisors',
+    'Arrange adult supervisors (one per six children)',
+    5,
+    'general',
+    'Name them on the run sheet.',
+    false,
+    (b) => b.subType === 'kids',
+  ),
+  t(
+    'slideshow',
+    'Prepare a memory slideshow and guest messages',
+    21,
+    'entertainment',
+    'Ask friends and family for photos and a line each.',
+    false,
+    (b) => b.subType === 'milestone',
+  ),
+];

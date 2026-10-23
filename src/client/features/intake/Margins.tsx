@@ -13,8 +13,8 @@ interface Props {
   onChange: (patch: Partial<IntakeDraft>) => void;
 }
 
-const toOptions = (values: readonly string[], labels: Record<string, string>) =>
-  values.map((value) => ({ value, label: labels[value] ?? value }));
+const toOptions = <V extends string>(values: readonly V[], labels: Record<V, string>) =>
+  values.map((value) => ({ value, label: labels[value] }));
 
 /** "In the margins": the optional fields as chip groups and ruled notepaper. */
 export function Margins({ draft, errors, onChange }: Props) {
@@ -32,7 +32,7 @@ export function Margins({ draft, errors, onChange }: Props) {
             options={toOptions(VIBES, VIBE_LABELS)}
             selected={draft.vibe}
             onChange={(vibe) => {
-              onChange({ vibe: vibe as IntakeDraft['vibe'] });
+              onChange({ vibe });
             }}
           />
           <ChipGroup
@@ -40,7 +40,7 @@ export function Margins({ draft, errors, onChange }: Props) {
             options={toOptions(DIETARY, DIETARY_LABELS)}
             selected={draft.dietary}
             onChange={(dietary) => {
-              onChange({ dietary: dietary as IntakeDraft['dietary'] });
+              onChange({ dietary });
             }}
           />
           <ChipGroup
@@ -48,7 +48,7 @@ export function Margins({ draft, errors, onChange }: Props) {
             options={toOptions(ACCESS, ACCESS_LABELS)}
             selected={draft.accessibility}
             onChange={(accessibility) => {
-              onChange({ accessibility: accessibility as IntakeDraft['accessibility'] });
+              onChange({ accessibility });
             }}
           />
         </div>

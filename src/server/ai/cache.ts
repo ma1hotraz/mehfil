@@ -32,12 +32,12 @@ export class TtlCache<V> {
   set(key: string, value: V): void {
     this.entries.delete(key);
     this.entries.set(key, { value, expiresAt: this.now() + this.ttlMs });
-    while (this.entries.size > this.maxEntries) {
-      const oldest = this.entries.keys().next();
-      if (oldest.done) {
+    // Map iterates oldest first, and deleting the key being visited is safe.
+    for (const oldest of this.entries.keys()) {
+      if (this.entries.size <= this.maxEntries) {
         break;
       }
-      this.entries.delete(oldest.value);
+      this.entries.delete(oldest);
     }
   }
 

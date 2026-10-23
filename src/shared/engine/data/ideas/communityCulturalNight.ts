@@ -1,0 +1,97 @@
+import { type FallbackIdea, idea } from './idea.js';
+
+/** Library ideas for a cultural night community. */
+export const COMMUNITY_CULTURAL_NIGHT: readonly FallbackIdea[] = [
+  idea(
+    'food',
+    'Interval lemonade and fruit cart',
+    'Wheel a cart of lemonade and sliced fruit around the hall at the interval, so every audience member has something to enjoy.',
+    1,
+    ['classic', 'cultural'],
+  ),
+  idea(
+    'theme',
+    'Many voices, one stage',
+    'Programme short sets of different languages, instruments and dances back to back, and let a host introduce each in two lines.',
+    2,
+    ['cultural', 'festive'],
+  ),
+  idea(
+    'theme',
+    'Folk and classical double bill',
+    'Pair a folk group with a classical soloist and let the audience see how both traditions answer each other.',
+    2,
+    ['cultural', 'classic'],
+    ['sensory-friendly'],
+  ),
+  idea(
+    'decor',
+    'Backdrop painted by local students',
+    'Commission a large painted backdrop from the school art class and display the artists’ names beside the stage.',
+    1,
+    ['cultural', 'rustic'],
+  ),
+  idea(
+    'decor',
+    'Lamp-lit aisle',
+    'Line the main aisle with small clay lamps in jars, so the audience arrives through light and the stage feels special.',
+    1,
+    ['classic', 'festive'],
+  ),
+  idea(
+    'food',
+    'Interval chai and snack cart',
+    'Run a cart at the interval with chai and simple snacks so the audience can chat and the queue moves quickly.',
+    1,
+    ['classic'],
+    ['vegan'],
+  ),
+  idea(
+    'food',
+    'Regional sweets sampler',
+    'Offer a small tray of sweets from different regions represented on stage, each with a card naming the place it comes from.',
+    2,
+    ['cultural'],
+    ['vegan', 'gluten-free'],
+  ),
+  idea(
+    'activities',
+    'Pre-show dance workshop',
+    'Teach a simple folk step to anyone who arrives early, ten minutes before the show begins.',
+    1,
+    ['playful', 'cultural'],
+  ),
+  idea(
+    'activities',
+    'First-stage slot for young performers',
+    'Reserve fifteen minutes for children and first-timers, with an experienced performer to introduce each.',
+    1,
+    ['playful', 'classic'],
+  ),
+  idea(
+    'favors',
+    'Programme with artist notes',
+    'Print a simple programme with a line about each artist and what they will perform, to take home.',
+    1,
+    ['classic', 'minimalist'],
+  ),
+  idea(
+    'favors',
+    'Signed event poster',
+    'Have the performers sign a poster at the end, then raffle it for the community fund.',
+    1,
+    ['classic', 'festive'],
+  ),
+  idea(
+    'inclusion',
+    'Captions for lyrics and announcements',
+    'Project lyrics and announcements on a side screen so guests who are deaf or unfamiliar with the language can follow.',
+    2,
+  ),
+  idea(
+    'inclusion',
+    'Wheelchair viewing area with sightlines',
+    'Mark a level viewing area with a clear view of the stage, with seats alongside for companions.',
+    1,
+  ),
+];

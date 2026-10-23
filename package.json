@@ -18,7 +18,8 @@
     "test:e2e": "playwright test",
     "check": "npm run lint && npm run typecheck && npm run test && npm run build && node scripts/check-bundle.mjs",
     "build:client": "NODE_ENV=production vite build",
-    "build:server": "esbuild src/server/index.ts --bundle --platform=node --format=esm --target=node22 --minify --legal-comments=none --banner:js=\"import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\" --outfile=dist/server.mjs"
+    "build:server": "esbuild src/server/index.ts --bundle --platform=node --format=esm --target=node22 --minify --legal-comments=none --banner:js=\"import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\" --outfile=dist/server.mjs",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "@google/genai": "^2.30.0",
@@ -65,5 +66,6 @@
     "vite": "^8.3.5",
     "vitest": "^5.0.5",
     "vitest-axe": "^0.1.0"
-  }
+  },
+  "license": "MIT"
 }

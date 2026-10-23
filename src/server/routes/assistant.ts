@@ -1,16 +1,12 @@
 import { type RequestHandler, Router } from 'express';
 
-import {
-  type AssistantRequest,
-  AssistantRequest as AssistantRequestSchema,
-} from '../../shared/schema/ai.js';
+import { AssistantRequest } from '../../shared/schema/ai.js';
 import { type AssistantDeps, answer } from '../ai/assistant.js';
 import type { Clock } from '../clock.js';
-import { validate } from '../middleware/validate.js';
 
-import { dateGuard } from './ideas.js';
+import { briefRoute } from './briefRoute.js';
 
-/** Express router handling AI planner conversation and action suggestion requests. */
+/** `POST /api/assistant`: the Planner's answer and whitelisted suggestions for a question. */
 export function assistantRouter(
   deps: AssistantDeps,
   clock: Clock,
@@ -20,11 +16,7 @@ export function assistantRouter(
   router.post(
     '/assistant',
     ...limits,
-    validate(AssistantRequestSchema),
-    dateGuard(clock),
-    async (req, res) => {
-      res.json(await answer(deps, req.body as AssistantRequest));
-    },
+    briefRoute(AssistantRequest, clock, (body) => answer(deps, body)),
   );
   return router;
 }

@@ -71,9 +71,11 @@ export const noStore: RequestHandler = (_req, res, next) => {
   next();
 };
 
-/** Rejects POST bodies that are not JSON (415). */
+const MUTATING_METHODS = ['POST', 'PUT', 'PATCH', 'DELETE'];
+
+/** Rejects mutating request bodies that are not JSON (415). */
 export const requireJson: RequestHandler = (req, res, next) => {
-  if (req.method === 'POST' && !req.is('application/json')) {
+  if (MUTATING_METHODS.includes(req.method) && !req.is('application/json')) {
     res.status(415).json({ error: 'unsupported_media_type' });
     return;
   }

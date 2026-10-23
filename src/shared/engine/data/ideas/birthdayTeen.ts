@@ -1,0 +1,96 @@
+import { type FallbackIdea, idea } from './idea.js';
+
+/** Library ideas for a teen birthday. */
+export const BIRTHDAY_TEEN: readonly FallbackIdea[] = [
+  idea(
+    'food',
+    'Smoothie and fruit-soda bar',
+    'Offer blended fruit smoothies and sparkling fruit sodas that friends can mix themselves from simple fruit and ice.',
+    2,
+    ['playful'],
+  ),
+  idea(
+    'theme',
+    'Retro arcade night',
+    'Set up a few console stations and a high-score board, and give out “coins” as tokens for winning games.',
+    2,
+    ['playful'],
+  ),
+  idea(
+    'theme',
+    'Open-mic acoustic evening',
+    'Invite friends to perform a song or a poem with a simple mic and a small speaker, and keep the setting cosy.',
+    1,
+    ['minimalist', 'rustic'],
+  ),
+  idea(
+    'decor',
+    'String-light photo wall',
+    'Hang plain string lights and clip printed photos of the birthday teen and friends on wires.',
+    1,
+    ['minimalist', 'playful'],
+  ),
+  idea(
+    'decor',
+    'Graffiti paper backdrop',
+    'Roll out large paper on a wall and give markers to everyone to sign and draw, then keep it as a keepsake.',
+    1,
+    ['playful'],
+  ),
+  idea(
+    'food',
+    'Mini burger and fries bar',
+    'Offer small vegetable burgers with a choice of sauces and a tray of fries, assembled by the guests.',
+    2,
+    ['playful'],
+    ['gluten-free', 'vegan'],
+  ),
+  idea(
+    'food',
+    'Mocktail menu named by guests',
+    'Mix three simple mocktails and let friends vote on silly names for each before the party.',
+    1,
+    ['playful', 'festive'],
+  ),
+  idea(
+    'activities',
+    'Team escape-room challenge',
+    'Make a set of printed clues and locks in a room or garden, and race teams against a timer.',
+    2,
+    ['playful'],
+  ),
+  idea(
+    'activities',
+    'Karaoke battle',
+    'Run a karaoke contest with a simple scoring card, with prizes for the funniest and the bravest performance.',
+    1,
+    ['playful', 'festive'],
+    ['sensory-friendly'],
+  ),
+  idea(
+    'favors',
+    'Photo-strip keepsake',
+    'Print a strip of four photos from the evening for each guest to take home in a paper sleeve.',
+    1,
+    ['playful'],
+  ),
+  idea(
+    'favors',
+    'Playlist card',
+    'Create a shared playlist of the party’s songs and hand out a small card with a code to open it.',
+    1,
+    ['minimalist'],
+  ),
+  idea(
+    'inclusion',
+    'Chill-out room',
+    'Set aside a calm room with soft seating and low light for anyone who needs a break from the noise and crowd.',
+    1,
+  ),
+  idea(
+    'inclusion',
+    'Opt-in dancing and board games',
+    'Offer a board-game table next to the dance floor so guests who do not want to dance still have a way to join in.',
+    1,
+  ),
+];

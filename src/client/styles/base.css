@@ -163,3 +163,12 @@ button {
     outline-color: Highlight;
   }
 }
+
+/* Shown only when JavaScript is off; styled here because the CSP forbids inline style attributes. */
+.noscript {
+  max-width: var(--measure);
+  margin: var(--space-7) auto;
+  padding: var(--space-5);
+  border: 1px solid var(--rule-strong);
+  font-family: var(--font-text);
+}

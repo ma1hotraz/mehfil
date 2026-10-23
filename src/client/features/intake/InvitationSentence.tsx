@@ -2,12 +2,12 @@ import type { ReactNode } from 'react';
 
 import { SUB_TYPE_LABELS } from '../../../shared/labels.js';
 import { type EventType, SUB_TYPES } from '../../../shared/schema/brief.js';
-import { Field } from '../../components/Field';
 import { type FieldErrors, type IntakeDraft, subTypeFor } from '../../lib/draft';
 
+import { DateBlank, SelectBlank, TextBlank } from './Blanks';
 import styles from './InvitationSentence.module.css';
 
-export const fieldId = (key: string): string => `intake-${key}`;
+export { fieldId } from './Blanks';
 
 interface Props {
   draft: IntakeDraft;
@@ -34,142 +34,6 @@ const CURRENCY_OPTIONS = [
   ['EUR', '€ EUR'],
   ['GBP', '£ GBP'],
 ] as const;
-
-/** Width, in characters, for a text blank so it hugs what was typed. */
-const widthFor = (value: string, min: number): { width: string } => ({
-  width: `${Math.max(min, value.length + 1)}ch`,
-});
-
-interface BlankProps {
-  name: string;
-  label: string;
-  hint: string;
-  error?: string | undefined;
-  required?: boolean;
-  children: Parameters<typeof Field>[0]['children'];
-}
-
-/** One underlined blank: a hidden-label Field with the sentence styling. */
-function Blank({ name, label, hint, error, required = true, children }: BlankProps) {
-  return (
-    <Field
-      id={fieldId(name)}
-      label={label}
-      hint={hint}
-      error={error}
-      required={required}
-      hideLabel
-      variant="underline"
-      className={styles.blank}
-    >
-      {children}
-    </Field>
-  );
-}
-
-interface SelectBlankProps<V extends string> extends Omit<BlankProps, 'children'> {
-  value: V;
-  options: readonly (readonly [V, string])[];
-  onChange: (value: V) => void;
-  onBlur?: () => void;
-}
-
-function SelectBlank<V extends string>({
-  value,
-  options,
-  onChange,
-  onBlur,
-  ...blank
-}: SelectBlankProps<V>) {
-  return (
-    <Blank {...blank}>
-      {(control) => (
-        <select
-          {...control}
-          value={value}
-          onBlur={onBlur}
-          onChange={(event) => {
-            onChange(event.target.value as V);
-          }}
-        >
-          {options.map(([optionValue, text]) => (
-            <option key={optionValue} value={optionValue}>
-              {text}
-            </option>
-          ))}
-        </select>
-      )}
-    </Blank>
-  );
-}
-
-interface TextBlankProps extends Omit<BlankProps, 'children'> {
-  value: string;
-  minChars: number;
-  inputMode?: 'numeric' | 'decimal';
-  autoComplete?: string;
-  maxLength?: number;
-  onChange: (value: string) => void;
-  onBlur: () => void;
-}
-
-function TextBlank({
-  value,
-  minChars,
-  inputMode,
-  autoComplete,
-  maxLength,
-  onChange,
-  onBlur,
-  ...blank
-}: TextBlankProps) {
-  return (
-    <Blank {...blank}>
-      {(control) => (
-        <input
-          {...control}
-          type="text"
-          inputMode={inputMode}
-          autoComplete={autoComplete ?? 'off'}
-          maxLength={maxLength}
-          value={value}
-          style={widthFor(value, minChars)}
-          onBlur={onBlur}
-          onChange={(event) => {
-            onChange(event.target.value);
-          }}
-        />
-      )}
-    </Blank>
-  );
-}
-
-function DateBlank({ draft, errors, minDate, maxDate, onChange, onBlurField }: Props) {
-  return (
-    <Blank
-      name="date"
-      label="Event date"
-      hint="Date — from today up to three years ahead"
-      error={errors.date}
-    >
-      {(control) => (
-        <input
-          {...control}
-          type="date"
-          min={minDate}
-          max={maxDate}
-          value={draft.date}
-          onBlur={() => {
-            onBlurField('date');
-          }}
-          onChange={(event) => {
-            onChange({ date: event.target.value });
-          }}
-        />
-      )}
-    </Blank>
-  );
-}
 
 const Words = ({ children }: { children: ReactNode }) => <> {children} </>;
 
@@ -251,7 +115,14 @@ export function InvitationSentence(props: Props) {
         </Words>
         on
         <Words>
-          <DateBlank {...props} />
+          <DateBlank
+            draft={draft}
+            error={errors.date}
+            minDate={props.minDate}
+            maxDate={props.maxDate}
+            onChange={onChange}
+            onBlurField={onBlurField}
+          />
         </Words>
         ,
         <Words>

@@ -5,7 +5,12 @@ export interface Logger {
   log(level: LogLevel, msg: string, fields?: LogFields): void;
 }
 
-const SECRET_KEY = /key|token|secret|authorization/i;
+/**
+ * Field names that look like credentials. Deliberately precise: `promptTokens` and `outputTokens`
+ * are usage counts, not secrets, and must stay readable in the logs.
+ */
+const SECRET_KEY =
+  /api[-_]?key|secret|password|authorization|bearer|(^|[-_])tokens?$|[a-z]Token$|access[-_]?token/i;
 
 /** Redacts any field whose name looks like a credential. */
 export function redact(fields: LogFields): LogFields {

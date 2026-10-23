@@ -2,12 +2,42 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import request from 'supertest';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { bootstrap } from '../../../src/server/bootstrap.js';
 import { CSP_DIRECTIVES } from '../../../src/server/middleware/security.js';
 
+const generateContent = vi.fn();
+vi.mock('@google/genai', async (importActual) => {
+  const actual = await importActual<typeof import('@google/genai')>();
+  class FakeGoogleGenAI {
+    models = { generateContent };
+  }
+  return { ...actual, GoogleGenAI: FakeGoogleGenAI };
+});
+
 describe('bootstrap', () => {
+  it('logs token usage (counts only, never content) after a model call', async () => {
+    generateContent.mockResolvedValue({
+      text: '{}',
+      usageMetadata: { promptTokenCount: 12, candidatesTokenCount: 5 },
+    });
+    const write = vi.spyOn(process.stdout, 'write').mockReturnValue(true);
+    const { ai } = bootstrap({ NODE_ENV: 'test', GEMINI_API_KEY: 'k' });
+    await ai.generateJson({
+      system: 's',
+      prompt: 'secret prompt text',
+      schema: {},
+      maxOutputTokens: 10,
+      signal: new AbortController().signal,
+    });
+    const lines = write.mock.calls.map((call) => String(call[0]));
+    write.mockRestore();
+    const usage = lines.find((line) => line.includes('ai_usage')) ?? '';
+    expect(JSON.parse(usage)).toMatchObject({ promptTokens: 12, outputTokens: 5 });
+    expect(lines.join('')).not.toContain('secret prompt text');
+  });
+
   it('uses the disabled client without a key', async () => {
     const { app, ai } = bootstrap({ NODE_ENV: 'test' });
     expect(ai.enabled).toBe(false);

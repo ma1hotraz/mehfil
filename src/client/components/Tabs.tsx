@@ -4,19 +4,19 @@ import { cx } from '../lib/cx';
 
 import styles from './Tabs.module.css';
 
-export interface TabItem {
-  id: string;
+export interface TabItem<Id extends string = string> {
+  id: Id;
   label: string;
   /** Section number shown before the label, e.g. 2 → "§2". */
   number?: number;
 }
 
-interface TabsProps {
+interface TabsProps<Id extends string> {
   /** Accessible name of the tab list. */
   label: string;
-  tabs: readonly TabItem[];
-  activeId: string;
-  onChange: (id: string) => void;
+  tabs: readonly TabItem<Id>[];
+  activeId: Id;
+  onChange: (id: Id) => void;
   /** Id prefix so several tab sets can coexist. */
   idPrefix?: string;
   /** Extra controls placed at the end of the strip (outside the tab list). */
@@ -28,7 +28,7 @@ export const tabId = (prefix: string, id: string): string => `${prefix}-tab-${id
 export const panelId = (prefix: string, id: string): string => `${prefix}-panel-${id}`;
 
 /** WAI-ARIA tabs with roving tabindex, arrow/Home/End keys and automatic activation. */
-export function Tabs({
+export function Tabs<Id extends string>({
   label,
   tabs,
   activeId,
@@ -36,7 +36,7 @@ export function Tabs({
   idPrefix = 'tabs',
   trailing,
   children,
-}: TabsProps) {
+}: TabsProps<Id>) {
   const refs = useRef(new Map<string, HTMLButtonElement>());
 
   const move = (event: KeyboardEvent<HTMLButtonElement>, index: number): void => {

@@ -1,0 +1,95 @@
+import { type FallbackIdea, idea } from './idea.js';
+
+/** Library ideas for a fundraiser community. */
+export const COMMUNITY_FUNDRAISER: readonly FallbackIdea[] = [
+  idea(
+    'food',
+    'Fruit and lemonade donation table',
+    'Offer lemonade and cut fruit by donation at the entrance. It is simple to run and safe for nearly every guest.',
+    1,
+    ['playful', 'minimalist'],
+  ),
+  idea(
+    'theme',
+    'Evening of giving in three stories',
+    'Build the programme around three short stories of people the cause has helped, and end with a clear and simple ask.',
+    1,
+    ['classic', 'minimalist'],
+  ),
+  idea(
+    'theme',
+    'Skills and services auction',
+    'Auction local skills such as a cooking lesson, a guitar class or a day of garden help, instead of goods.',
+    1,
+    ['playful', 'cultural'],
+  ),
+  idea(
+    'decor',
+    'Progress thermometer board',
+    'Paint a large thermometer on a board and update it through the evening, so guests see the total grow in real time.',
+    1,
+    ['playful'],
+  ),
+  idea(
+    'decor',
+    'Table cards with impact numbers',
+    'Place a card on each table that says what a donation of a given size pays for, written in plain words.',
+    1,
+    ['minimalist', 'classic'],
+  ),
+  idea(
+    'food',
+    'Pay-what-you-wish chai stall',
+    'Run a chai and biscuit stall where guests put whatever they like in a box, staffed by volunteers.',
+    1,
+    ['cultural', 'rustic'],
+    ['vegan'],
+  ),
+  idea(
+    'food',
+    'Potluck of home recipes',
+    'Ask each family to bring one dish and a card with its name and ingredients, so allergies are clear to everyone.',
+    1,
+    ['rustic', 'cultural'],
+  ),
+  idea(
+    'activities',
+    'Matching-gift moment',
+    'Ask a sponsor to match donations for ten minutes during the evening, with a countdown to build momentum.',
+    1,
+    ['festive'],
+  ),
+  idea(
+    'activities',
+    'Beneficiary open-floor hour',
+    'Give a beneficiary or volunteer five minutes to speak, and keep the rest of the evening short and warm.',
+    1,
+    ['classic'],
+  ),
+  idea(
+    'favors',
+    'Postcards from the people you helped',
+    'Send thank-you postcards written by beneficiaries to every donor within a week of the event.',
+    1,
+    ['classic', 'minimalist'],
+  ),
+  idea(
+    'favors',
+    'Paper leaves on a giving tree',
+    'Let each donor write their name on a paper leaf and stick it to a painted tree, which is then displayed in the hall.',
+    1,
+    ['eco-conscious', 'playful'],
+  ),
+  idea(
+    'inclusion',
+    'Cash and digital giving options',
+    'Offer a collection box for cash and a clearly printed QR code for digital payments, so everyone can give in their own way.',
+    1,
+  ),
+  idea(
+    'inclusion',
+    'Interpreter for the appeal',
+    'Arrange a sign-language interpreter or live captions for the main appeal so every guest can follow the ask.',
+    2,
+  ),
+];

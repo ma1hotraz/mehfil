@@ -48,12 +48,9 @@ export function FrontPage({
   const beginRef = useRef<HTMLButtonElement>(null);
   const shelfRef = useRef<HTMLUListElement>(null);
 
-  const confirmRemove = (): void => {
-    if (!pending) {
-      return;
-    }
-    const index = plans.findIndex((p) => p.id === pending.id);
-    onRemove(pending.id);
+  const confirmRemove = (target: Plan): void => {
+    const index = plans.findIndex((p) => p.id === target.id);
+    onRemove(target.id);
     setPending(undefined);
     // Focus the item that takes its place, or the primary action when the shelf is empty.
     requestAnimationFrame(() => {
@@ -158,23 +155,31 @@ export function FrontPage({
         title="Remove this plan?"
         showClose={false}
       >
-        <p>
-          {pending ? `“${planTitle(pending.brief)}”` : ''} will be removed from this device. This
-          cannot be undone.
-        </p>
-        <div className={styles.dialogActions}>
-          <Button variant="primary" onClick={confirmRemove}>
-            Remove plan
-          </Button>
-          <Button
-            variant="text"
-            onClick={() => {
-              setPending(undefined);
-            }}
-          >
-            Keep it
-          </Button>
-        </div>
+        {pending ? (
+          <>
+            <p>
+              “{planTitle(pending.brief)}” will be removed from this device. This cannot be undone.
+            </p>
+            <div className={styles.dialogActions}>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  confirmRemove(pending);
+                }}
+              >
+                Remove plan
+              </Button>
+              <Button
+                variant="text"
+                onClick={() => {
+                  setPending(undefined);
+                }}
+              >
+                Keep it
+              </Button>
+            </div>
+          </>
+        ) : null}
       </Dialog>
     </div>
   );

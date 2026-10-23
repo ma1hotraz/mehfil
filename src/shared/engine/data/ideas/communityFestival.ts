@@ -1,0 +1,96 @@
+import { type FallbackIdea, idea } from './idea.js';
+
+/** Library ideas for a festival community. */
+export const COMMUNITY_FESTIVAL: readonly FallbackIdea[] = [
+  idea(
+    'food',
+    'Water and lemonade seva stall',
+    'Run a free stall of chilled water, lemonade and sliced fruit staffed by volunteers. It suits every dietary need and costs little.',
+    1,
+    ['cultural', 'eco-conscious'],
+  ),
+  idea(
+    'theme',
+    'Lantern lane Diwali mela',
+    'Line the main path with handmade paper lanterns made in advance by local schoolchildren, and place stalls on either side.',
+    2,
+    ['festive', 'cultural'],
+  ),
+  idea(
+    'theme',
+    'Harvest fair of local crafts',
+    'Invite potters, weavers and home bakers from the neighbourhood to sell and demonstrate their craft at simple tables.',
+    1,
+    ['rustic', 'cultural'],
+  ),
+  idea(
+    'decor',
+    'Gate rangoli competition',
+    'Invite residents to design rangolis at the entrance, with a vote at midday and small prizes for the three most-liked designs.',
+    1,
+    ['festive', 'cultural'],
+  ),
+  idea(
+    'decor',
+    'Bunting from donated fabric scraps',
+    'Ask tailors and households for fabric offcuts and stitch them into bunting that can be reused every year.',
+    1,
+    ['eco-conscious', 'rustic'],
+  ),
+  idea(
+    'food',
+    'Neighbourhood home-cook stall passport',
+    'Each home cook runs a small stall of one dish, and visitors collect a stamp from each to claim a small prize.',
+    2,
+    ['festive', 'cultural'],
+    ['jain', 'vegan'],
+  ),
+  idea(
+    'food',
+    'Steel-plate bank',
+    'Collect steel plates and cups from households to lend for the day, so there is no single-use plastic or thermocol.',
+    1,
+    ['eco-conscious'],
+  ),
+  idea(
+    'activities',
+    'Children’s stamp-passport trail',
+    'Give each child a card and stations to collect stamps from, such as a craft table, a story corner and the first-aid post.',
+    1,
+    ['playful'],
+  ),
+  idea(
+    'activities',
+    'Neighbourhood talent hour',
+    'Open the stage for an hour for anyone who wants to sing, dance or recite, with a sign-up sheet at the gate.',
+    1,
+    ['festive', 'cultural'],
+    ['sensory-friendly'],
+  ),
+  idea(
+    'favors',
+    'Seed packet for every family',
+    'Hand out a small seed packet of marigold or tulsi with a note on the community garden project.',
+    1,
+    ['eco-conscious'],
+  ),
+  idea(
+    'favors',
+    'Cloth bag with the community name',
+    'Print a plain cloth bag with the neighbourhood name and year, to be reused for shopping.',
+    2,
+    ['eco-conscious', 'classic'],
+  ),
+  idea(
+    'inclusion',
+    'Quiet first hour',
+    'Open the first hour with low music and fewer crowds so families who find noise hard can visit comfortably.',
+    1,
+  ),
+  idea(
+    'inclusion',
+    'Rest benches and a water point',
+    'Place benches every fifty metres along the main path and keep a clearly marked water point near the entrance.',
+    1,
+  ),
+];

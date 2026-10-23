@@ -56,7 +56,10 @@ test('a tab panel is a single stop and Esc closes the removal dialog', async ({ 
   await page.getByRole('button', { name: /Jaipur wedding/ }).click();
   await page.getByRole('button', { name: /Set it in type/ }).click();
   await page.getByRole('heading', { level: 1, name: 'Ananya & Kabir' }).waitFor();
-  await page.getByRole('button', { name: 'Mehfil' }).first().click();
+  await page
+    .getByRole('button', { name: /^Mehfil/ })
+    .first()
+    .click();
   await page.getByRole('button', { name: 'Remove Ananya & Kabir' }).click();
   await expect(page.getByRole('dialog', { name: 'Remove this plan?' })).toBeVisible();
   await page.keyboard.press('Escape');

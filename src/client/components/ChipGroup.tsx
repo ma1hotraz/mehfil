@@ -5,37 +5,37 @@ import { cx } from '../lib/cx';
 import styles from './ChipGroup.module.css';
 import { Icon } from './Icon';
 
-export interface ChipOption {
-  value: string;
+export interface ChipOption<V extends string = string> {
+  value: V;
   label: string;
 }
 
-interface BaseProps {
+interface BaseProps<V extends string> {
   legend: string;
-  options: readonly ChipOption[];
+  options: readonly ChipOption<V>[];
   hint?: string;
 }
 
-interface MultiProps extends BaseProps {
+interface MultiProps<V extends string> extends BaseProps<V> {
   mode?: 'multi';
-  selected: readonly string[];
+  selected: readonly V[];
   /** Maximum number of chips that may be selected. */
   max?: number;
-  onChange: (selected: string[]) => void;
+  onChange: (selected: V[]) => void;
 }
 
-interface SingleProps extends BaseProps {
+interface SingleProps<V extends string> extends BaseProps<V> {
   mode: 'single';
-  selected: string;
-  onChange: (selected: string) => void;
+  selected: V;
+  onChange: (selected: V) => void;
 }
 
-export type ChipGroupProps = MultiProps | SingleProps;
+export type ChipGroupProps<V extends string = string> = MultiProps<V> | SingleProps<V>;
 
 const LIMIT_WORDS = ['', 'one', 'two', 'three', 'four', 'five'];
 
 /** Rectangular chips: toggle buttons (aria-pressed) for multi-select, native radios for single. */
-export function ChipGroup(props: ChipGroupProps) {
+export function ChipGroup<V extends string>(props: ChipGroupProps<V>) {
   const name = useId();
   const noteId = `${name}-note`;
   const isMulti = props.mode !== 'single';

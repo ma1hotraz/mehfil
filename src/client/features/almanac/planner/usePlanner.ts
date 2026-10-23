@@ -105,14 +105,11 @@ function useExchanges() {
 
 /** Applies one suggestion through the plan API and records the outcome on its slip. */
 async function applySuggestion(
-  state: ActionState | undefined,
+  state: ActionState,
   api: Pick<PlansApi, 'applyPlannerAction'>,
   record: (next: Partial<ActionState>) => void,
   onNotice: (notice: string) => void,
 ): Promise<void> {
-  if (!state) {
-    return;
-  }
   const result = await api.applyPlannerAction(state.action);
   if ('notice' in result) {
     record({ status: 'applied', message: result.notice });
@@ -146,6 +143,9 @@ export function usePlanner(deps: Deps): Planner {
   const apply = useCallback(
     (id: number, index: number) => {
       const state = exchanges.find((e) => e.id === id)?.actions[index];
+      if (!state) {
+        return;
+      }
       void applySuggestion(
         state,
         api,

@@ -157,7 +157,7 @@ export function AlmanacView({
           tabs={TABS}
           activeId={tab}
           onChange={(id) => {
-            onTab(id as TabId);
+            onTab(id);
           }}
           idPrefix="plan"
           trailing={

@@ -1,0 +1,95 @@
+import { type FallbackIdea, idea } from './idea.js';
+
+/** Library ideas for a milestone birthday. */
+export const BIRTHDAY_MILESTONE: readonly FallbackIdea[] = [
+  idea(
+    'food',
+    'Sorbet course by decade',
+    'Serve three small fruit sorbets as a palate cleanser, each flavour named for a decade of the life being celebrated.',
+    2,
+    ['elegant', 'classic'],
+  ),
+  idea(
+    'theme',
+    'Decade-by-decade story evening',
+    'Set up one corner for each decade of life with photos, music and a small prop, and let guests walk through them like a gallery.',
+    2,
+    ['classic', 'elegant'],
+  ),
+  idea(
+    'theme',
+    'Black-and-white film premiere',
+    'Dress up for a “premiere” with a red-carpet entrance and a short film of photos and clips, followed by dinner.',
+    3,
+    ['elegant', 'playful'],
+  ),
+  idea(
+    'decor',
+    'Clothesline of memories',
+    'Hang photographs from a long string with wooden pegs across the room, in order from childhood to today.',
+    1,
+    ['rustic', 'classic'],
+  ),
+  idea(
+    'decor',
+    'Tables named for years that matter',
+    'Name each table after a year that mattered to the guest of honour and place a small card that explains why.',
+    1,
+    ['classic', 'minimalist'],
+  ),
+  idea(
+    'food',
+    'Menu of childhood favourites',
+    'Rework the dishes of their childhood into a plated dinner, with a card that names the person who used to cook each one.',
+    2,
+    ['classic', 'cultural'],
+  ),
+  idea(
+    'food',
+    'Tower of mini cakes by decade',
+    'Make a tower of small cakes, one flavour per decade, so guests can taste the story as they take a slice.',
+    3,
+    ['elegant'],
+    ['gluten-free', 'vegan'],
+  ),
+  idea(
+    'activities',
+    'Surprise video messages reel',
+    'Collect short video messages from friends and relatives who cannot attend, and play the reel after dinner.',
+    1,
+    ['classic'],
+  ),
+  idea(
+    'activities',
+    'Memory jar readings',
+    'Ask guests to write a memory on a slip as they arrive, and read a handful aloud between courses.',
+    1,
+    ['classic', 'minimalist'],
+  ),
+  idea(
+    'favors',
+    'Year-in-pictures booklet',
+    'Print a small booklet of photographs from the evening and the decades, to be posted to guests a week later.',
+    2,
+    ['elegant'],
+  ),
+  idea(
+    'favors',
+    'Personalised bookmark',
+    'Give each guest a paper bookmark printed with a favourite line or quote of the guest of honour.',
+    1,
+    ['minimalist', 'classic'],
+  ),
+  idea(
+    'inclusion',
+    'Large-print programme card',
+    'Print the schedule and menu in large type with high contrast, and read the programme aloud at the start of the evening.',
+    1,
+  ),
+  idea(
+    'inclusion',
+    'Reserved seats near the speaker',
+    'Reserve seats near the speeches for elders and guests who are hard of hearing, with a clear path from the entrance.',
+    1,
+  ),
+];

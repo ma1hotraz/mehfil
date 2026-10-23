@@ -59,6 +59,25 @@ describe('logger', () => {
     write.mockRestore();
     silentLogger.log('info', 'x');
     expect(redact({ token: 't', ok: 1 })).toEqual({ token: '[redacted]', ok: 1 });
+    expect(
+      redact({
+        GEMINI_API_KEY: 'k',
+        accessToken: 'a',
+        idToken: 'i',
+        password: 'p',
+        client_secret: 's',
+      }),
+    ).toEqual({
+      GEMINI_API_KEY: '[redacted]',
+      accessToken: '[redacted]',
+      idToken: '[redacted]',
+      password: '[redacted]',
+      client_secret: '[redacted]',
+    });
+    expect(redact({ promptTokens: 12, outputTokens: 5 })).toEqual({
+      promptTokens: 12,
+      outputTokens: 5,
+    });
   });
 });
 

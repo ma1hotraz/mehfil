@@ -1,4 +1,4 @@
-import { type CSSProperties, useState } from 'react';
+import { useState } from 'react';
 
 import type { CategoryId } from '../../shared/schema/plan.js';
 import { cx } from '../lib/cx';
@@ -120,7 +120,7 @@ export function LedgerTable({
                 <span
                   className={styles.tally}
                   aria-hidden="true"
-                  style={{ '--share': `${row.percent}%` } as CSSProperties}
+                  style={{ '--share': `${row.percent}%` }}
                 />
               </th>
               <td>
