@@ -9,7 +9,13 @@
   letter-spacing: 0.08em;
   line-height: 1.1;
   text-align: center;
+  user-select: none;
   transform: rotate(var(--tilt, -4deg));
+  transition: transform var(--dur-state) var(--ease);
+}
+
+.stamp:hover {
+  transform: rotate(calc(var(--tilt, -4deg) - 3deg)) scale(1.05);
 }
 
 .ring {

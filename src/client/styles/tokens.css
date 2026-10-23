@@ -1,18 +1,18 @@
-/* Design tokens for "The Almanac" (docs/06 §3). Paper is the default theme; Lamplight is dark. */
+/* Design tokens for "The Almanac". Clean, modern editorial luxury palette. */
 :root {
-  --paper: #f3ebdd;
-  --paper-raised: #faf5ec;
-  --paper-sunk: #e9decb;
-  --ink: #1e1915;
-  --ink-soft: #4f453c;
-  --sindoor: #a8301c;
-  --peacock: #1d5a55;
-  --leaf: #3d6527;
-  --umber: #7a4a12;
-  --marigold: #d99a2b;
-  --rule: #cdbfa8;
-  --rule-strong: #7d6b55;
-  --on-sindoor: #faf5ec;
+  --paper: #faf9f6;
+  --paper-raised: #ffffff;
+  --paper-sunk: #f4f2ec;
+  --ink: #18181b;
+  --ink-soft: #57534e;
+  --sindoor: #b91c1c;
+  --peacock: #0f766e;
+  --leaf: #166534;
+  --umber: #92400e;
+  --marigold: #d97706;
+  --rule: #e5e5e0;
+  --rule-strong: #78716c;
+  --on-sindoor: #ffffff;
 
   --font-display: 'Fraunces Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
   --font-text: 'Instrument Sans Variable', 'Helvetica Neue', Arial, sans-serif;
@@ -38,51 +38,51 @@
   --space-9: 112px;
 
   --hairline: 1px solid var(--rule);
-  --rule-double: 3px double var(--ink);
+  --rule-double: 2px solid var(--ink);
   --rule-dotted: 1px dotted var(--rule-strong);
 
   --r-0: 0;
-  --r-1: 2px;
-  --shadow-print: 3px 3px 0 var(--ink);
+  --r-1: 4px;
+  --shadow-print: 0 1px 0 var(--rule-strong);
 
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --dur-state: 120ms;
   --dur-enter: 240ms;
 
-  --focus-ring: 3px solid var(--peacock);
+  --focus-ring: 2px solid var(--peacock);
   --measure: 68ch;
 }
 
 :root[data-theme='lamplight'] {
-  --paper: #17130f;
-  --paper-raised: #221c16;
-  --paper-sunk: #100d0a;
-  --ink: #efe6d6;
-  --ink-soft: #bcae9b;
-  --sindoor: #f08468;
-  --peacock: #78c2b7;
-  --leaf: #9cc97f;
-  --umber: #e0a866;
-  --marigold: #e9b04a;
-  --rule: #3a3128;
-  --rule-strong: #8e7c66;
-  --on-sindoor: #17130f;
+  --paper: #0c0a09;
+  --paper-raised: #1c1917;
+  --paper-sunk: #171412;
+  --ink: #f5f5f4;
+  --ink-soft: #a8a29e;
+  --sindoor: #f87171;
+  --peacock: #2dd4bf;
+  --leaf: #4ade80;
+  --umber: #fbbf24;
+  --marigold: #f59e0b;
+  --rule: #292524;
+  --rule-strong: #a8a29e;
+  --on-sindoor: #0c0a09;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='paper']) {
-    --paper: #17130f;
-    --paper-raised: #221c16;
-    --paper-sunk: #100d0a;
-    --ink: #efe6d6;
-    --ink-soft: #bcae9b;
-    --sindoor: #f08468;
-    --peacock: #78c2b7;
-    --leaf: #9cc97f;
-    --umber: #e0a866;
-    --marigold: #e9b04a;
-    --rule: #3a3128;
-    --rule-strong: #8e7c66;
-    --on-sindoor: #17130f;
+    --paper: #0c0a09;
+    --paper-raised: #1c1917;
+    --paper-sunk: #171412;
+    --ink: #f5f5f4;
+    --ink-soft: #a8a29e;
+    --sindoor: #f87171;
+    --peacock: #2dd4bf;
+    --leaf: #4ade80;
+    --umber: #fbbf24;
+    --marigold: #f59e0b;
+    --rule: #292524;
+    --rule-strong: #a8a29e;
+    --on-sindoor: #0c0a09;
   }
 }

@@ -10,7 +10,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-3);
-  border-bottom: var(--rule-double);
+  border-bottom: 1px solid var(--rule);
   padding-bottom: var(--space-3);
 }
 
@@ -37,9 +37,11 @@
 .margin {
   color: var(--ink-soft);
   font-size: var(--fs-sm);
-  font-style: italic;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
   border-left: 3px solid var(--marigold);
-  padding-left: var(--space-3);
+  border-radius: var(--r-1);
+  padding: var(--space-3) var(--space-4);
 }
 
 .margin p {

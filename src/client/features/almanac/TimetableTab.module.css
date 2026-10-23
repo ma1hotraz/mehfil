@@ -5,21 +5,23 @@
 }
 
 .platform {
-  padding: var(--space-2) var(--space-3);
-  background: var(--paper-sunk);
-  border-block: 1px solid var(--rule-strong);
-  font-family: var(--font-text);
-  font-size: var(--fs-md);
-  font-variant-caps: all-small-caps;
-  letter-spacing: 0.1em;
-  font-weight: 600;
+  padding: var(--space-2) var(--space-4);
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  border-radius: var(--r-1);
+  font-family: var(--font-figures);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 /* The vertical ink rail of the line, with a dot at each stop. */
 .rail {
   position: relative;
   margin-left: var(--space-3);
-  border-left: 2px solid var(--ink);
+  border-left: 2px solid var(--rule-strong);
 }
 
 .row {
@@ -27,8 +29,19 @@
   display: flex;
   gap: var(--space-3);
   align-items: flex-start;
-  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
-  border-bottom: var(--rule-dotted);
+  padding: var(--space-3) var(--space-4) var(--space-3) var(--space-5);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+  background: var(--paper-raised);
+  margin-bottom: var(--space-2);
+  transition:
+    background-color var(--dur-state) var(--ease),
+    border-color var(--dur-state) var(--ease);
+}
+
+.row:hover {
+  background-color: var(--paper);
+  border-color: var(--rule-strong);
 }
 
 .stop {
@@ -40,6 +53,18 @@
   border: 2px solid var(--ink);
   border-radius: 50%;
   background: var(--paper);
+  transition:
+    transform var(--dur-state) var(--ease),
+    background-color var(--dur-state) var(--ease);
+}
+
+.row:hover .stop {
+  transform: scale(1.25);
+  background: var(--marigold);
+}
+
+.done .stop {
+  background: var(--ink);
 }
 
 .check {

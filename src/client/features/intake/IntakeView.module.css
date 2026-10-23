@@ -6,6 +6,12 @@
 
 .title {
   font-size: var(--fs-2xl);
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 144, 'SOFT' 50, 'WONK' 1;
+}
+
+.title > span {
+  color: var(--sindoor);
 }
 
 .lede {

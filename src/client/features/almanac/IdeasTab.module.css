@@ -3,13 +3,25 @@
   margin: 0;
   padding: var(--space-1) var(--space-3);
   border: 2px solid var(--sindoor);
+  border-radius: var(--r-0);
   color: var(--sindoor);
   transform: rotate(-1.5deg);
-  font-size: var(--fs-md);
+  font-family: var(--font-text);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  background: var(--paper-raised);
 }
 
 .grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }

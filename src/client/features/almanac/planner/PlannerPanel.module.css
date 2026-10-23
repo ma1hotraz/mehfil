@@ -6,7 +6,7 @@
 
 .title {
   font-size: var(--fs-lg);
-  border-bottom: var(--rule-double);
+  border-bottom: 1px solid var(--rule);
   padding-bottom: var(--space-2);
 }
 
@@ -27,7 +27,7 @@
 
 .exchange {
   padding: var(--space-4) 0;
-  border-bottom: var(--hairline);
+  border-bottom: 1px solid var(--rule);
 }
 
 .kicker {
@@ -58,9 +58,20 @@
 
 .slip {
   margin: var(--space-3) 0;
-  padding: var(--space-3);
-  border: 2px dashed var(--rule-strong);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--peacock);
+  border-radius: var(--r-1);
   background: var(--paper-raised);
+  transition:
+    box-shadow var(--dur-state) var(--ease),
+    border-color var(--dur-state) var(--ease);
+}
+
+.slip:hover {
+  border-color: var(--rule-strong);
+  border-left-color: var(--peacock);
+  box-shadow: 0 1px 0 var(--rule);
 }
 
 .slipText {

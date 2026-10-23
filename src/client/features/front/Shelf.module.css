@@ -25,15 +25,23 @@
   width: 64px;
   min-height: 190px;
   padding: 0 0 var(--space-3);
-  border: 1px solid var(--ink);
-  border-top-width: 14px;
-  border-radius: var(--r-0);
+  border: 1px solid var(--rule-strong);
+  border-top-width: 10px;
+  border-radius: var(--r-1);
   background: var(--paper-raised);
   color: var(--ink);
+  transition:
+    border-color var(--dur-state) var(--ease),
+    transform var(--dur-state) var(--ease);
 }
 
 .spine:hover {
-  box-shadow: var(--shadow-print);
+  border-color: var(--ink);
+  transform: translateY(-4px);
+}
+
+.spine:active {
+  transform: translateY(0);
 }
 
 .wedding {
@@ -52,8 +60,10 @@
   overflow: hidden;
   padding-top: var(--space-2);
   font-family: var(--font-display);
+  font-variation-settings: 'opsz' 72, 'SOFT' 40;
   font-weight: 600;
   font-size: var(--fs-sm);
+  letter-spacing: 0.02em;
   text-overflow: ellipsis;
 }
 
@@ -88,6 +98,14 @@
     padding: 0 var(--space-3);
     border-top-width: 1px;
     border-left-width: 14px;
+  }
+
+  .spine:hover {
+    transform: translateX(3px);
+  }
+
+  .spine:active {
+    transform: translateX(0);
   }
 
   .wedding {

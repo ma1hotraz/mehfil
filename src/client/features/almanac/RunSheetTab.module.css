@@ -1,13 +1,23 @@
 .order {
   max-width: 44rem;
   margin: 0 auto;
+  padding: var(--space-5) var(--space-6);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
+  background: var(--paper-raised);
 }
 
 .slot {
   display: grid;
   grid-template-columns: 4.5rem 1.5rem minmax(0, 1fr);
   align-items: baseline;
-  padding: var(--space-3) 0;
+  padding: var(--space-3) var(--space-2);
+  border-bottom: 1px solid var(--rule);
+  transition: background-color var(--dur-state) var(--ease);
+}
+
+.slot:hover {
+  background-color: var(--paper-sunk);
 }
 
 .time {

@@ -9,15 +9,15 @@
   },
   "scripts": {
     "dev": "concurrently -k -n server,client \"tsx watch src/server/index.ts\" \"vite\"",
-    "build": "vite build && npm run build:server",
-    "start": "node dist/server.mjs",
+    "build": "NODE_ENV=production vite build && npm run build:server",
+    "start": "NODE_ENV=production node dist/server.mjs",
     "lint": "eslint . --max-warnings 0",
     "format": "prettier --check .",
     "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.server.json",
     "test": "vitest run --coverage",
     "test:e2e": "playwright test",
     "check": "npm run lint && npm run typecheck && npm run test && npm run build && node scripts/check-bundle.mjs",
-    "build:client": "vite build",
+    "build:client": "NODE_ENV=production vite build",
     "build:server": "esbuild src/server/index.ts --bundle --platform=node --format=esm --target=node22 --minify --legal-comments=none --banner:js=\"import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);\" --outfile=dist/server.mjs"
   },
   "dependencies": {

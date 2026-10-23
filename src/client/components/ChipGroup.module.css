@@ -26,15 +26,26 @@
   gap: 6px;
   min-height: 36px;
   padding: 4px 12px;
-  border: 1px solid var(--rule-strong);
+  border: 1px solid var(--rule);
   border-radius: var(--r-1);
-  background: transparent;
+  background: var(--paper-raised);
   font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--ink);
   cursor: pointer;
+  transition:
+    background-color var(--dur-state) var(--ease),
+    border-color var(--dur-state) var(--ease),
+    color var(--dur-state) var(--ease);
 }
 
-.chip:hover {
-  border-color: var(--ink);
+.chip:hover:not(.on):not(.blocked) {
+  border-color: var(--rule-strong);
+  background: var(--paper-sunk);
+}
+
+.chip:active:not(.blocked) {
+  transform: translateY(0);
 }
 
 .on {

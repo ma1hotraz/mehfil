@@ -1,12 +1,9 @@
 .card {
   margin: 0;
   padding: var(--space-6) var(--space-5);
-  border: 1px solid var(--ink);
-  border-radius: var(--r-0);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-1);
   background: var(--paper-raised);
-  /* Inset thin double border, like a printed invitation card. */
-  outline: 1px solid var(--ink);
-  outline-offset: -8px;
 }
 
 .sentence {
@@ -32,6 +29,7 @@
   line-height: 1.4;
   field-sizing: content;
   max-width: 100%;
+  transition: color var(--dur-state) var(--ease), border-color var(--dur-state) var(--ease);
 }
 
 .blank :is(input, select):focus-visible {
@@ -57,15 +55,20 @@
 
 .blank:focus-within p:not([id$='-error']) {
   width: max-content;
-  max-width: min(18rem, 80vw);
+  max-width: min(20rem, 80vw);
   height: auto;
   margin: 0;
   overflow: visible;
   clip-path: none;
   white-space: normal;
-  padding: var(--space-1) var(--space-2);
+  padding: var(--space-1) var(--space-3);
   background: var(--paper-raised);
-  border: 1px solid var(--rule-strong);
+  border: 1px solid var(--ink);
+  box-shadow: var(--shadow-print);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--ink);
 }
 
 .blank p[id$='-error'] {
