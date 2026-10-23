@@ -17,6 +17,9 @@ function stripDelimiters(text: string): string {
  * Makes untrusted text safe to embed in a prompt or UI: NFC-normalises, drops control and
  * invisible characters (newlines kept), removes prompt delimiters, collapses whitespace and
  * clamps to `max` code points.
+ * @param input - Raw string from user, model or storage.
+ * @param max   - Maximum code-point length of the output.
+ * @returns Cleaned, length-clamped string safe for prompts and display.
  * @example sanitizeText('  hi <<<DATA  there ', 20) // 'hiDATA there'
  */
 export function sanitizeText(input: string, max: number): string {

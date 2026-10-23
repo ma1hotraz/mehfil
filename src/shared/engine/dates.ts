@@ -1,3 +1,5 @@
+import { at } from '../util.js';
+
 /** Date-only helpers. Everything is UTC so there is no timezone drift (docs/03 §4). */
 const MS_PER_DAY = 86_400_000;
 const ISO_DATE = /^(\d{4})-(\d{2})-(\d{2})$/;
@@ -60,9 +62,9 @@ export function diffDays(from: string, to: string): number {
 }
 
 export const monthIndex = (date: string): number => new Date(mustParse(date)).getUTCMonth();
-export const monthName = (date: string): string => MONTHS[monthIndex(date)] as string;
+export const monthName = (date: string): string => at(MONTHS, monthIndex(date));
 export const weekdayName = (date: string): string =>
-  WEEKDAYS[new Date(mustParse(date)).getUTCDay()] as string;
+  at(WEEKDAYS, new Date(mustParse(date)).getUTCDay());
 
 /** Day of the year, 1-based (used by the masthead dateline). */
 export function dayOfYear(date: string): number {

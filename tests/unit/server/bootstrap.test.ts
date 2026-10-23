@@ -50,6 +50,9 @@ describe('vercel.json', () => {
   it('carries the companion security headers and routes /api to the function', () => {
     expect(header('X-Content-Type-Options')).toBe('nosniff');
     expect(header('Permissions-Policy')).toContain('camera=()');
+    expect(header('X-Frame-Options')).toBe('DENY');
+    expect(header('Cross-Origin-Opener-Policy')).toBe('same-origin');
+    expect(header('Cross-Origin-Resource-Policy')).toBe('same-origin');
     expect(header('Strict-Transport-Security')).toContain('max-age=31536000');
     expect(config.rewrites[0]).toEqual({ source: '/api/(.*)', destination: '/api' });
   });

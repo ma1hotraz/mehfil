@@ -31,4 +31,5 @@ export function createLogger(
   };
 }
 
+/** A no-op logger instance useful for unit tests where logs are suppressed. */
 export const silentLogger: Logger = { log: () => undefined };

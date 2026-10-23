@@ -60,7 +60,9 @@
   overflow: hidden;
   padding-top: var(--space-2);
   font-family: var(--font-display);
-  font-variation-settings: 'opsz' 72, 'SOFT' 40;
+  font-variation-settings:
+    'opsz' 72,
+    'SOFT' 40;
   font-weight: 600;
   font-size: var(--fs-sm);
   letter-spacing: 0.02em;

@@ -144,7 +144,7 @@ npm test          # Vitest with coverage thresholds
 npm run test:e2e  # Playwright against the production build (no API key)
 ```
 
-**531** unit, component, client and API tests · **4** property tests (fast-check, 500 runs) ·
+**536** unit, component, client and API tests · **4** property tests (fast-check, 500 runs) ·
 **20** end-to-end tests. No test touches the network.
 
 | Coverage            | Lines | Branches | Functions |

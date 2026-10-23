@@ -22,6 +22,7 @@ export function parseHash(hash: string): Route {
   return tab ? { view: 'plan', tab } : { view: 'front', tab: 'overview' };
 }
 
+/** Formats a Route into its corresponding window hash fragment. */
 export function routeHash(route: Route): string {
   if (route.view === 'front') {
     return '';

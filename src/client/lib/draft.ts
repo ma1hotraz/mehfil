@@ -12,6 +12,7 @@ import {
   checkBriefDate,
 } from '../../shared/schema/brief.js';
 
+/** Canonical list of editable draft form keys matching EventBrief. */
 export const FIELD_KEYS = [
   'eventType',
   'subType',
@@ -69,6 +70,7 @@ export function emptyDraft(today: string): IntakeDraft {
   };
 }
 
+/** Converts an existing EventBrief back into editable draft strings for the intake form. */
 export function draftFromBrief(brief: EventBrief): IntakeDraft {
   return {
     eventType: brief.eventType,
@@ -104,6 +106,7 @@ export function parseAmount(text: string): number | undefined {
   return Number.isFinite(value) ? value : undefined;
 }
 
+/** Parses numeric guest counts typed by user, ignoring non-digit formatting characters. */
 export function parseCount(text: string): number | undefined {
   const digits = text.replace(/[^\d]/g, '');
   return digits === '' ? undefined : Number(digits);

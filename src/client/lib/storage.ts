@@ -11,8 +11,11 @@ export interface KeyValueStore {
   removeItem(key: string): void;
 }
 
+/** Key for serialized plan list envelope in persistent storage. */
 export const PLANS_KEY = 'mehfil:v1:plans';
+/** Key for the currently opened plan id. */
 export const OPEN_KEY = 'mehfil:v1:open';
+/** Key for user interface preferences (theme, font scale). */
 export const PREFS_KEY = 'mehfil:v1:prefs';
 /** Keeps total storage under roughly 1 MB (docs/08 §5). */
 export const MAX_PLANS = 20;
@@ -78,9 +81,11 @@ export function savePlans(
   }
 }
 
+/** Reads the active plan id from storage, or undefined if none saved. */
 export const loadOpenId = (store: KeyValueStore): string | undefined =>
   read(store, OPEN_KEY) ?? undefined;
 
+/** Persists or removes the active plan id in storage. */
 export function saveOpenId(store: KeyValueStore, id: string | undefined): void {
   try {
     if (id === undefined) {
@@ -93,14 +98,17 @@ export function saveOpenId(store: KeyValueStore, id: string | undefined): void {
   }
 }
 
+/** Schema validating theme and text size user preferences. */
 export const Prefs = z.object({
   theme: z.nullable(z.enum(['paper', 'lamplight'])),
   textSize: z.union([z.literal(TEXT_SIZES[0]), z.literal(TEXT_SIZES[1]), z.literal(TEXT_SIZES[2])]),
 });
 export type Prefs = z.infer<typeof Prefs>;
 
+/** Default user preferences when none are stored. */
 export const DEFAULT_PREFS: Prefs = { theme: null, textSize: 1 };
 
+/** Loads stored preferences or returns default settings if unset or invalid. */
 export function loadPrefs(store: KeyValueStore): Prefs {
   const raw = read(store, PREFS_KEY);
   if (raw === null) {
@@ -114,6 +122,7 @@ export function loadPrefs(store: KeyValueStore): Prefs {
   }
 }
 
+/** Stores user UI preferences into persistent storage. */
 export function savePrefs(store: KeyValueStore, prefs: Prefs): void {
   try {
     store.setItem(PREFS_KEY, JSON.stringify(prefs));

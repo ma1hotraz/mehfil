@@ -29,7 +29,9 @@
   line-height: 1.4;
   field-sizing: content;
   max-width: 100%;
-  transition: color var(--dur-state) var(--ease), border-color var(--dur-state) var(--ease);
+  transition:
+    color var(--dur-state) var(--ease),
+    border-color var(--dur-state) var(--ease);
 }
 
 .blank :is(input, select):focus-visible {

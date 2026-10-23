@@ -16,7 +16,9 @@
   border: 0;
   background: transparent;
   font-family: var(--font-display);
-  font-variation-settings: 'opsz' 72, 'SOFT' 10;
+  font-variation-settings:
+    'opsz' 72,
+    'SOFT' 10;
   font-size: var(--fs-lg);
   font-weight: 700;
   letter-spacing: 0.12em;

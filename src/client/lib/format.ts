@@ -3,6 +3,7 @@ import { currencySymbol, formatMoney } from '../../shared/engine/money.js';
 import type { Currency } from '../../shared/schema/brief.js';
 import type { IdeaCategory, Verdict, VendorStatus } from '../../shared/schema/plan.js';
 
+/** Formats minor units into localized currency string with proper symbols. */
 export const money = (minor: number, currency: Currency): string => formatMoney(minor, currency);
 
 export { formatLongDate };
@@ -10,6 +11,7 @@ export { formatLongDate };
 /** Whole days from `today` to `date` (never negative). */
 export const daysToGo = (today: string, date: string): number => Math.max(0, diffDays(today, date));
 
+/** Formats count with singular or plural noun suffix. */
 export const plural = (count: number, one: string, many = `${one}s`): string =>
   `${count} ${count === 1 ? one : many}`;
 
@@ -35,6 +37,7 @@ export function tMinusSpoken(offsetDays: number): string {
 export const offsetFromEvent = (eventDate: string, dueDate: string): number =>
   diffDays(dueDate, eventDate);
 
+/** User-facing display labels for plan feasibility verdicts. */
 export const VERDICT_LABELS: Record<Verdict, string> = {
   comfortable: 'Comfortable',
   workable: 'Workable',
@@ -42,6 +45,7 @@ export const VERDICT_LABELS: Record<Verdict, string> = {
   unrealistic: 'Unrealistic',
 };
 
+/** User-facing display labels for vendor procurement statuses. */
 export const STATUS_LABELS: Record<VendorStatus, string> = {
   'to-find': 'To find',
   enquired: 'Enquired',
@@ -49,6 +53,7 @@ export const STATUS_LABELS: Record<VendorStatus, string> = {
   paid: 'Paid',
 };
 
+/** User-facing display labels for creative idea categories. */
 export const IDEA_CATEGORY_LABELS: Record<IdeaCategory, string> = {
   theme: 'Theme',
   decor: 'Décor',
@@ -64,4 +69,5 @@ const BAND_WORDS = ['low', 'medium', 'high'] as const;
 export const costMarks = (currency: Currency, band: 1 | 2 | 3): string =>
   currencySymbol(currency).repeat(band);
 
+/** Human-readable cost tier description for screen readers and tooltips. */
 export const costLabel = (band: 1 | 2 | 3): string => `Cost: ${BAND_WORDS[band - 1] ?? 'medium'}`;

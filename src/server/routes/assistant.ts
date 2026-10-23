@@ -10,6 +10,7 @@ import { validate } from '../middleware/validate.js';
 
 import { dateGuard } from './ideas.js';
 
+/** Express router handling AI planner conversation and action suggestion requests. */
 export function assistantRouter(
   deps: AssistantDeps,
   clock: Clock,

@@ -7,11 +7,6 @@ export const notFound: RequestHandler = (_req, res) => {
   res.status(404).json({ error: 'not_found' });
 };
 
-interface HttpishError {
-  status?: number;
-  type?: string;
-}
-
 /**
  * Central error handler. Maps body-parser failures to 400/413 and everything else to a generic
  * 500 with a request id. Stack traces and upstream error text are logged by name only, never sent.
@@ -19,9 +14,9 @@ interface HttpishError {
 export const errorHandler =
   (logger: Logger): ErrorRequestHandler =>
   (error: unknown, _req, res, _next) => {
-    const { status, type } = (
-      typeof error === 'object' && error !== null ? error : {}
-    ) as HttpishError;
+    const obj = typeof error === 'object' && error !== null ? error : {};
+    const status = 'status' in obj && typeof obj.status === 'number' ? obj.status : undefined;
+    const type = 'type' in obj && typeof obj.type === 'string' ? obj.type : undefined;
     if (type === 'entity.too.large') {
       res.status(413).json({ error: 'payload_too_large' });
       return;

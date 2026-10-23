@@ -1,12 +1,14 @@
 import { formatLongDate } from './engine/dates.js';
 import type { Access, Dietary, EventBrief, EventType, Vibe } from './schema/brief.js';
 
+/** User-facing display names for event categories. */
 export const EVENT_TYPE_LABELS: Record<EventType, string> = {
   wedding: 'wedding',
   birthday: 'birthday',
   community: 'community event',
 };
 
+/** User-facing display names for event sub-categories. */
 export const SUB_TYPE_LABELS: Record<string, string> = {
   traditional: 'traditional',
   intimate: 'intimate',
@@ -22,6 +24,7 @@ export const SUB_TYPE_LABELS: Record<string, string> = {
   drive: 'clean-up or donation drive',
 };
 
+/** Human-readable display labels for aesthetic and atmosphere vibes. */
 export const VIBE_LABELS: Record<Vibe, string> = {
   classic: 'Classic',
   playful: 'Playful',
@@ -33,6 +36,7 @@ export const VIBE_LABELS: Record<Vibe, string> = {
   cultural: 'Cultural',
 };
 
+/** Human-readable display labels for catering and dietary options. */
 export const DIETARY_LABELS: Record<Dietary, string> = {
   vegetarian: 'Vegetarian',
   vegan: 'Vegan',
@@ -43,6 +47,7 @@ export const DIETARY_LABELS: Record<Dietary, string> = {
   'kids-menu': 'Kids’ menu',
 };
 
+/** Human-readable display labels for accessibility amenities and considerations. */
 export const ACCESS_LABELS: Record<Access, string> = {
   'step-free': 'Step-free access',
   'hearing-support': 'Hearing support',

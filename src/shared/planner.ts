@@ -17,6 +17,7 @@ const MAX_ANSWER = 900;
 /** Lines the Planner may create when they are absent from the ledger (docs/04 §10). */
 const CREATABLE: readonly CategoryId[] = ['contingency', 'accessibility', 'weatherCover'];
 
+/** Zod schema for the raw model JSON: answer is required, actions default to empty. */
 export const ModelOutput = z.object({
   answer: z.string().check(z.minLength(1)),
   suggestedActions: z._default(z.array(z.unknown()), []),
@@ -58,6 +59,7 @@ export function vetActions(raw: readonly unknown[], digest: PlanDigest): Suggest
     .slice(0, MAX_ACTIONS);
 }
 
+/** Clamps the answer to the configured maximum length. */
 export const trimAnswer = (text: string): string => sanitizeText(text, MAX_ANSWER);
 
 // ---------------------------------------------------------------- rule-based fallback

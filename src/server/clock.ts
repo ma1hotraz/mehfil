@@ -2,6 +2,7 @@ export interface Clock {
   now(): Date;
 }
 
+/** Default production clock backed by native Javascript Date. */
 export const systemClock: Clock = { now: () => new Date() };
 
 /** Today's date as `YYYY-MM-DD` (UTC). */

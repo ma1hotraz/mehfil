@@ -4,4 +4,5 @@ export function localToday(now: Date = new Date()): string {
   return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 }
 
+/** Returns current UTC time as an ISO-8601 string. */
 export const nowIso = (now: Date = new Date()): string => now.toISOString();
